@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Madhuban Murli Audio Library (2012019–2025)</title>
+  <style>
+    :root {
+      /* default (light theme) variables */
+      --bg-color: #f5f5f5;
+      --text-color: #111111;
+      --card-bg: #ffffff;
+      --month-bg: #fafafa;
+      --border-color: #dddddd;
+      --shadow-color: rgba(0, 0, 0, 0.08);
+
+      --day-bg: #e7f3ff;
+      --day-hover-bg: #d0e7ff;
+      --day-border: #cccccc;
+      --day-text: #111111;
+
+      --selected-bg: #2563eb;
+      --selected-text: #ffffff;
+      --selected-border: #1d4ed8;
+
+      --accent: #2563eb;
+      --accent-soft: #e0edff;
+
+      --button-bg: #2563eb;
+      --button-text: #ffffff;
+      --button-hover-bg: #1d4ed8;
+    }
+
+    body.theme-light {
+      --bg-color: #f5f5f5;
+      --text-color: #111111;
+      --card-bg: #ffffff;
+      --month-bg: #fafafa;
+      --border-color: #dddddd;
+      --shadow-color: rgba(0, 0, 0, 0.08);
+
+      --day-bg: #e7f3ff;
+      --day-hover-bg: #d0e7ff;
+      --day-border: #cccccc;
+      --day-text: #111111;
+
+      --selected-bg: #2563eb;
+      --selected-text: #ffffff;
+      --selected-border: #1d4ed8;
+
+      --accent: #2563eb;
+      --accent-soft: #e0edff;
+
+      --button-bg: #2563eb;
+      --button-text: #ffffff;
+      --button-hover-bg: #1d4ed8;
+    }
+
+    body.theme-dark {
+      --bg-color: #111827;
+      --text-color: #e5e7eb;
+      --card-bg: #1f2937;
+      --month-bg: #111827;
+      --border-color: #374151;
+      --shadow-color: rgba(0, 0, 0, 0.4);
+
+      --day-bg: #1f2937;
+      --day-hover-bg: #374151;
+      --day-border: #4b5563;
+      --day-text: #e5e7eb;
+
+      --selected-bg: #fbbf24;
+      --selected-text: #111827;
+      --selected-border: #f59e0b;
+
+      --accent: #fbbf24;
+      --accent-soft: #4b5563;
+
+      --button-bg: #4b5563;
+      --button-text: #f9fafb;
+      --button-hover-bg: #6b7280;
+    }
+
+    body.theme-divine {
+      --bg-color: #e6f0ff;
+      --text-color: #0b1120;
+      --card-bg: #ffffff;
+      --month-bg: #edf2ff;
+      --border-color: #c7d2fe;
+      --shadow-color: rgba(59, 130, 246, 0.18);
+
+      --day-bg: #dbeafe;
+      --day-hover-bg: #bfdbfe;
+      --day-border: #93c5fd;
+      --day-text: #0b1120;
+
+      --selected-bg: #1d4ed8;
+      --selected-text: #ffffff;
+      --selected-border: #1e40af;
+
+      --accent: #1d4ed8;
+      --accent-soft: #dbeafe;
+
+      --button-bg: #1d4ed8;
+      --button-text: #ffffff;
+      --button-hover-bg: #1e40af;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 10px;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    #topbar {
+      max-width: 1200px;
+      margin: 0 auto 15px auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .left-controls,
+    .right-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #language {
+      padding: 6px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-color);
+    }
+
+    #search-bar {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    #date-input {
+      padding: 5px 6px;
+      font-size: 13px;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-color);
+    }
+
+    #go-date {
+      padding: 5px 10px;
+      font-size: 13px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      background: var(--button-bg);
+      color: var(--button-text);
+    }
+
+    #go-date:hover {
+      background: var(--button-hover-bg);
+    }
+
+    #theme-switcher {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .theme-btn {
+      padding: 4px 8px;
+      font-size: 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      opacity: 0.9;
+    }
+
+    .theme-btn span.icon {
+      font-size: 13px;
+    }
+
+    .theme-btn.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      opacity: 1;
+      font-weight: bold;
+    }
+
+    #calendar {
+      max-width: 1200px;
+      margin: 0 auto 30px auto;
+    }
+
+    .year {
+      background: var(--card-bg);
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px var(--shadow-color);
+      border: 1px solid var(--border-color);
+    }
+
+    .year h2 {
+      text-align: center;
+      margin: 5px 0 10px 0;
+    }
+
+    .months {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .month {
+      background: var(--month-bg);
+      border-radius: 4px;
+      padding: 6px;
+      border: 1px solid var(--border-color);
+    }
+
+    .month h3 {
+      text-align: center;
+      margin: 4px 0;
+      font-size: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    th, td {
+      width: 14.28%;
+      text-align: center;
+      padding: 2px;
+    }
+
+    th {
+      font-weight: bold;
+    }
+
+    td.empty {
+      background: none;
+    }
+
+    button.day-btn {
+      width: 100%;
+      padding: 3px 0;
+      border-radius: 4px;
+      border: 1px solid var(--day-border);
+      cursor: pointer;
+      background: var(--day-bg);
+      font-size: 11px;
+      color: var(--day-text);
+    }
+
+    button.day-btn:hover {
+      background: var(--day-hover-bg);
+    }
+
+    button.day-btn.selected {
+      background: var(--selected-bg);
+      color: var(--selected-text);
+      border-color: var(--selected-border);
+      font-weight: bold;
+    }
+
+    td.no-audio span {
+      display: inline-block;
+      width: 100%;
+      padding: 3px 0;
+      color: #aaa;
+    }
+
+    #player {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      background: var(--card-bg);
+      padding: 10px;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px var(--shadow-color);
+      border: 1px solid var(--border-color);
+    }
+
+    #selected-date {
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    #current-url {
+      display: none; /* URL hidden as requested */
+      font-size: 11px;
+      color: #555;
+      word-break: break-all;
+      margin-bottom: 6px;
+    }
+
+    audio {
+      width: 100%;
+    }
+
+    .download-btn {
+      display: none;
+      margin-top: 8px;
+      padding: 6px 12px;
+      font-size: 13px;
+      border-radius: 4px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      background: var(--button-bg);
+      color: var(--button-text);
+    }
+
+    .download-btn:hover {
+      background: var(--button-hover-bg);
+    }
+
+    footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 1024px) {
+      .months {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        margin: 6px;
+      }
+      h1 {
+        font-size: 18px;
+      }
+      #topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .right-controls {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .months {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body class="theme-light">
+
+<h1>Madhuban Murli Audio Library (2019–2025)</h1>
+
+<div id="topbar">
+  <div class="left-controls">
+    <label for="language"><strong>Language:</strong></label>
+    <select id="language">
+      <option value="as">অসমীয়া (Assamese)</option>
+      <option value="de">Deutsch (German)</option>
+      <option value="el">ελληνικά (Greek)</option>
+      <option value="en">English</option>
+      <option value="es">Español (Spanish)</option>
+      <option value="fr">Français (French)</option>
+      <option value="gu">ગુજરાતી (Gujarati)</option>
+      <option value="hi">हिंदी (Hindi)</option>
+      <option value="it">Italiano (Italian)</option>
+      <option value="kn">ಕನ್ನಡ (Kannada)</option>
+      <option value="ml">മലയാളം (Malayalam)</option>
+      <option value="mr">मराठी (Marathi)</option>
+      <option value="ne">नेपाली (Nepali)</option>
+      <option value="or" selected>ଓଡ଼ିଆ (Odia)</option>
+      <option value="pl">Polskie (Polish)</option>
+      <option value="pt">Português (Portuguese)</option>
+      <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+      <option value="ro">Română (Romanian)</option>
+      <option value="si">සිංහල (Sinhala)</option>
+      <option value="ta_my">தமிழ் (சென்னை)</option>
+      <option value="ta">தமிழ் (இலங்கை)</option>
+      <option value="te">తెలుగు (Telugu)</option>
+      <option value="th">ภาษาไทย (Thai)</option>
+    </select>
+  </div>
+
+  <div class="right-controls">
+    <div id="search-bar">
+      <label for="date-input" style="font-size: 12px;">Go to date:</label>
+      <input type="date" id="date-input" min="2019-01-01" max="2025-12-31">
+      <button id="go-date">Go</button>
+    </div>
+    <div id="theme-switcher">
+      <button class="theme-btn active" data-theme="light">
+        <span class="icon">🌞</span><span>Light</span>
+      </button>
+      <button class="theme-btn" data-theme="dark">
+        <span class="icon">🌙</span><span>Dark</span>
+      </button>
+      <button class="theme-btn" data-theme="divine">
+        <span class="icon">🔷</span><span>Divine Blue</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="calendar"></div>
+
+<div id="player">
+  <p id="selected-date">Click any valid date to play its Murli.</p>
+  <div id="current-url"></div>
+  <audio id="audio" controls></audio>
+  <a id="download-btn" class="download-btn" href="#" download>Download MP3</a>
+</div>
+
+<footer>
+  designed by https:divine-connectionz.com
+</footer>
+
+<script>
+  const startDate = new Date(2019, 0, 1);
+  const endDate   = new Date(2025, 11, 31);
+
+  const monthNames = [
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December"
+  ];
+  const dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+  const pad = n => String(n).padStart(2,"0");
+
+  // language code -> display name for "(Tamil)" text
+  const langNames = {
+    "ta_my": "Tamil",
+    "ta": "Tamil-Lanka",
+    "en": "English",
+    "hi": "Hindi",
+    "ml": "Malayalam",
+    "te": "Telugu",
+    "kn": "Kannada",
+    "mr": "Marathi",
+    "gu": "Gujarati",
+    "pa": "Punjabi",
+    "si": "Sinhala",
+    "ne": "Nepali",
+    "as": "Assamese",
+    "or": "Odia",
+    "fr": "French",
+    "es": "Spanish",
+    "de": "German",
+    "it": "Italian",
+    "pl": "Polish",
+    "pt": "Portuguese",
+    "ro": "Romanian",
+    "el": "Greek",
+    "th": "Thai"
+  };
+
+  let lastSelectedBtn = null;
+
+  function isWithinRange(y, m, d) {
+    const dt = new Date(y, m, d);
+    return dt >= startDate && dt <= endDate;
+  }
+
+  function createCalendar() {
+    const container = document.getElementById("calendar");
+
+    for (let year = 2019; year <= 2025; year++) {
+      const yearBox = document.createElement("section");
+      yearBox.className = "year";
+
+      const h2 = document.createElement("h2");
+      h2.textContent = year;
+      yearBox.appendChild(h2);
+
+      const months = document.createElement("div");
+      months.className = "months";
+
+      for (let month = 0; month < 12; month++) {
+        const monthDiv = document.createElement("div");
+        monthDiv.className = "month";
+
+        const h3 = document.createElement("h3");
+        h3.textContent = monthNames[month];
+        monthDiv.appendChild(h3);
+
+        const table = document.createElement("table");
+        const thead = document.createElement("thead");
+        const trh = document.createElement("tr");
+
+        dayNames.forEach(d => {
+          const th = document.createElement("th");
+          th.textContent = d;
+          trh.appendChild(th);
+        });
+        thead.appendChild(trh);
+        table.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        let day = 1;
+
+        for (let week = 0; week < 6; week++) {
+          const tr = document.createElement("tr");
+
+          for (let dow = 0; dow < 7; dow++) {
+            const td = document.createElement("td");
+
+            if (week === 0 && dow < firstDay) {
+              td.className = "empty";
+            } else if (day > daysInMonth) {
+              td.className = "empty";
+            } else {
+              if (isWithinRange(year, month, day)) {
+                (function(y, m, d) {
+                  const btn = document.createElement("button");
+                  btn.className = "day-btn";
+                  btn.textContent = d;
+                  btn.dataset.date = `${y}-${pad(m+1)}-${pad(d)}`;
+
+                  btn.onclick = function () {
+                    // highlight
+                    if (lastSelectedBtn) {
+                      lastSelectedBtn.classList.remove("selected");
+                    }
+                    btn.classList.add("selected");
+                    lastSelectedBtn = btn;
+
+                    const lang = document.getElementById("language").value;
+                    const langText = langNames[lang] || lang;
+
+                    const url = `https://murli.madhuban.org/murlis/${lang}/mp3/murli-${y}-${pad(m+1)}-${pad(d)}.mp3`;
+
+                    document.getElementById("selected-date").textContent =
+                      `Playing: ${pad(d)}-${pad(m+1)}-${y} (${langText})`;
+
+                    document.getElementById("current-url").textContent = url;
+
+                    const audio = document.getElementById("audio");
+                    audio.src = url;
+                    audio.play();
+
+                    const downloadLink = document.getElementById("download-btn");
+                    downloadLink.href = url;
+                    downloadLink.setAttribute("download", `murli-${y}-${pad(m+1)}-${pad(d)}.mp3`);
+                    downloadLink.style.display = "inline-block";
+                  };
+
+                  td.appendChild(btn);
+                })(year, month, day);
+              } else {
+                td.className = "no-audio";
+                const sp = document.createElement("span");
+                sp.textContent = day;
+                td.appendChild(sp);
+              }
+              day++;
+            }
+
+            tr.appendChild(td);
+          }
+
+          tbody.appendChild(tr);
+          if (day > daysInMonth) break;
+        }
+
+        table.appendChild(tbody);
+        monthDiv.appendChild(table);
+        months.appendChild(monthDiv);
+      }
+
+      yearBox.appendChild(months);
+      container.appendChild(yearBox);
+    }
+  }
+
+  createCalendar();
+
+  // THEME HANDLING
+  const bodyEl = document.body;
+  const themeButtons = document.querySelectorAll(".theme-btn");
+
+  function applyTheme(themeName) {
+    bodyEl.classList.remove("theme-light", "theme-dark", "theme-divine");
+    if (themeName === "dark") {
+      bodyEl.classList.add("theme-dark");
+    } else if (themeName === "divine") {
+      bodyEl.classList.add("theme-divine");
+    } else {
+      bodyEl.classList.add("theme-light");
+      themeName = "light";
+    }
+
+    themeButtons.forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.theme === themeName);
+    });
+
+    try {
+      localStorage.setItem("murliTheme", themeName);
+    } catch (e) {
+      // ignore if not available
+    }
+  }
+
+  let savedTheme = "light";
+  try {
+    const stored = localStorage.getItem("murliTheme");
+    if (stored) savedTheme = stored;
+  } catch (e) {}
+
+  applyTheme(savedTheme);
+
+  themeButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      applyTheme(btn.dataset.theme);
+    });
+  });
+
+  // SEARCH BY DATE
+  const dateInput = document.getElementById("date-input");
+  const goDateBtn = document.getElementById("go-date");
+
+  function goToDate() {
+    const value = dateInput.value;
+    if (!value) {
+      alert("Please select a date.");
+      return;
+    }
+    const btn = document.querySelector(`button.day-btn[data-date="${value}"]`);
+    if (!btn) {
+      alert("This date is outside the calendar range or has no Murli button.");
+      return;
+    }
+    btn.click();
+    btn.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  goDateBtn.addEventListener("click", goToDate);
+  dateInput.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      goToDate();
+    }
+  });
+</script>
+
+</body>
+</html>
