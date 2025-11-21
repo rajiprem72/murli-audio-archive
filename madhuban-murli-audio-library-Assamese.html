@@ -9,6 +9,7 @@
     }
 
     :root {
+      /* default (light theme) variables */
       --bg-color: #f5f5f5;
       --text-color: #111111;
       --card-bg: #ffffff;
@@ -121,20 +122,6 @@
       margin-bottom: 10px;
     }
 
-    /* Go January & Go Top link style */
-    .jump-links {
-      text-align: right;
-      margin: 5px 0 10px 0;
-    }
-    .jump-links a {
-      font-size: 12px;
-      text-decoration: none;
-      color: var(--accent);
-      font-weight: bold;
-      margin-left: 10px;
-    }
-
-    /* Rest is unchanged... */
     #topbar {
       max-width: 1200px;
       margin: 0 auto 15px auto;
@@ -143,6 +130,26 @@
       justify-content: space-between;
       align-items: center;
       gap: 8px;
+    }
+
+    /* YEAR LINK BAR */
+    #year-links {
+      max-width: 1200px;
+      margin: 0 auto 15px auto;
+      text-align: center;
+      padding: 8px;
+      background: var(--card-bg);
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 1px 4px var(--shadow-color);
+    }
+
+    #year-links a {
+      margin: 0 10px;
+      font-size: 14px;
+      font-weight: bold;
+      text-decoration: none;
+      color: var(--accent);
     }
 
     .left-controls,
@@ -188,36 +195,6 @@
       color: var(--button-text);
     }
 
-    #go-date:hover {
-      background: var(--button-hover-bg);
-    }
-
-    #theme-switcher {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .theme-btn {
-      padding: 4px 8px;
-      font-size: 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border-color);
-      background: var(--card-bg);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      opacity: 0.9;
-    }
-
-    .theme-btn.active {
-      border-color: var(--accent);
-      background: var(--accent-soft);
-      opacity: 1;
-      font-weight: bold;
-    }
-
     #calendar {
       max-width: 1200px;
       margin: 0 auto 30px auto;
@@ -232,66 +209,18 @@
       border: 1px solid var(--border-color);
     }
 
-    .year h2 {
-      text-align: center;
-      margin: 5px 0 10px 0;
+    .jump-top {
+      text-align: right;
+      margin-top: 5px;
     }
 
-    .months {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .month {
-      background: var(--month-bg);
-      border-radius: 4px;
-      padding: 6px;
-      border: 1px solid var(--border-color);
-    }
-
-    .month h3 {
-      text-align: center;
-      margin: 4px 0;
-      font-size: 14px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 11px;
-    }
-
-    th, td {
-      width: 14.28%;
-      text-align: center;
-      padding: 2px;
-    }
-
-    button.day-btn {
-      width: 100%;
-      padding: 3px 0;
-      border-radius: 4px;
-      border: 1px solid var(--day-border);
-      cursor: pointer;
-      background: var(--day-bg);
-      font-size: 11px;
-      color: var(--day-text);
-    }
-
-    button.day-btn.selected {
-      background: var(--selected-bg);
-      color: var(--selected-text);
-      border-color: var(--selected-border);
-      font-weight: bold;
-    }
-
-    footer {
-      margin-top: 20px;
-      text-align: center;
+    .jump-top a {
       font-size: 12px;
-      color: #666;
+      font-weight: bold;
+      color: var(--accent);
+      text-decoration: none;
     }
+
   </style>
 </head>
 
@@ -300,7 +229,66 @@
 <h1>Madhuban Murli Audio Library (2019–2025)</h1>
 
 <div id="topbar">
-  <!-- unchanged -->
+  <!-- ORIGINAL TOPBAR CONTENT UNCHANGED -->
+  <div class="left-controls">
+    <label><strong>Language:</strong></label>
+    <select id="language">
+      <option value="as" selected>অসমীয়া (Assamese)</option>
+      <option value="de">Deutsch (German)</option>
+      <option value="el">ελληνικά (Greek)</option>
+      <option value="en">English</option>
+      <option value="es">Español (Spanish)</option>
+      <option value="fr">Français (French)</option>
+      <option value="gu">ગુજરાતી (Gujarati)</option>
+      <option value="hi">हिंदी (Hindi)</option>
+      <option value="it">Italiano (Italian)</option>
+      <option value="kn">ಕನ್ನಡ (Kannada)</option>
+      <option value="ml">മലയാളം (Malayalam)</option>
+      <option value="mr">मराठी (Marathi)</option>
+      <option value="ne">नेपाली (Nepali)</option>
+      <option value="or">ଓଡ଼ିଆ (Odia)</option>
+      <option value="pl">Polskie (Polish)</option>
+      <option value="pt">Português (Portuguese)</option>
+      <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+      <option value="ro">Română (Romanian)</option>
+      <option value="si">සිංහල (Sinhala)</option>
+      <option value="ta_my">தமிழ் (சென்னை)</option>
+      <option value="ta">தமிழ் (இலங்கை)</option>
+      <option value="te">తెలుగు (Telugu)</option>
+      <option value="th">ภาษาไทย (Thai)</option>
+    </select>
+  </div>
+
+  <div class="right-controls">
+    <div id="search-bar">
+      <label style="font-size: 12px;">Go to date:</label>
+      <input type="date" id="date-input" min="2019-01-01" max="2025-12-31">
+      <button id="go-date">Go</button>
+    </div>
+
+    <div id="theme-switcher">
+      <button class="theme-btn active" data-theme="light">
+        <span class="icon">🌞</span><span>Light</span>
+      </button>
+      <button class="theme-btn" data-theme="dark">
+        <span class="icon">🌙</span><span>Dark</span>
+      </button>
+      <button class="theme-btn" data-theme="divine">
+        <span class="icon">🔷</span><span>Divine Blue</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ⭐ YEAR LINKS BAR ADDED HERE ⭐ -->
+<div id="year-links">
+  <a href="#y2019">2019</a>
+  <a href="#y2020">2020</a>
+  <a href="#y2021">2021</a>
+  <a href="#y2022">2022</a>
+  <a href="#y2023">2023</a>
+  <a href="#y2024">2024</a>
+  <a href="#y2025">2025</a>
 </div>
 
 <div id="calendar"></div>
@@ -312,7 +300,7 @@
 </div>
 
 <footer>
-  designed by https://divine-connectionz.com
+  designed by https:divine-connectionz.com
 </footer>
 
 <script>
@@ -328,29 +316,12 @@
   const pad = n => String(n).padStart(2,"0");
 
   const langNames = {
-    "ta_my": "Tamil",
-    "ta": "Tamil-Lanka",
-    "en": "English",
-    "hi": "Hindi",
-    "ml": "Malayalam",
-    "te": "Telugu",
-    "kn": "Kannada",
-    "mr": "Marathi",
-    "gu": "Gujarati",
-    "pa": "Punjabi",
-    "si": "Sinhala",
-    "ne": "Nepali",
-    "as": "Assamese",
-    "or": "Odia",
-    "fr": "French",
-    "es": "Spanish",
-    "de": "German",
-    "it": "Italian",
-    "pl": "Polish",
-    "pt": "Portuguese",
-    "ro": "Romanian",
-    "el": "Greek",
-    "th": "Thai"
+    "ta_my": "Tamil", "ta": "Tamil-Lanka", "en": "English", "hi": "Hindi",
+    "ml": "Malayalam", "te": "Telugu", "kn": "Kannada", "mr": "Marathi",
+    "gu": "Gujarati", "pa": "Punjabi", "si": "Sinhala", "ne": "Nepali",
+    "as": "Assamese", "or": "Odia", "fr": "French", "es": "Spanish",
+    "de": "German", "it": "Italian", "pl": "Polish", "pt": "Portuguese",
+    "ro": "Romanian", "el": "Greek", "th": "Thai"
   };
 
   let lastSelectedBtn = null;
@@ -367,14 +338,7 @@
 
       const yearBox = document.createElement("section");
       yearBox.className = "year";
-
-      /* ADD ID FOR JANUARY ANCHOR */
-      yearBox.id = "y" + year;
-
-      const jumpTop = document.createElement("div");
-      jumpTop.className = "jump-links";
-      jumpTop.innerHTML = `<a href="#y${year}">Go January</a>`;
-      yearBox.appendChild(jumpTop);
+      yearBox.id = "y" + year;  // ⭐ JANUARY ANCHOR ID
 
       const h2 = document.createElement("h2");
       h2.textContent = year;
@@ -393,9 +357,9 @@
         monthDiv.appendChild(h3);
 
         const table = document.createElement("table");
+
         const thead = document.createElement("thead");
         const trh = document.createElement("tr");
-
         dayNames.forEach(d => {
           const th = document.createElement("th");
           th.textContent = d;
@@ -409,6 +373,7 @@
         const daysInMonth = new Date(year, month + 1, 0).getDate();
 
         let day = 1;
+
         for (let week = 0; week < 6; week++) {
           const tr = document.createElement("tr");
 
@@ -428,9 +393,7 @@
                   btn.dataset.date = `${y}-${pad(m+1)}-${pad(d)}`;
 
                   btn.onclick = function () {
-                    if (lastSelectedBtn) {
-                      lastSelectedBtn.classList.remove("selected");
-                    }
+                    if (lastSelectedBtn) lastSelectedBtn.classList.remove("selected");
                     btn.classList.add("selected");
                     lastSelectedBtn = btn;
 
@@ -444,10 +407,8 @@
                       `Playing: ${pad(d)}-${pad(m+1)}-${y} (${langText})`;
 
                     document.getElementById("audio").src = url;
-
-                    const downloadLink = document.getElementById("download-btn");
-                    downloadLink.href = url;
-                    downloadLink.style.display = "inline-block";
+                    document.getElementById("download-btn").href = url;
+                    document.getElementById("download-btn").style.display = "inline-block";
                   };
 
                   td.appendChild(btn);
@@ -457,23 +418,26 @@
               }
               day++;
             }
+
             tr.appendChild(td);
           }
+
           tbody.appendChild(tr);
+          if (day > daysInMonth) break;
         }
 
         table.appendChild(tbody);
         monthDiv.appendChild(table);
-        months.appendChild(monthDiv);
 
-        /* ADD GO TOP LINK BELOW DECEMBER */
+        /* ⭐ ADD GO TOP LINK AT DECEMBER ⭐ */
         if (month === 11) {
-          const btm = document.createElement("div");
-          btm.className = "jump-links";
-          btm.innerHTML = `<a href="#top">⬆ Go Top</a>`;
-          monthDiv.appendChild(btm);
+          const gt = document.createElement("div");
+          gt.className = "jump-top";
+          gt.innerHTML = `<a href="#top">⬆ Go Top</a>`;
+          monthDiv.appendChild(gt);
         }
 
+        months.appendChild(monthDiv);
       }
 
       yearBox.appendChild(months);
