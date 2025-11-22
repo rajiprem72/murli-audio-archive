@@ -454,6 +454,14 @@
                     audio.src=url;
 
                     audio.play(); // ⭐ AUTO PLAY
+                    audio.onerror = function () {
+                      document.getElementById("audio-help").style.display = "block";
+                    };
+
+                    audio.onplay = function () {
+                      document.getElementById("audio-help").style.display = "none";
+                    };
+
                     document.getElementById("player").scrollIntoView({behavior:"smooth"}); // ⭐ SCROLL
 
                     const downloadLink=document.getElementById("download-btn");
