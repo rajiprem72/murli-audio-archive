@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Avyakt Vani Calendar (1969–2017)</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Noto Sans',Helvetica,Arial; margin:20px;}
+    header{display:flex;align-items:center;justify-content:space-between}
+    h1{font-size:20px;margin:0}
+    .year-links{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:18px 0}
+    .year-links a{display:block;padding:8px;border-radius:6px;text-align:center;text-decoration:none;background:#f0f0f0;color:#111;border:1px solid #e0e0e0}
+    .calendar{margin:18px 0 40px;border:1px solid #e6e6e6;padding:8px;border-radius:8px;background:#fff}
+    .cal-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .cal-table{width:100%;border-collapse:collapse;font-size:13px}
+    .cal-table th,.cal-table td{border:1px solid #eee;padding:6px;text-align:center}
+    .cal-table th:first-child,.cal-table td:first-child{text-align:right;padding-right:10px;width:42px;background:#fafafa}
+    .has-record{background:#fffae6;cursor:pointer}
+    .no-record{background:#f8f9fb;color:#bbb}
+    .today-record{background:#ffd8a8}
+    .small-link{font-size:12px;margin-left:8px}
+    .player-wrap{position:fixed;left:0;right:0;bottom:0;background:#222;color:#fff;padding:12px;display:flex;align-items:center;gap:12px}
+    .msg{padding:8px;border-radius:6px;background:rgba(255,255,255,0.06);font-size:13px}
+    .goto-top{font-size:13px;text-decoration:none;background:#eee;padding:6px 8px;border-radius:6px;color:#111;border:1px solid #ddd}
+    .year-anchor{scroll-margin-top:40px}
+    .legend{margin-top:8px;font-size:13px}
+    .toast{position:fixed;right:20px;bottom:90px;background:#333;color:#fff;padding:10px 14px;border-radius:8px;opacity:0.95}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Avyakt Vani Calendar — 1969 to 2017 (49 years)</h1>
+    <div><strong>Source:</strong> <code>/mnt/data/Avyakt_Vani_Calendar_Tamil.xlsx</code></div>
+  </header>
+
+  <p>Click a year below to jump to that year's calendar. Cells with records are highlighted — click them to open the original URL (opens in new tab) and play the audio in the player at the bottom.</p>
+
+  <div id="yearLinks" class="year-links"></div>
+
+  <div id="calendars"></div>
+
+  <div style="height:120px"></div>
+
+  <div class="player-wrap" id="playerWrap">
+    <div style="flex:1">
+      <audio id="audioPlayer" controls preload="none" style="width:100%"></audio>
+    </div>
+    <div class="msg" id="playerMsg">No audio loaded</div>
+  </div>
+
+  <div id="toastContainer"></div>
+
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script>
+    // Path to the uploaded Excel file (the environment will map this path to an accessible URL).
+    const EXCEL_PATH = '/mnt/data/Avyakt_Vani_Calendar_Tamil.xlsx';
+
+    const START_YEAR = 1969, END_YEAR = 2017;
+    const yearLinksEl = document.getElementById('yearLinks');
+    const calendarsEl = document.getElementById('calendars');
+    const toastContainer = document.getElementById('toastContainer');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const playerMsg = document.getElementById('playerMsg');
+
+    function makeYearLinks(){
+      for(let y=START_YEAR;y<=END_YEAR;y++){
+        const a=document.createElement('a');
+        a.href='#year-'+y;
+        a.textContent=y;
+        yearLinksEl.appendChild(a);
+      }
+    }
+
+    function makeEmptyCalendar(year){
+      const wrap=document.createElement('div');
+      wrap.className='calendar';
+      wrap.id='year-'+year;
+      wrap.innerHTML=`
+        <div class="cal-title year-anchor"><strong>${year}</strong>
+          <div>
+            <a class="goto-top" href="#top">GO TO</a>
+          </div>
+        </div>
+      `;
+
+      const table=document.createElement('table');
+      table.className='cal-table';
+      const thead=document.createElement('thead');
+      const headerRow=document.createElement('tr');
+      const months=['Day','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      months.forEach(m=>{const th=document.createElement('th'); th.textContent=m; headerRow.appendChild(th)});
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+      const tbody=document.createElement('tbody');
+      for(let d=1;d<=31;d++){
+        const tr=document.createElement('tr');
+        const tdDay=document.createElement('td'); tdDay.textContent=d; tr.appendChild(tdDay);
+        for(let m=1;m<=12;m++){
+          const td=document.createElement('td'); td.dataset.day=d; td.dataset.month=m; td.dataset.year=year; td.className='no-record'; td.innerHTML='&nbsp;';
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      }
+      table.appendChild(tbody);
+      wrap.appendChild(table);
+      return wrap;
+    }
+
+    function showToast(msg,timeout=3000){
+      const t=document.createElement('div'); t.className='toast'; t.textContent=msg; toastContainer.appendChild(t);
+      setTimeout(()=>{t.remove()}, timeout);
+    }
+
+    function parseExcelAndFill(){
+      fetch(EXCEL_PATH).then(r=>r.arrayBuffer()).then(ab=>{
+        const data = new Uint8Array(ab);
+        const workbook = XLSX.read(data, {type:'array'});
+        const firstSheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[firstSheetName];
+        const json = XLSX.utils.sheet_to_json(sheet, {header:1});
+        // Expect header row with Date and URL
+        const rows = json.slice(1).filter(r=>r && r.length>=2);
+        const records = [];
+        rows.forEach(r=>{
+          let dateVal = String(r[0]).trim();
+          const url = String(r[1] || '').trim();
+          if(!dateVal) return;
+          // date may be numeric like 19690118 or with dots or slashes - normalize
+          dateVal = dateVal.replace(/[^0-9]/g,'');
+          if(dateVal.length===8){
+            const yyyy = parseInt(dateVal.slice(0,4),10);
+            const mm = parseInt(dateVal.slice(4,6),10);
+            const dd = parseInt(dateVal.slice(6,8),10);
+            records.push({year:yyyy,month:mm,day:dd,url:url,raw:dateVal});
+          }
+        });
+
+        // Fill into calendars
+        records.forEach(rec=>{
+          if(rec.year<START_YEAR || rec.year>END_YEAR) return;
+          const tableCell = document.querySelector(`#year-${rec.year} .cal-table tbody td[data-day='${rec.day}'][data-month='${rec.month}']`);
+          if(!tableCell) return;
+          tableCell.classList.remove('no-record');
+          tableCell.classList.add('has-record');
+          // construct clickable anchor
+          const a=document.createElement('a');
+          a.href = rec.url || '#';
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.title = rec.raw + (rec.url?(' — open in new tab'):'');
+          a.textContent = rec.day + '\u00A0';
+          a.style.textDecoration='none';
+          a.onclick = function(e){
+            // set audio src and attempt to play
+            if(rec.url){
+              audioPlayer.src = rec.url;
+              audioPlayer.load();
+              audioPlayer.play().then(()=>{
+                showToast('Kindly check your audio volume');
+                playerMsg.textContent = 'Playing: ' + rec.raw;
+              }).catch(err=>{
+                // play failed but we still opened new tab
+                showToast('Unable to autoplay: please click play on the player');
+              });
+            } else {
+              showToast('No URL available for this record');
+            }
+            // allow link to open in new tab
+          };
+
+          // small open icon
+          const openSpan = document.createElement('span');
+          openSpan.className='small-link';
+          openSpan.innerHTML = '🔗';
+          a.appendChild(openSpan);
+
+          tableCell.innerHTML='';
+          tableCell.appendChild(a);
+        });
+
+        // add legend
+        const legend = document.createElement('div'); legend.className='legend';
+        legend.innerHTML = '<strong>Legend:</strong> <span style="display:inline-block;width:12px;height:12px;background:#ffd8a8;margin-left:8px;border:1px solid #ddd"></span> Record (highlighted) — <span style="display:inline-block;width:12px;height:12px;background:#f8f9fb;margin-left:8px;border:1px solid #ddd"></span> No record.';
+        calendarsEl.appendChild(legend);
+
+      }).catch(err=>{
+        console.error(err);
+        showToast('Could not load the Excel file at: '+EXCEL_PATH,8000);
+      });
+    }
+
+    // Build empty calendars
+    function buildAll(){
+      for(let y=START_YEAR;y<=END_YEAR;y++){
+        calendarsEl.appendChild(makeEmptyCalendar(y));
+      }
+    }
+
+    // Audio events
+    audioPlayer.addEventListener('play', ()=>{
+      // On play show a message
+      showToast('Kindly check your audio volume');
+      playerMsg.textContent = 'Playing...';
+    });
+    audioPlayer.addEventListener('error', ()=>{
+      playerMsg.textContent = 'Playback error: The Murli of that vani is not available at the moment.';
+      showToast('The Murli of that vani is not available at the moment.',5000);
+    });
+
+    // Kick off
+    (function(){
+      makeYearLinks();
+      buildAll();
+      parseExcelAndFill();
+    })();
+
+  </script>
+</body>
+</html>
