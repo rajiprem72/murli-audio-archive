@@ -1,217 +1,133 @@
+
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Avyakt Vani Calendar (1969–2017)</title>
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Noto Sans',Helvetica,Arial; margin:20px;background:#fbfbfd;color:#111}
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    h1{font-size:20px;margin:0}
-    #top{scroll-margin-top:20px}
-    .year-links{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:18px 0}
-    .year-links a{display:block;padding:8px;border-radius:6px;text-align:center;text-decoration:none;background:#f0f0f0;color:#111;border:1px solid #e0e0e0}
-    .calendar{margin:18px 0 60px;border:1px solid #e6e6e6;padding:8px;border-radius:8px;background:#fff}
-    .cal-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-    .cal-table{width:100%;border-collapse:collapse;font-size:13px}
-    .cal-table th,.cal-table td{border:1px solid #eee;padding:6px;text-align:center}
-    .cal-table th:first-child,.cal-table td:first-child{text-align:right;padding-right:10px;width:42px;background:#fafafa}
-    .has-record{background:#ffeb99 !important; cursor:pointer; border:1px solid #cc9900;}
-    .no-record{background:#f8f9fb;color:#bbb}
-    .today-record{background:#ffd8a8}
-    .small-link{font-size:12px;margin-left:6px}
-    .player-wrap{position:fixed;left:0;right:0;bottom:0;background:#222;color:#fff;padding:12px;display:flex;align-items:center;gap:12px;z-index:999}
-    .msg{padding:8px;border-radius:6px;background:rgba(255,255,255,0.06);font-size:13px;min-width:240px;text-align:center}
-    .goto-top{font-size:13px;text-decoration:none;background:#eee;padding:6px 8px;border-radius:6px;color:#111;border:1px solid #ddd}
-    .year-anchor{scroll-margin-top:40px}
-    .legend{margin-top:8px;font-size:13px}
-    .toast{position:fixed;right:20px;bottom:90px;background:#333;color:#fff;padding:10px 14px;border-radius:8px;opacity:0.95;z-index:1000}
-    a.record-link{text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:6px}
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Avyakt Vani Calendar (1969–2017)</title>
+<style>
+body{font-family:Arial, sans-serif;margin:10px;background:#fafafa;}
+.year-links{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+@media(min-width:600px){.year-links{grid-template-columns:repeat(7,1fr);} }
+.year-links a{padding:6px;background:#eee;border:1px solid #ccc;border-radius:6px;text-align:center;text-decoration:none;color:#111;font-size:14px;}
+.calendar{margin:18px 0;border:1px solid #ccc;background:#fff;padding:8px;border-radius:8px;}
+.cal-table{width:100%;border-collapse:collapse;font-size:11px;}
+.cal-table th,.cal-table td{border:1px solid #e0e0e0;padding:3px 4px;text-align:center;}
+.cal-table th:first-child,.cal-table td:first-child{width:28px;background:#f2f2f2;}
+.has-record{background:#ffeb99;border:1px solid #cc9900;cursor:pointer;}
+.no-record{background:#f7f7f7;color:#bbb;}
+.player-wrap{position:fixed;bottom:0;left:0;right:0;background:#222;padding:10px;color:#fff;display:flex;gap:10px;align-items:center;z-index:999;}
+audio{width:100%;}
+.msg{font-size:12px;}
+.toast{position:fixed;right:10px;bottom:100px;background:#333;color:#fff;padding:8px 12px;border-radius:6px;opacity:.95;}
+</style>
 </head>
 <body>
-  <div id="top"></div>
-  <header>
-    <h1>Avyakt Vani Calendar — 1969 to 2017 (49 years)</h1>
-    <div><strong>Data file:</strong> <code>avyakt_vani_data.json</code></div>
-  </header>
 
-  <p>Click a year below to jump to that year's calendar. Cells with records are highlighted — click them to <strong>open the URL in a new tab</strong> and <strong>play the audio in the player</strong> at the bottom.</p>
+<h2>Avyakt Vani Calendar — 1969 to 2017</h2>
+<div id="yearLinks" class="year-links"></div>
+<div id="calendars"></div>
+<div style="height:120px"></div>
 
-  <div id="yearLinks" class="year-links"></div>
+<div class="player-wrap">
+    <audio id="audioPlayer" controls preload="none"></audio>
+    <div id="playerMsg" class="msg">No audio loaded</div>
+</div>
+<div id="toastContainer"></div>
 
-  <div id="calendars"></div>
+<script>
+const START=1969, END=2017;
 
-  <div style="height:140px"></div>
+function toast(msg){
+ let t=document.createElement('div');
+ t.className='toast'; t.textContent=msg;
+ document.getElementById('toastContainer').appendChild(t);
+ setTimeout(()=>t.remove(),3000);
+}
 
-  <div class="player-wrap" id="playerWrap">
-    <div style="flex:1">
-      <audio id="audioPlayer" controls preload="none" style="width:100%"></audio>
-    </div>
-    <div class="msg" id="playerMsg">No audio loaded</div>
-  </div>
+function parseDate(s){
+ s=String(s).trim();
+ const d=s.replace(/[^0-9]/g,'');
+ if(d.length===8){
+   return {y:+d.slice(0,4), m:+d.slice(4,6), d:+d.slice(6,8)};
+ }
+ return null;
+}
 
-  <div id="toastContainer"></div>
+function makeYearLinks(){
+ let yEl=document.getElementById('yearLinks');
+ for(let y=START;y<=END;y++){
+   let a=document.createElement('a');
+   a.textContent=y; a.href="#year-"+y;
+   yEl.appendChild(a);
+ }
+}
 
-  <script>
-    const START_YEAR = 1969, END_YEAR = 2017;
-    const yearLinksEl = document.getElementById('yearLinks');
-    const calendarsEl = document.getElementById('calendars');
-    const toastContainer = document.getElementById('toastContainer');
-    const audioPlayer = document.getElementById('audioPlayer');
-    const playerMsg = document.getElementById('playerMsg');
+function buildEmpty(){
+ let container=document.getElementById('calendars');
+ for(let y=START;y<=END;y++){
+   let div=document.createElement('div');
+   div.className='calendar'; div.id='year-'+y;
+   div.innerHTML=`<h3>${y}</h3>`;
+   let tbl=document.createElement('table');
+   tbl.className='cal-table';
+   let h=`<tr><th>Day</th>`;
+   ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"].forEach(m=>h+=`<th>${m}</th>`);
+   h+=`</tr>`;
+   tbl.innerHTML = "<thead>"+h+"</thead>";
+   let body="";
+   for(let d=1;d<=31;d++){
+     body+=`<tr><td>${d}</td>`;
+     for(let m=1;m<=12;m++){
+       body+=`<td class='no-record' data-y='${y}' data-m='${m}' data-d='${d}'></td>`;
+     }
+     body+="</tr>";
+   }
+   tbl.innerHTML += "<tbody>"+body+"</tbody>";
+   div.appendChild(tbl);
+   container.appendChild(div);
+ }
+}
 
-    function makeYearLinks(){
-      for(let y=START_YEAR;y<=END_YEAR;y++){
-        const a=document.createElement('a');
-        a.href='#year-'+y;
-        a.textContent=y;
-        yearLinksEl.appendChild(a);
-      }
-    }
+let records=[];
 
-    function makeEmptyCalendar(year){
-      const wrap=document.createElement('div');
-      wrap.className='calendar';
-      wrap.id='year-'+year;
-      wrap.innerHTML=`
-        <div class="cal-title year-anchor"><strong>${year}</strong>
-          <div>
-            <a class="goto-top" href="#top">GO TO</a>
-          </div>
-        </div>
-      `;
+fetch('avyakt_vani_data.json').then(r=>r.json()).then(data=>{
+ records=data;
+ makeYearLinks();
+ buildEmpty();
+ fillData();
+});
 
-      const table=document.createElement('table');
-      table.className='cal-table';
-      const thead=document.createElement('thead');
-      const headerRow=document.createElement('tr');
-      const months=['Day','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      months.forEach(m=>{const th=document.createElement('th'); th.textContent=m; headerRow.appendChild(th)});
-      thead.appendChild(headerRow);
-      table.appendChild(thead);
-      const tbody=document.createElement('tbody');
-      for(let d=1;d<=31;d++){
-        const tr=document.createElement('tr');
-        const tdDay=document.createElement('td'); tdDay.textContent=d; tr.appendChild(tdDay);
-        for(let m=1;m<=12;m++){
-          const td=document.createElement('td'); td.dataset.day=d; td.dataset.month=m; td.dataset.year=year; td.className='no-record'; td.innerHTML='&nbsp;';
-          tr.appendChild(td);
-        }
-        tbody.appendChild(tr);
-      }
-      table.appendChild(tbody);
-      wrap.appendChild(table);
-      return wrap;
-    }
+function fillData(){
+ records.forEach(r=>{
+   let p=parseDate(r.Date);
+   if(!p) return;
+   if(p.y<START||p.y>END) return;
+   let cell=document.querySelector(`#year-${p.y} td[data-m='${p.m}'][data-d='${p.d}']`);
+   if(!cell) return;
+   cell.className='has-record';
+   cell.textContent=p.d;
+   cell.onclick=()=>playAudio(r.url, r.Date);
+ });
+}
 
-    function showToast(msg,timeout=3000){
-      const t=document.createElement('div'); t.className='toast'; t.textContent=msg; toastContainer.appendChild(t);
-      setTimeout(()=>{t.remove()}, timeout);
-    }
+function playAudio(url,date){
+ let player=document.getElementById('audioPlayer');
+ player.src=url;
+ player.load();
+ player.play().then(()=>{
+    toast("Kindly check your audio volume");
+    document.getElementById('playerMsg').textContent="Playing: "+date;
+ }).catch(()=>{
+    document.getElementById('playerMsg').textContent="Loaded (tap play)";
+ });
+}
 
-    function parseDateString(s){
-      if(!s) return null;
-      s = String(s).trim();
-      // Accept formats like 1969.01.18, 1969-01-18, 19690118, 18-01-1969 etc.
-      const digits = s.replace(/[^0-9]/g,'');
-      if(digits.length===8){
-        const yyyy = parseInt(digits.slice(0,4),10);
-        const mm = parseInt(digits.slice(4,6),10);
-        const dd = parseInt(digits.slice(6,8),10);
-        return {year:yyyy,month:mm,day:dd,raw:s};
-      }
-      // Try ddmmyyyy if starts with day
-      const parts = s.split(/[-.\\/]/);
-      if(parts.length===3){
-        // Determine which is year (4-digit)
-        if(parts[0].length===4){
-          return {year:parseInt(parts[0],10), month:parseInt(parts[1],10), day:parseInt(parts[2],10), raw:s};
-        } else if(parts[2].length===4){
-          return {year:parseInt(parts[2],10), month:parseInt(parts[1],10), day:parseInt(parts[0],10), raw:s};
-        }
-      }
-      return null;
-    }
+document.getElementById('audioPlayer').addEventListener('error',()=>{
+ document.getElementById('playerMsg').textContent="Murli not available at the moment.";
+ toast("The Murli of that vani is not available at the moment.");
+});
+</script>
 
-    function loadAndFill(){
-      fetch('avyakt_vani_data.json').then(r=>{
-        if(!r.ok) throw new Error('Could not fetch JSON (status '+r.status+')');
-        return r.json();
-      }).then(records=>{
-        // build empty calendars first
-        for(let y=START_YEAR;y<=END_YEAR;y++){
-          calendarsEl.appendChild(makeEmptyCalendar(y));
-        }
-
-        // iterate records
-        records.forEach(rec=>{
-          const dateField = rec['Date'] || rec['date'] || rec['DATE'] || rec['date'];
-          const url = rec['url'] || rec['URL'] || rec['Url'] || rec['link'] || '';
-          const parsed = parseDateString(dateField);
-          if(!parsed) return;
-          const {year,month,day,raw} = parsed;
-          if(year<START_YEAR || year>END_YEAR) return;
-          const cell = document.querySelector(`#year-${year} .cal-table tbody td[data-day='${day}'][data-month='${month}']`);
-          if(!cell) return;
-          cell.classList.remove('no-record');
-          cell.classList.add('has-record');
-          // make clickable element
-          const a = document.createElement('a');
-          a.href = url || '#';
-          a.className = 'record-link';
-          a.target = '_blank';
-          a.rel = 'noopener';
-          a.innerHTML = '<span>'+day+'</span><span class="small-link">🔊</span>';
-          // handle click: load into player and open new tab
-          a.addEventListener('click', function(e){
-            // open new tab if url exists
-            if(url){
-              try{ window.open(url, '_blank'); } catch(err){ /* ignore */ }
-              audioPlayer.src = url;
-              audioPlayer.load();
-              audioPlayer.play().then(()=> {
-                showToast('Kindly check your audio volume');
-                playerMsg.textContent = 'Playing: ' + raw;
-              }).catch(err=>{
-                showToast('Autoplay failed — click play in the player');
-                playerMsg.textContent = 'Loaded (click play)';
-              });
-            } else {
-              showToast('No URL available for this record');
-            }
-            // prevent default navigation in case of irregular URL handling
-            e.preventDefault();
-          });
-          cell.innerHTML = '';
-          cell.appendChild(a);
-        });
-
-        // add legend once
-        const legend = document.createElement('div'); legend.className='legend';
-        legend.innerHTML = '<strong>Legend:</strong> <span style="display:inline-block;width:12px;height:12px;background:#ffeb99;margin-left:8px;border:1px solid #cc9900"></span> Record (highlighted) — <span style="display:inline-block;width:12px;height:12px;background:#f8f9fb;margin-left:8px;border:1px solid #ddd"></span> No record.';
-        calendarsEl.insertBefore(legend, calendarsEl.firstChild);
-      }).catch(err=>{
-        console.error(err);
-        showToast('Failed to load avyakt_vani_data.json — make sure the file is in the same folder as this HTML file.',8000);
-      });
-    }
-
-    // audio events
-    audioPlayer.addEventListener('play', ()=>{
-      showToast('Kindly check your audio volume');
-      playerMsg.textContent = 'Playing...';
-    });
-    audioPlayer.addEventListener('error', ()=>{
-      playerMsg.textContent = 'Playback error: The Murli of that vani is not available at the moment.';
-      showToast('The Murli of that vani is not available at the moment.',5000);
-    });
-
-    // init
-    (function(){
-      makeYearLinks();
-      loadAndFill();
-    })();
-  </script>
 </body>
 </html>
