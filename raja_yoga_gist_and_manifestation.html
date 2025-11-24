@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Raja Yoga Gist & Manifestation – Daily Playlist</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f5f5f8;
+        color: #222;
+    }
+
+    h1 {
+        text-align: center;
+        padding: 20px;
+        margin: 0;
+        background: #4e46e5;
+        color: #fff;
+        font-size: 26px;
+        letter-spacing: 0.5px;
+    }
+
+    .playlist-container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 10px;
+    }
+
+    .video-card {
+        display: flex;
+        background: #fff;
+        border-radius: 10px;
+        margin-bottom: 18px;
+        overflow: hidden;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .video-card:hover {
+        transform: scale(1.01);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.20);
+    }
+
+    .video-thumb {
+        width: 40%;
+        min-height: 140px;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .video-info {
+        width: 60%;
+        padding: 15px;
+    }
+
+    .video-info h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+        color: #222;
+    }
+
+    .video-info p {
+        margin: 0;
+        color: #444;
+        font-size: 14px;
+    }
+
+    .video-info a {
+        text-decoration: none;
+        color: #4e46e5;
+        font-weight: bold;
+    }
+
+    @media(max-width: 700px) {
+        .video-card {
+            flex-direction: column;
+        }
+        .video-thumb, .video-info {
+            width: 100%;
+        }
+        .video-thumb {
+            height: 200px;
+        }
+    }
+</style>
+
+</head>
+<body>
+
+<h1>Raja Yoga Gist & Manifestation – Daily Playlist</h1>
+
+<div class="playlist-container" id="playlist"></div>
+
+<script>
+// ------------------------------
+// YOUR PLAYLIST ID
+// ------------------------------
+const playlistId = "PLejqAWAjVfCT4HENHmsdb4jHGdtj3D5EP";
+
+// YouTube API through no-key endpoint
+const apiUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${playlistId}`;
+
+// Fetch playlist feed (ATOM XML)
+fetch(apiUrl)
+  .then(response => response.text())
+  .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+  .then(data => {
+      const entries = Array.from(data.getElementsByTagName("entry"));
+
+      // Sort videos by published date DESCENDING
+      entries.sort((a, b) => {
+          return new Date(b.getElementsByTagName("published")[0].textContent) -
+                 new Date(a.getElementsByTagName("published")[0].textContent);
+      });
+
+      const container = document.getElementById("playlist");
+
+      entries.forEach(entry => {
+          const title = entry.getElementsByTagName("title")[0].textContent;
+          const link = entry.getElementsByTagName("link")[0].getAttribute("href");
+          const videoId = link.split("v=")[1];
+          const published = entry.getElementsByTagName("published")[0].textContent;
+
+          const thumbnail = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+
+          const card = `
+            <div class="video-card">
+              <div class="video-thumb" style="background-image:url('${thumbnail}');"></div>
+              <div class="video-info">
+                <h3>${title}</h3>
+                <p><strong>Date:</strong> ${new Date(published).toLocaleDateString()}</p>
+                <p><a href="${link}" target="_blank">Watch Video →</a></p>
+              </div>
+            </div>
+          `;
+
+          container.innerHTML += card;
+      });
+  })
+  .catch(err => {
+      document.getElementById("playlist").innerHTML =
+        "<p style='color:red; text-align:center;'>Unable to load playlist.</p>";
+  });
+</script>
+
+</body>
+</html>
