@@ -95,25 +95,31 @@
 
 <script>
 // ------------------------------
-// YOUR PLAYLIST ID
+// PLAYLIST ID
 // ------------------------------
 const playlistId = "PLejqAWAjVfCT4HENHmsdb4jHGdtj3D5EP";
 
-// YouTube API through no-key endpoint
-const apiUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${playlistId}`;
+// YouTube XML feed URL
+const youtubeFeed = `https://www.youtube.com/feeds/videos.xml?playlist_id=${playlistId}`;
 
-// Fetch playlist feed (ATOM XML)
-fetch(apiUrl)
-  .then(response => response.text())
-  .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+// Bypass CORS using AllOrigins API
+const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(youtubeFeed)}`;
+
+// Fetch using proxy
+fetch(proxyUrl)
+  .then(response => response.json())
   .then(data => {
-      const entries = Array.from(data.getElementsByTagName("entry"));
+      const xmlText = data.contents;
 
-      // Sort videos by published date DESCENDING
-      entries.sort((a, b) => {
-          return new Date(b.getElementsByTagName("published")[0].textContent) -
-                 new Date(a.getElementsByTagName("published")[0].textContent);
-      });
+      const xml = new window.DOMParser().parseFromString(xmlText, "text/xml");
+
+      const entries = Array.from(xml.getElementsByTagName("entry"));
+
+      // Sort by latest first
+      entries.sort((a, b) =>
+          new Date(b.getElementsByTagName("published")[0].textContent) -
+          new Date(a.getElementsByTagName("published")[0].textContent)
+      );
 
       const container = document.getElementById("playlist");
 
@@ -125,7 +131,7 @@ fetch(apiUrl)
 
           const thumbnail = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
 
-          const card = `
+          container.innerHTML += `
             <div class="video-card">
               <div class="video-thumb" style="background-image:url('${thumbnail}');"></div>
               <div class="video-info">
@@ -135,8 +141,6 @@ fetch(apiUrl)
               </div>
             </div>
           `;
-
-          container.innerHTML += card;
       });
   })
   .catch(err => {
