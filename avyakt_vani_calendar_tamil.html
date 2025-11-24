@@ -11,6 +11,7 @@ body{font-family:Arial, sans-serif;margin:10px;background:#fafafa;}
 @media(min-width:600px){.year-links{grid-template-columns:repeat(7,1fr);} }
 .year-links a{padding:6px;background:#eee;border:1px solid #ccc;border-radius:6px;text-align:center;text-decoration:none;color:#111;font-size:14px;}
 .calendar{margin:18px 0;border:1px solid #ccc;background:#fff;padding:8px;border-radius:8px;}
+.goTop{margin-top:6px;display:inline-block;font-size:14px;text-decoration:none;color:#0055cc;}
 .cal-table{width:100%;border-collapse:collapse;font-size:11px;}
 .cal-table th,.cal-table td{border:1px solid #e0e0e0;padding:3px 4px;text-align:center;}
 .cal-table th:first-child,.cal-table td:first-child{width:28px;background:#f2f2f2;}
@@ -24,6 +25,7 @@ audio{width:100%;}
 </head>
 <body>
 
+<div id="top"></div>
 <h2>Avyakt Vani Calendar — 1969 to 2017</h2>
 <div id="yearLinks" class="year-links"></div>
 <div id="calendars"></div>
@@ -69,12 +71,14 @@ function buildEmpty(){
    let div=document.createElement('div');
    div.className='calendar'; div.id='year-'+y;
    div.innerHTML=`<h3>${y}</h3>`;
+
    let tbl=document.createElement('table');
    tbl.className='cal-table';
-   let h=`<tr><th>Day</th>`;
-   ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"].forEach(m=>h+=`<th>${m}</th>`);
-   h+=`</tr>`;
-   tbl.innerHTML = "<thead>"+h+"</thead>";
+   let header="<tr><th>Day</th>";
+   ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"].forEach(m=>header+=`<th>${m}</th>`);
+   header+="</tr>";
+   tbl.innerHTML="<thead>"+header+"</thead>";
+
    let body="";
    for(let d=1;d<=31;d++){
      body+=`<tr><td>${d}</td>`;
@@ -85,6 +89,14 @@ function buildEmpty(){
    }
    tbl.innerHTML += "<tbody>"+body+"</tbody>";
    div.appendChild(tbl);
+
+   // Add ↑ Go to Top link
+   let topLink=document.createElement('a');
+   topLink.textContent="↑ Go to Top";
+   topLink.href="#top";
+   topLink.className="goTop";
+   div.appendChild(topLink);
+
    container.appendChild(div);
  }
 }
