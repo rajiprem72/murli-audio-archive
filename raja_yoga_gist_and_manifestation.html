@@ -22,6 +22,21 @@
         letter-spacing: 0.5px;
     }
 
+    /* Video Player */
+    #player-container {
+        max-width: 900px;
+        margin: 20px auto;
+        background: #000;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    #player {
+        width: 100%;
+        height: 500px;
+    }
+
     .playlist-container {
         max-width: 900px;
         margin: 20px auto;
@@ -35,6 +50,7 @@
         margin-bottom: 18px;
         overflow: hidden;
         box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        cursor: pointer;
         transition: transform 0.2s, box-shadow 0.2s;
     }
 
@@ -67,12 +83,6 @@
         font-size: 14px;
     }
 
-    .video-info a {
-        text-decoration: none;
-        color: #4e46e5;
-        font-weight: bold;
-    }
-
     @media(max-width: 700px) {
         .video-card {
             flex-direction: column;
@@ -80,8 +90,8 @@
         .video-thumb, .video-info {
             width: 100%;
         }
-        .video-thumb {
-            height: 200px;
+        #player {
+            height: 280px;
         }
     }
 </style>
@@ -91,31 +101,32 @@
 
 <h1>Raja Yoga Gist & Manifestation – Daily Playlist</h1>
 
+<!-- MAIN PLAYER -->
+<div id="player-container">
+  <iframe id="player" src="" frameborder="0" allowfullscreen></iframe>
+</div>
+
 <div class="playlist-container" id="playlist"></div>
 
 <script>
-// ------------------------------
-// PLAYLIST ID
-// ------------------------------
+// Playlist ID
 const playlistId = "PLejqAWAjVfCT4HENHmsdb4jHGdtj3D5EP";
 
-// YouTube XML feed URL
+// Feed URL
 const youtubeFeed = `https://www.youtube.com/feeds/videos.xml?playlist_id=${playlistId}`;
 
-// Bypass CORS using AllOrigins API
+// CORS Proxy
 const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(youtubeFeed)}`;
 
-// Fetch using proxy
+// Load playlist
 fetch(proxyUrl)
   .then(response => response.json())
   .then(data => {
       const xmlText = data.contents;
-
       const xml = new window.DOMParser().parseFromString(xmlText, "text/xml");
-
       const entries = Array.from(xml.getElementsByTagName("entry"));
 
-      // Sort by latest first
+      // Sort by newest first (Descending by date)
       entries.sort((a, b) =>
           new Date(b.getElementsByTagName("published")[0].textContent) -
           new Date(a.getElementsByTagName("published")[0].textContent)
@@ -123,27 +134,49 @@ fetch(proxyUrl)
 
       const container = document.getElementById("playlist");
 
+      // Load first video into player automatically
+      const firstVideoLink = entries[0].getElementsByTagName("link")[0].getAttribute("href");
+      const firstVideoId = firstVideoLink.split("v=")[1];
+      document.getElementById("player").src =
+        "https://www.youtube.com/embed/" + firstVideoId;
+
       entries.forEach(entry => {
           const title = entry.getElementsByTagName("title")[0].textContent;
           const link = entry.getElementsByTagName("link")[0].getAttribute("href");
           const videoId = link.split("v=")[1];
           const published = entry.getElementsByTagName("published")[0].textContent;
 
-          const thumbnail = `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`;
+          // Try different thumbnails (maxres, hq, mq)
+          const thumbnailList = [
+              `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
+              `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+              `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`
+          ];
 
-          container.innerHTML += `
-            <div class="video-card">
-              <div class="video-thumb" style="background-image:url('${thumbnail}');"></div>
-              <div class="video-info">
-                <h3>${title}</h3>
-                <p><strong>Date:</strong> ${new Date(published).toLocaleDateString()}</p>
-                <p><a href="${link}" target="_blank">Watch Video →</a></p>
-              </div>
+          const thumb = thumbnailList[0];
+
+          const card = document.createElement("div");
+          card.className = "video-card";
+          card.innerHTML = `
+            <div class="video-thumb" style="background-image:url('${thumb}');"></div>
+            <div class="video-info">
+              <h3>${title}</h3>
+              <p><strong>Date:</strong> ${new Date(published).toLocaleDateString()}</p>
             </div>
           `;
+
+          // Clicking video plays in top player
+          card.onclick = function () {
+              document.getElementById("player").src =
+                "https://www.youtube.com/embed/" + videoId;
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+          };
+
+          container.appendChild(card);
       });
   })
   .catch(err => {
+      console.log(err);
       document.getElementById("playlist").innerHTML =
         "<p style='color:red; text-align:center;'>Unable to load playlist.</p>";
   });
