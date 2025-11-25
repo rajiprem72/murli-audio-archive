@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,12 +14,28 @@ body{font-family:Arial, sans-serif;margin:10px;background:#fafafa;}
 .cal-table{width:100%;border-collapse:collapse;font-size:11px;}
 .cal-table th,.cal-table td{border:1px solid #e0e0e0;padding:3px 4px;text-align:center;}
 .cal-table th:first-child,.cal-table td:first-child{width:28px;background:#f2f2f2;}
+
 .has-record{background:#ffeb99;border:1px solid #cc9900;cursor:pointer;}
 .no-record{background:#f7f7f7;color:#bbb;}
+.no-file{background:#ffcccc;border:1px solid #cc0000;color:#900;}
+
 .player-wrap{position:fixed;bottom:0;left:0;right:0;background:#222;padding:10px;color:#fff;display:flex;gap:10px;align-items:center;z-index:999;}
 audio{width:100%;}
+
 .msg{font-size:12px;}
 .toast{position:fixed;right:10px;bottom:100px;background:#333;color:#fff;padding:8px 12px;border-radius:6px;opacity:.95;}
+
+/* Floating Stats Box */
+.stats-box{
+ position:fixed;right:10px;bottom:160px;
+ background:#fff;padding:10px 14px;border:1px solid #ccc;
+ border-radius:8px;font-size:13px;line-height:1.5;
+ box-shadow:0 2px 6px rgba(0,0,0,0.2);
+ z-index:999;
+}
+.legend-box{font-size:12px;margin-left:10px;display:inline-block;}
+.legend-item{display:flex;align-items:center;margin-top:4px;font-size:12px;}
+.legend-color{width:14px;height:14px;border:1px solid #000;margin-right:6px;}
 </style>
 </head>
 <body>
@@ -35,10 +50,16 @@ audio{width:100%;}
     <audio id="audioPlayer" controls preload="none"></audio>
     <div id="playerMsg" class="msg">No audio loaded</div>
 </div>
+
 <div id="toastContainer"></div>
+<div id="statsBox" class="stats-box" style="display:none"></div>
 
 <script>
 const START=1969, END=2017;
+
+let totalRecords = 0;
+let totalValid = 0;
+let totalMissing = 0;
 
 function toast(msg){
  let t=document.createElement('div');
@@ -75,7 +96,8 @@ function buildEmpty(){
    let tbl=document.createElement('table');
    tbl.className='cal-table';
    let header="<tr><th>Day</th>";
-   ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"].forEach(m=>header+=`<th>${m}</th>`);
+   ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+   .forEach(m=>header+=`<th>${m}</th>`);
    header+="</tr>";
    tbl.innerHTML="<thead>"+header+"</thead>";
 
@@ -90,12 +112,24 @@ function buildEmpty(){
    tbl.innerHTML += "<tbody>"+body+"</tbody>";
    div.appendChild(tbl);
 
-   // Add ↑ Go to Top link
+   // Legend + Go Top
+   let legend = `
+     <div class="legend-box">
+       <div class="legend-item"><div class="legend-color" style="background:#ffeb99;border-color:#cc9900"></div>Vani Present</div>
+       <div class="legend-item"><div class="legend-color" style="background:#ffcccc;border-color:#cc0000"></div>Vani Not Available</div>
+     </div>
+   `;
+
    let topLink=document.createElement('a');
    topLink.textContent="↑ Go to Top";
    topLink.href="#top";
    topLink.className="goTop";
-   div.appendChild(topLink);
+
+   let wrapper = document.createElement('div');
+   wrapper.innerHTML = legend;
+   wrapper.appendChild(topLink);
+
+   div.appendChild(wrapper);
 
    container.appendChild(div);
  }
@@ -103,23 +137,39 @@ function buildEmpty(){
 
 let records=[];
 
-fetch('avyakt_vani_data_tamil.json').then(r=>r.json()).then(data=>{
+fetch('avyakt_vani_data_tamil.json')
+.then(r=>r.json())
+.then(data=>{
  records=data;
+ totalRecords = data.length;
  makeYearLinks();
  buildEmpty();
  fillData();
+ showStats();
 });
 
 function fillData(){
  records.forEach(r=>{
    let p=parseDate(r.Date);
    if(!p) return;
-   if(p.y<START||p.y>END) return;
-   let cell=document.querySelector(`#year-${p.y} td[data-m='${p.m}'][data-d='${p.d}']`);
+
+   if(p.y<START || p.y>END) return;
+
+   let cell=document.querySelector(
+     `#year-${p.y} td[data-m='${p.m}'][data-d='${p.d}']`
+   );
    if(!cell) return;
-   cell.className='has-record';
-   cell.textContent=p.d;
-   cell.onclick=()=>playAudio(r.url, r.Date);
+
+   if(r.url === "#"){
+     cell.className='no-file';
+     cell.textContent=p.d;
+     totalMissing++;
+   } else {
+     cell.className='has-record';
+     cell.textContent=p.d;
+     cell.onclick=()=>playAudio(r.url, r.Date);
+     totalValid++;
+   }
  });
 }
 
@@ -139,6 +189,17 @@ document.getElementById('audioPlayer').addEventListener('error',()=>{
  document.getElementById('playerMsg').textContent="Murli not available at the moment.";
  toast("The Murli of that vani is not available at the moment.");
 });
+
+function showStats(){
+ let box=document.getElementById('statsBox');
+ box.innerHTML = `
+   <b>Vani Summary</b><br>
+   Total Records: ${totalRecords}<br>
+   Total Vani Available: ${totalValid}<br>
+   Missing Files: ${totalMissing}
+ `;
+ box.style.display = 'block';
+}
 </script>
 
 </body>
