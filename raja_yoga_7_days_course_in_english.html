@@ -22,7 +22,6 @@
         letter-spacing: 0.5px;
     }
 
-    /* 🔹 Loading Message Style */
     #loadingMessage {
         text-align: center;
         padding: 12px;
@@ -114,7 +113,6 @@
 
 <h1>Raja Yoga 7 Days Course in English</h1>
 
-<!-- 🔹 Loading Message -->
 <div id="loadingMessage">⏳ Playlist is loading, please wait…</div>
 
 <div id="player-container">
@@ -131,21 +129,18 @@ const videos = [
     { day: "Day 4", id: "o42Ep6q5RAc" },
     { day: "Day 5", id: "9EKCQ0qr570" },
     { day: "Day 6", id: "zg1BKlOxa30" },
-    { day: "Day 7", id: "uBQKFl-ZcUU" }
+    { day: "Day 7", id: "uBQKFl-ZcUU" },
     { day: "Day 8", id: "IJiBntn2rmM" }
-
 ];
 
 function getThumbnail(id) {
     return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 }
 
-// 🔹 Show loading message immediately
 document.getElementById("loadingMessage").style.display = "block";
 
-// Simulate slight delay to show message (optional but useful)
 setTimeout(() => {
-    // Load first video
+
     document.getElementById("player").src =
         "https://www.youtube-nocookie.com/embed/" + videos[0].id;
 
@@ -159,7 +154,7 @@ setTimeout(() => {
             <div class="video-thumb" style="background-image:url('${getThumbnail(v.id)}');"></div>
             <div class="video-info">
                 <h3>${v.day}</h3>
-                <p>Raja Yoga 7 Days Course – Kannada</p>
+                <p>Raja Yoga 7 Days Course – English</p>
             </div>
         `;
 
@@ -172,10 +167,9 @@ setTimeout(() => {
         container.appendChild(card);
     });
 
-    // 🔹 Hide loading message after page is ready
     document.getElementById("loadingMessage").style.display = "none";
 
-}, 400); // slight delay makes the message visible
+}, 400);
 </script>
 
 </body>
