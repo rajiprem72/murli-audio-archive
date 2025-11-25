@@ -22,6 +22,20 @@
         letter-spacing: 0.5px;
     }
 
+    /* 🔹 Loading Message Style */
+    #loadingMessage {
+        text-align: center;
+        padding: 12px;
+        font-size: 17px;
+        background: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+        border-radius: 8px;
+        max-width: 900px;
+        margin: 15px auto;
+        display: none;
+    }
+
     /* Video Player */
     #player-container {
         max-width: 900px;
@@ -101,6 +115,9 @@
 
 <h1>Raja Yoga 7 Days Course in Tamil</h1>
 
+<!-- 🔹 Loading Message -->
+<div id="loadingMessage">⏳ Playlist is loading, please wait…</div>
+
 <!-- MAIN PLAYER -->
 <div id="player-container">
   <iframe id="player" src="" frameborder="0" allowfullscreen></iframe>
@@ -113,6 +130,9 @@ const playlistId = "PLejqAWAjVfCQ85FOeCovq217gf3HbCvRG";
 
 const youtubeFeed = `https://www.youtube.com/feeds/videos.xml?playlist_id=${playlistId}`;
 const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(youtubeFeed)}`;
+
+// 🔹 Show loading message immediately
+document.getElementById("loadingMessage").style.display = "block";
 
 function findWorkingThumbnail(videoId) {
     const attempts = [
@@ -149,7 +169,7 @@ fetch(proxyUrl)
   .then(response => response.json())
   .then(async data => {
       const xml = new window.DOMParser().parseFromString(data.contents, "text/xml");
-      const entries = Array.from(xml.getElementsByTagName("entry"));
+        const entries = Array.from(xml.getElementsByTagName("entry"));
 
       entries.sort((a, b) =>
           new Date(a.getElementsByTagName("published")[0].textContent) -
@@ -189,6 +209,9 @@ fetch(proxyUrl)
 
           container.appendChild(card);
       }
+
+      // 🔹 Hide loading message after playlist is fully loaded
+      document.getElementById("loadingMessage").style.display = "none";
   });
 </script>
 
