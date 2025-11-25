@@ -22,6 +22,20 @@
         letter-spacing: 0.5px;
     }
 
+    /* 🔹 Loading Message Style */
+    #loadingMessage {
+        text-align: center;
+        padding: 12px;
+        font-size: 17px;
+        background: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+        border-radius: 8px;
+        max-width: 900px;
+        margin: 15px auto;
+        display: none;
+    }
+
     #player-container {
         max-width: 900px;
         margin: 20px auto;
@@ -100,6 +114,9 @@
 
 <h1>Raja Yoga 7 Days Course in Kannada</h1>
 
+<!-- 🔹 Loading Message -->
+<div id="loadingMessage">⏳ Playlist is loading, please wait…</div>
+
 <div id="player-container">
   <iframe id="player" src="" frameborder="0" allowfullscreen></iframe>
 </div>
@@ -121,32 +138,42 @@ function getThumbnail(id) {
     return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 }
 
-// Load first video
-document.getElementById("player").src =
-    "https://www.youtube-nocookie.com/embed/" + videos[0].id;
+// 🔹 Show loading message immediately
+document.getElementById("loadingMessage").style.display = "block";
 
-const container = document.getElementById("playlist");
+// Simulate slight delay to show message (optional but useful)
+setTimeout(() => {
+    // Load first video
+    document.getElementById("player").src =
+        "https://www.youtube-nocookie.com/embed/" + videos[0].id;
 
-videos.forEach(v => {
-    const card = document.createElement("div");
-    card.className = "video-card";
+    const container = document.getElementById("playlist");
 
-    card.innerHTML = `
-        <div class="video-thumb" style="background-image:url('${getThumbnail(v.id)}');"></div>
-        <div class="video-info">
-            <h3>${v.day}</h3>
-            <p>Raja Yoga 7 Days Course – Kannada</p>
-        </div>
-    `;
+    videos.forEach(v => {
+        const card = document.createElement("div");
+        card.className = "video-card";
 
-    card.onclick = () => {
-        document.getElementById("player").src =
-            "https://www.youtube-nocookie.com/embed/" + v.id;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+        card.innerHTML = `
+            <div class="video-thumb" style="background-image:url('${getThumbnail(v.id)}');"></div>
+            <div class="video-info">
+                <h3>${v.day}</h3>
+                <p>Raja Yoga 7 Days Course – Kannada</p>
+            </div>
+        `;
 
-    container.appendChild(card);
-});
+        card.onclick = () => {
+            document.getElementById("player").src =
+                "https://www.youtube-nocookie.com/embed/" + v.id;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        container.appendChild(card);
+    });
+
+    // 🔹 Hide loading message after page is ready
+    document.getElementById("loadingMessage").style.display = "none";
+
+}, 400); // slight delay makes the message visible
 </script>
 
 </body>
