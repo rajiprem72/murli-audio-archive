@@ -152,8 +152,8 @@ fetch(proxyUrl)
       const entries = Array.from(xml.getElementsByTagName("entry"));
 
       entries.sort((a, b) =>
-          new Date(b.getElementsByTagName("published")[0].textContent) -
-          new Date(a.getElementsByTagName("published")[0].textContent)
+          new Date(a.getElementsByTagName("published")[0].textContent) -
+          new Date(b.getElementsByTagName("published")[0].textContent)
       );
 
       const container = document.getElementById("playlist");
