@@ -36,7 +36,6 @@
         display: none;
     }
 
-    /* Video Player */
     #player-container {
         max-width: 900px;
         margin: 20px auto;
@@ -118,7 +117,6 @@
 <!-- 🔹 Loading Message -->
 <div id="loadingMessage">⏳ Playlist is loading, please wait…</div>
 
-<!-- MAIN PLAYER -->
 <div id="player-container">
   <iframe id="player" src="" frameborder="0" allowfullscreen></iframe>
 </div>
@@ -126,93 +124,67 @@
 <div class="playlist-container" id="playlist"></div>
 
 <script>
-const playlistId = "PLejqAWAjVfCQ85FOeCovq217gf3HbCvRG";
+const videos = [
+    { day: "Day 1 | Who Am I? | நான் யார்? | 7 Days Course | Raja Yoga Class Tamil", id: "vxf_ygg-inU" },
+    { day: "Day 2 | Three World's | மூன்று உலகங்கள் | 7 Days Course | Raja Yoga Class Tamil", id: "ztCppWns9-0" },
+    { day: "Day 3 Part 1 | இறைவன் யார்? | Who is God? | 7 Days course | Raja Yoga Class Tamil", id: "Sb-peWXia4o" },
+    { day: "Day 3 Part 2 | இறைவனின் குணங்கள் | Attributes of God | 7 days course | Raja Yoga Class Tamil", id: "JvHNLk2VEy8" },
+    { day: "Day 4 | இறைவன் ஒருவரே | God Is One | 7 Days course | Raja Yoga Class Tamil", id: "U5BlRbAnwe0" },
+    { day: "Day 5 Part 1 | Thirumurthi Shivan | திருமூர்த்தி சிவன் | 7 Days course | Raja Yoga Class Tamil", id: "BchOQxCBwRc" },
+    { day: "Day 5 Part 2 | சங்கர் என்பவர் யார்? | Who is Shankar? | 7 Days course | Raja Yoga Class Tamil", id: "Vz9pwFBG-w4" },
+    { day: "Day 5 Part 3 | இறைவன் சர்வவியாபி அல்ல | God is Not Omnipresent | 7 Days Course | Raja Yoga Class", id: "tVoHIwokZR8" },
+    { day: "Day 5 Part 4 | கல்ப விருட்சம் | World Genealogical Tree | 7 Days course | Rajayoga Class Tamil", id: "r7eGTEc6F4g" },
+    { day: "Day 5 Part 5 | கல்ப விருட்சம் பாகம் 2 | World Cycle Part 2 | 7 Days Course | Raja Yoga Class", id: "GEVib2lfPOA" },
+    { day: "Day 6 Part 1 | மனித ஆத்மாக்கள் எடுக்கும் பிறவிகள் | Birth Of Human Souls | 7 Days Course", id: "TDoPagnsrC0" },
+    { day: "Day 6 Part 2 | ராவணன் என்பவன் யார்? | Who is Ravana? | 7 Days Course | Raja Yoga Class Tamil", id: "QsJIBWMfMQ0" },
+    { day: "Day 7 Part 1 | ஸ்ரீ கிருஷ்ணன் யார்? | Who Is Shri Krishna? | 7 Days Course | RajaYoga Class Tamil", id: "qlGPL8UOidE" },
+    { day: "Day 7 Part 2 | இராஜ யோகத்தின் தூண்கள் | Pillars Of Raja Yoga | 7 Days Course | Raja Yoga Class", id: "phZPxzmWZJo" },
+    { day: "Day 7 Part 3 | இராஜ யோகத்தின் சக்திகள் | Attainments & Benefits Of Raja Yoga | 7 Days Course", id: "bYhU9U4bfwk" },
+    { day: "Day 7 Part 4 | இராஜ யோகா தியானம் செய்வது எப்படி? | How To Do Rajayoga Meditation? | 7 Days Course", id: "sjn4bduNkm0" }
 
-const youtubeFeed = `https://www.youtube.com/feeds/videos.xml?playlist_id=${playlistId}`;
-const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(youtubeFeed)}`;
+
+];
+
+function getThumbnail(id) {
+    return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+}
 
 // 🔹 Show loading message immediately
 document.getElementById("loadingMessage").style.display = "block";
 
-function findWorkingThumbnail(videoId) {
-    const attempts = [
-        `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
-        `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
-        `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`,
-        `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`,
-        `https://i.ytimg.com/vi/${videoId}/default.jpg`,
-        `https://i.ytimg.com/vi/${videoId}/hq2.jpg`,
-        `https://i.ytimg.com/vi/${videoId}/hq3.jpg`
-    ];
+// Simulate slight delay to show message (optional but useful)
+setTimeout(() => {
+    // Load first video
+    document.getElementById("player").src =
+        "https://www.youtube-nocookie.com/embed/" + videos[0].id;
 
-    return new Promise(resolve => {
-        let index = 0;
+    const container = document.getElementById("playlist");
 
-        function tryNext() {
-            if (index >= attempts.length) {
-                resolve(attempts[4]); // default image
-                return;
-            }
+    videos.forEach(v => {
+        const card = document.createElement("div");
+        card.className = "video-card";
 
-            const img = new Image();
-            img.onload = () => resolve(attempts[index]);
-            img.onerror = () => { index++; tryNext(); };
-            img.src = attempts[index];
-        }
-
-        tryNext();
-    });
-}
-
-// Load playlist
-fetch(proxyUrl)
-  .then(response => response.json())
-  .then(async data => {
-      const xml = new window.DOMParser().parseFromString(data.contents, "text/xml");
-        const entries = Array.from(xml.getElementsByTagName("entry"));
-
-      entries.sort((a, b) =>
-          new Date(a.getElementsByTagName("published")[0].textContent) -
-          new Date(b.getElementsByTagName("published")[0].textContent)
-      );
-
-      const container = document.getElementById("playlist");
-
-      // Load first video into player
-      const firstId = entries[0].getElementsByTagName("link")[0].getAttribute("href").split("v=")[1];
-      document.getElementById("player").src =
-        "https://www.youtube-nocookie.com/embed/" + firstId;
-
-      for (const entry of entries) {
-          const title = entry.getElementsByTagName("title")[0].textContent;
-          const link = entry.getElementsByTagName("link")[0].getAttribute("href");
-          const videoId = link.split("v=")[1];
-          const published = entry.getElementsByTagName("published")[0].textContent;
-
-          const thumb = await findWorkingThumbnail(videoId);
-
-          const card = document.createElement("div");
-          card.className = "video-card";
-          card.innerHTML = `
-            <div class="video-thumb" style="background-image:url('${thumb}');"></div>
+        card.innerHTML = `
+            <div class="video-thumb" style="background-image:url('${getThumbnail(v.id)}');"></div>
             <div class="video-info">
-              <h3>${title}</h3>
-              <p><strong>Date:</strong> ${new Date(published).toLocaleDateString()}</p>
+                <h3>${v.day}</h3>
+                <p>Raja Yoga 7 Days Course – Kannada</p>
             </div>
-          `;
+        `;
 
-          card.onclick = () => {
-              document.getElementById("player").src =
-                "https://www.youtube-nocookie.com/embed/" + videoId;
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-          };
+        card.onclick = () => {
+            document.getElementById("player").src =
+                "https://www.youtube-nocookie.com/embed/" + v.id;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
 
-          container.appendChild(card);
-      }
+        container.appendChild(card);
+    });
 
-      // 🔹 Hide loading message after playlist is fully loaded
-      document.getElementById("loadingMessage").style.display = "none";
-  });
+    // 🔹 Hide loading message after page is ready
+    document.getElementById("loadingMessage").style.display = "none";
+
+}, 400); // slight delay makes the message visible
 </script>
 
 </body>
