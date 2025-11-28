@@ -158,6 +158,9 @@ function findWorkingThumbnail(videoId) {
 fetch(proxyUrl)
   .then(response => response.json())
   .then(async data => {
+      // ⛳ HIDE LOADING MESSAGE NOW
+      document.getElementById("loadingMessage").style.display = "none";
+      
       const xml = new window.DOMParser().parseFromString(data.contents, "text/xml");
       const entries = Array.from(xml.getElementsByTagName("entry"));
 
