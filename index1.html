@@ -31,17 +31,23 @@
       padding: 10px;
       scroll-behavior: smooth;
     }
+.lang-card {
+  min-width: 140px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+  cursor: pointer; /* 👈 added */
+  transition: transform 0.15s;
+}
 
-    .lang-card {
-      min-width: 140px;
-      background: #fff;
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-      flex-shrink: 0;
-    }
+.lang-card:hover {
+  transform: scale(1.05); /* Optional small zoom effect */
+}
 
+    
     .lang-circle {
       width: 55px;
       height: 55px;
