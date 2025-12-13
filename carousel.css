@@ -1,0 +1,65 @@
+/* ===============================
+   HERO CAROUSEL STYLES
+================================ */
+
+.hero-carousel {
+  max-width: 900px;
+  margin: 20px auto 30px auto;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  background: #000;
+}
+
+.carousel-track {
+  position: relative;
+  height: 240px; /* perfect for mobile + desktop */
+}
+
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* DOTS */
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.carousel-dots .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+}
+
+.carousel-dots .dot.active {
+  background: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .carousel-track {
+    height: 200px;
+  }
+}
