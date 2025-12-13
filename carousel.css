@@ -69,16 +69,18 @@
 ----------------------------- */
 
 .top-banner-carousel {
-  max-width: 100%;
-  margin: 0 auto 20px auto;
-  padding: 0 10px;
+  width: 100%;
+  height: 220px;        /* adjust as needed */
+  background: #800000; /* fallback background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .top-banner-carousel img {
   width: 100%;
-  height: auto;              /* ✅ THIS IS THE KEY */
-  display: block;
-  border-radius: 16px;
-  object-fit: contain;       /* ✅ Prevents cropping */
-  background: #800000;       /* fallback color */
+  height: 100%;
+  object-fit: contain; /* ✅ shows FULL image */
 }
+
+
