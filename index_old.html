@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Madhuban Murli Audio Library (2019–2025)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f5f5f5;
+      color: #111;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* -----------------------------------
+       HORIZONTAL SCROLL — AVAILABLE LANGUAGES
+    ----------------------------------- */
+    .lang-section-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 30px 0 10px 10px;
+    }
+
+    .lang-scroll-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 16px;
+      padding: 10px;
+      scroll-behavior: smooth;
+    }
+.lang-card {
+  min-width: 140px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+  cursor: pointer; /* 👈 added */
+  transition: transform 0.15s;
+}
+
+.lang-card:hover {
+  transform: scale(1.05); /* Optional small zoom effect */
+}
+
+    
+    .lang-circle {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: #e6e6e6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: bold;
+      margin: 0 auto 10px auto;
+    }
+
+    .lang-card a {
+      text-decoration: none;
+      color: #2563eb;
+      display: block;
+      margin-top: 5px;
+    }
+
+    .extra-link {
+      font-size: 13px;
+      margin-top: 6px;
+      display: block;
+      color: #800000;
+      font-weight: bold;
+    }
+
+    /* -----------------------------------
+       TABLE (TEMPORARY)
+    ----------------------------------- */
+    .lang-list {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 6px;
+      padding: 15px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    /* -----------------------------------
+       WhatsApp Banner
+    ----------------------------------- */
+    .wa-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #f5f7f5;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+    .wa-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+    .wa-icon img {
+      width: 36px;
+      height: 36px;
+    }
+    .wa-btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: #4CAF50;
+      color: #fff;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .wa-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* -----------------------------------
+       VANIS SECTION
+    ----------------------------------- */
+    .vani-info {
+      max-width: 700px;
+      margin: 25px auto;
+      background: #ffffff;
+      padding: 18px;
+      border-radius: 8px;
+      line-height: 1.6;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      border-left: 5px solid #2563eb;
+    }
+    .vani-info h2 {
+      margin-top: 0;
+      color: #2563eb;
+      font-size: 20px;
+    }
+
+    /* APK COUNTER */
+    #apkDownloadStats {
+      text-align:center; 
+      padding:15px;
+      color:#ffffff;
+      background:#800000;
+      margin:30px auto 0 auto;
+      font-size:16px;
+      max-width: 700px;
+      border-radius:6px;
+      box-shadow:0 1px 4px rgba(0,0,0,0.2);
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Madhuban Murli Audio Library (2019–2025)</h1>
+<div class="lang-section-title">Sakara Vani — Available Languages (scroll right to left)</div>
+
+<div class="lang-scroll-container">
+
+  <!-- Assamese -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Assamese.html'">
+    <div class="lang-circle">অ</div>
+    <div class="lang-name">Assamese</div>
+  </div>
+
+  <!-- German -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-German.html'">
+    <div class="lang-circle">D</div>
+    <div class="lang-name">German</div>
+  </div>
+
+  <!-- Greek -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Greek.html'">
+    <div class="lang-circle">Ε</div>
+    <div class="lang-name">Greek</div>
+  </div>
+
+  <!-- English -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-English.html'">
+    <div class="lang-circle">E</div>
+    <div class="lang-name">English</div>
+  </div>
+
+  <!-- Spanish -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Spanish.html'">
+    <div class="lang-circle">E</div>
+    <div class="lang-name">Spanish</div>
+  </div>
+
+  <!-- French -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-French.html'">
+    <div class="lang-circle">F</div>
+    <div class="lang-name">French</div>
+  </div>
+
+  <!-- Gujarati -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Gujarati.html'">
+    <div class="lang-circle">ગ</div>
+    <div class="lang-name">Gujarati</div>
+  </div>
+
+  <!-- Hindi -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Hindi.html'">
+    <div class="lang-circle">ह</div>
+    <div class="lang-name">Hindi</div>
+  </div>
+
+  <!-- Italian -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Italian.html'">
+    <div class="lang-circle">I</div>
+    <div class="lang-name">Italian</div>
+  </div>
+
+  <!-- Kannada -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Kannada.html'">
+    <div class="lang-circle">ಕ</div>
+    <div class="lang-name">Kannada</div>
+  </div>
+
+  <!-- Malayalam -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Malayalam.html'">
+    <div class="lang-circle">മ</div>
+    <div class="lang-name">Malayalam</div>
+  </div>
+
+  <!-- Marathi -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Marathi.html'">
+    <div class="lang-circle">म</div>
+    <div class="lang-name">Marathi</div>
+  </div>
+
+  <!-- Nepali -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Nepali.html'">
+    <div class="lang-circle">न</div>
+    <div class="lang-name">Nepali</div>
+  </div>
+
+  <!-- Odia -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Odia.html'">
+    <div class="lang-circle">ଓ</div>
+    <div class="lang-name">Odia</div>
+  </div>
+
+  <!-- Polish -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Polish.html'">
+    <div class="lang-circle">P</div>
+    <div class="lang-name">Polish</div>
+  </div>
+
+  <!-- Portuguese -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Portuguese.html'">
+    <div class="lang-circle">P</div>
+    <div class="lang-name">Portuguese</div>
+  </div>
+
+  <!-- Punjabi -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Punjabi.html'">
+    <div class="lang-circle">ਪ</div>
+    <div class="lang-name">Punjabi</div>
+  </div>
+
+  <!-- Romanian -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Romanian.html'">
+    <div class="lang-circle">R</div>
+    <div class="lang-name">Romanian</div>
+  </div>
+
+  <!-- Sinhala -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Sinhala.html'">
+    <div class="lang-circle">ස</div>
+    <div class="lang-name">Sinhala</div>
+  </div>
+
+  <!-- Tamil Chennai -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Tamil-Chennai.html'">
+    <div class="lang-circle">அ</div>
+    <div class="lang-name">Tamil (Chennai)</div>
+  </div>
+
+  <!-- Tamil Lanka -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Tamil-Lanka.html'">
+    <div class="lang-circle">அ</div>
+    <div class="lang-name">Tamil (Lanka)</div>
+  </div>
+
+  <!-- Telugu -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Telugu.html'">
+    <div class="lang-circle">త</div>
+    <div class="lang-name">Telugu</div>
+  </div>
+
+  <!-- Thai -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/madhuban-murli-audio-library-Thai.html'">
+    <div class="lang-circle">ไ</div>
+    <div class="lang-name">Thai</div>
+  </div>
+
+</div>
+<div class="lang-section-title">Available Resources (scroll right to left) </div>
+
+<div class="lang-scroll-container">
+
+  <!-- Paramathma Smriti Calendar -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/paramathma_smrithi_calendar.html'">
+    <div class="lang-circle" style="font-size:32px;">📅</div>
+    <div class="lang-name">Paramathma Smriti<br>Calendar</div>
+  </div>
+
+  <!-- Avyakt Vani Tamil Calendar -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/avyakt_vani_calendar_tamil.html'">
+    <div class="lang-circle" style="font-size:32px;">📅</div>
+    <div class="lang-name">Avyakt Vani<br>Tamil Calendar</div>
+  </div>
+
+  <!-- Raja Yoga 7 Days Course -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/raja_yoga_7_days_course.html'">
+    <div class="lang-circle" style="font-size:30px;">🧘</div>
+    <div class="lang-name">Raja Yoga<br>7 Days Course</div>
+  </div>
+
+  <!-- GIST & Manifestation -->
+  <div class="lang-card" onclick="location.href='https://rajiprem72.github.io/murli-audio-archive/raja_yoga_gist_and_manifestation.html'">
+    <div class="lang-circle" style="font-size:30px;">🧘</div>
+    <div class="lang-name">GIST &<br>Manifestation</div>
+  </div>
+
+</div>
+
+
+<!-- WhatsApp Banner -->
+<div class="wa-banner">
+  <div class="wa-left">
+    <div class="wa-icon">
+      <img src="https://www.svgrepo.com/show/176768/whatsapp-social-media.svg" alt="WhatsApp">
+    </div>
+    <div class="wa-text">
+      Join our WhatsApp Channel <strong> Raja Yoga Vishwa Seva </strong> for updates on latest events happening around the Raja Yogi's world.
+    </div>
+  </div>
+  <a class="wa-btn" href="https://whatsapp.com/channel/0029VaztsG6Ae5VvflGKXk2i" target="_blank">Join Now</a>
+</div>
+
+<!-- ⭐ Sakar–Avyakt Info Section ⭐ -->
+
+<div class="vani-info">
+  <h2>About Sakar Vani & Avyakt Vani</h2>
+
+  <p><strong>Sakar Vani</strong> refers to the divine versions spoken directly by
+  <strong>Paramathma Shiva, the Supreme Soul</strong>, through the corporeal medium of  
+  <strong>Shri Lekhraj Kripalani (Brahma Baba)</strong>.  
+  From <strong>1936 to 1969</strong>, Shiv Baba entered Brahma Baba and delivered the teachings of 
+  <strong>Raja Yoga Meditation</strong>, seated in the subtle region of his forehead.  
+  These Murlis are known as <strong>Sakar Murli</strong> and are read from <strong>Monday to Saturday</strong>.</p>
+
+  <p><strong>Avyakt Vani</strong> began from <strong>1969 onwards</strong>, after Brahma Baba became avyakt (angelic).
+  From <strong>1969 to 2017</strong>,  
+  <strong>Paramathma Shiva along with Avyakt Brahma Baba</strong> descended in the subtle-trance state  
+  of <strong>Dadi Gulzar</strong>.  
+  These divine messages, called <strong>Avyakt Murli</strong>, are read on every <strong>Sunday</strong> and contain  
+  subtle, angelic guidance for effort-makers and world servers.</p>
+
+  <p>This library provides complete access to both <strong>Sakar Murli</strong> and <strong>Avyakt Vani</strong>  
+  audio files in <strong>23 languages</strong>, for the years <strong>2019 to 2025</strong>.</p>
+</div>
+
+
+<!-- APK Download Stats -->
+<div id="apkDownloadStats">
+  Loading APK download count…
+</div>
+
+<script>
+fetch("https://api.github.com/repos/rajiprem72/murli-audio-archive/releases/latest")
+  .then(response => response.json())
+  .then(data => {
+    const apk = data.assets.find(a => a.name === "MurliAudioApp-v1.0.apk");
+    if (apk) {
+      document.getElementById("apkDownloadStats").innerText =
+        "Murli Audio App Downloads: " + apk.download_count;
+    } else {
+      document.getElementById("apkDownloadStats").innerText = "APK not found.";
+    }
+  })
+  .catch(err => {
+    document.getElementById("apkDownloadStats").innerText =
+      "Unable to load download count.";
+  });
+</script>
+
+<footer>
+  designed by https://divine-connectionz.com
+</footer>
+
+</body>
+</html>
