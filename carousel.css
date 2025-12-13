@@ -63,3 +63,22 @@
     height: 200px;
   }
 }
+
+/* -----------------------------
+   TOP BANNER IMAGE FIX
+----------------------------- */
+
+.top-banner-carousel {
+  max-width: 100%;
+  margin: 0 auto 20px auto;
+  padding: 0 10px;
+}
+
+.top-banner-carousel img {
+  width: 100%;
+  height: auto;              /* ✅ THIS IS THE KEY */
+  display: block;
+  border-radius: 16px;
+  object-fit: contain;       /* ✅ Prevents cropping */
+  background: #800000;       /* fallback color */
+}
