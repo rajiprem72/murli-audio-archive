@@ -131,3 +131,18 @@ footer {
   height: 36px;
   object-fit: contain;
 }
+/* ===========================
+   APK DOWNLOAD COUNTER
+=========================== */
+#apkDownloadStats {
+  text-align: center;
+  padding: 15px;
+  color: #ffffff;
+  background: #800000;
+  margin: 30px auto 0 auto;
+  font-size: 16px;
+  max-width: 700px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  font-weight: bold;
+}
