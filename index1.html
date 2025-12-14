@@ -3,168 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Madhuban Murli Audio Library (2019–2025)</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background: #f5f5f5;
-      color: #111;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    /* -----------------------------------
-       HORIZONTAL SCROLL — AVAILABLE LANGUAGES
-    ----------------------------------- */
-    .lang-section-title {
-      font-size: 22px;
-      font-weight: bold;
-      margin: 30px 0 10px 10px;
-    }
-
-    .lang-scroll-container {
-      display: flex;
-      overflow-x: auto;
-      gap: 16px;
-      padding: 10px;
-      scroll-behavior: smooth;
-    }
-.lang-card {
-  min-width: 140px;
-  background: #fff;
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  flex-shrink: 0;
-  cursor: pointer; /* 👈 added */
-  transition: transform 0.15s;
-}
-
-.lang-card:hover {
-  transform: scale(1.05); /* Optional small zoom effect */
-}
-
-    
-    .lang-circle {
-      width: 55px;
-      height: 55px;
-      border-radius: 50%;
-      background: #e6e6e6;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      font-weight: bold;
-      margin: 0 auto 10px auto;
-    }
-
-    .lang-card a {
-      text-decoration: none;
-      color: #2563eb;
-      display: block;
-      margin-top: 5px;
-    }
-
-    .extra-link {
-      font-size: 13px;
-      margin-top: 6px;
-      display: block;
-      color: #800000;
-      font-weight: bold;
-    }
-
-    /* -----------------------------------
-       TABLE (TEMPORARY)
-    ----------------------------------- */
-    .lang-list {
-      max-width: 700px;
-      margin: 0 auto;
-      background: #ffffff;
-      border-radius: 6px;
-      padding: 15px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    }
-
-    /* -----------------------------------
-       WhatsApp Banner
-    ----------------------------------- */
-    .wa-banner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      background: #f5f7f5;
-      border-radius: 999px;
-      padding: 10px 16px;
-      font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: 20px auto;
-    }
-    .wa-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex: 1;
-    }
-    .wa-icon img {
-      width: 36px;
-      height: 36px;
-    }
-    .wa-btn {
-      padding: 8px 16px;
-      border-radius: 999px;
-      background: #4CAF50;
-      color: #fff;
-      font-size: 14px;
-      text-decoration: none;
-    }
-    .wa-btn:hover {
-      opacity: 0.9;
-    }
-
-    /* -----------------------------------
-       VANIS SECTION
-    ----------------------------------- */
-    .vani-info {
-      max-width: 700px;
-      margin: 25px auto;
-      background: #ffffff;
-      padding: 18px;
-      border-radius: 8px;
-      line-height: 1.6;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-      border-left: 5px solid #2563eb;
-    }
-    .vani-info h2 {
-      margin-top: 0;
-      color: #2563eb;
-      font-size: 20px;
-    }
-
-    /* APK COUNTER */
-    #apkDownloadStats {
-      text-align:center; 
-      padding:15px;
-      color:#ffffff;
-      background:#800000;
-      margin:30px auto 0 auto;
-      font-size:16px;
-      max-width: 700px;
-      border-radius:6px;
-      box-shadow:0 1px 4px rgba(0,0,0,0.2);
-      font-weight: bold;
-    }
-
-    footer {
-      margin-top: 20px;
-      text-align: center;
-      font-size: 12px;
-      color: #666;
-    }
-  </style>
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 <!-- ===============================
@@ -398,6 +237,26 @@
 </div>
 
 
+<div class="events-section-title">Tamil Nadu Events</div>
+
+<div class="events-scroll-container">
+
+  <!-- Event 1 -->
+  <div class="event-card" onclick="openEventImage('images/events/Kancheepuram_inauguration.jpg')">
+    <img src="images/events/Kancheepuram_inauguration.jpg" alt="Tamil Nadu Event">
+  </div>
+
+  <!-- Future events: just duplicate this block -->
+  <!--
+  <div class="event-card" onclick="openEventImage('images/event2.jpg')">
+    <img src="images/event2.jpg">
+  </div>
+  -->
+
+</div>
+
+
+
 <!-- WhatsApp Banner -->
 <div class="wa-banner">
   <div class="wa-left">
@@ -457,6 +316,23 @@ fetch("https://api.github.com/repos/rajiprem72/murli-audio-archive/releases/late
       "Unable to load download count.";
   });
 </script>
+<script>
+function openEventImage(src) {
+  document.getElementById("eventOverlayImg").src = src;
+  document.getElementById("eventOverlay").style.display = "flex";
+}
+
+function closeEventImage() {
+  document.getElementById("eventOverlay").style.display = "none";
+}
+</script>
+<!-- Event Fullscreen Viewer -->
+<div id="eventOverlay" class="event-overlay" onclick="closeEventImage()">
+  <span>&times;</span>
+  <img id="eventOverlayImg">
+</div>
+
+
 
 <footer>
   designed by https://divine-connectionz.com
