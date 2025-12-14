@@ -123,3 +123,11 @@ footer {
   font-size: 12px;
   color: #666;
 }
+/* ===========================
+   WHATSAPP BANNER FIX
+=========================== */
+.wa-icon img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
