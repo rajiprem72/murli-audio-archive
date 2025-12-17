@@ -146,3 +146,54 @@ footer {
   box-shadow: 0 1px 4px rgba(0,0,0,0.2);
   font-weight: bold;
 }
+.wa-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  background: #f3fff7;
+  border: 1px solid #cceedd;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin: 16px 0;
+}
+
+.wa-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.wa-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.wa-text {
+  font-size: 14.5px;
+  line-height: 1.4;
+  color: #222;
+}
+
+.wa-text strong {
+  font-weight: 600;
+}
+
+.wa-btn {
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+
+  padding: 8px 16px;
+  border-radius: 20px;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+}
+
+.wa-btn:hover {
+  background: #1ebe5d;
+}
