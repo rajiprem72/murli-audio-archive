@@ -322,10 +322,9 @@
     </div>
   </div>
 
-  <a
-  class="wa-btn"
-  href="intent://channel/0029VaztsG6Ae5VvflGKXk2i#Intent;scheme=https;package=com.whatsapp;end">
-  Join Now
+ <a href="https://whatsapp.com/channel/0029VaztsG6Ae5VvflGKXk2i"
+   onclick="openWhatsApp(event)">
+   Join WhatsApp Channel
 </a>
 
 </div>
@@ -398,6 +397,27 @@ function closeEventImage() {
 <footer>
   designed by https://divine-connectionz.com
 </footer>
+
+<script>
+function openWhatsApp(e) {
+  e.preventDefault();
+
+  const intentUrl =
+    "intent://channel/0029VaztsG6Ae5VvflGKXk2i#Intent;" +
+    "scheme=https;" +
+    "package=com.whatsapp;" +
+    "end;";
+
+  window.location.href = intentUrl;
+
+  // Fallback if intent fails
+  setTimeout(() => {
+    window.location.href =
+      "https://whatsapp.com/channel/0029VaztsG6Ae5VvflGKXk2i";
+  }, 500);
+}
+</script>
+
 
 </body>
 </html>
