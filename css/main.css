@@ -209,3 +209,22 @@ footer {
     align-self: flex-end;
   }
 }
+
+.event-card {
+  min-width: 160px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.event-card img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+}
+
+.event-title {
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
