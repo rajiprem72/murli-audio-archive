@@ -197,3 +197,15 @@ footer {
 .wa-btn:hover {
   background: #1ebe5d;
 }
+
+
+@media (max-width: 480px) {
+  .wa-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wa-btn {
+    align-self: flex-end;
+  }
+}
