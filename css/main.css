@@ -25,6 +25,7 @@ h1 {
 
 /* ===========================
    HORIZONTAL SCROLL CONTAINERS
+   (For languages, resources, posters)
 =========================== */
 .lang-scroll-container,
 .events-scroll-container {
@@ -54,6 +55,7 @@ h1 {
   transform: scale(1.05);
 }
 
+/* Icon / placeholder circle (❓ comes from HTML text here) */
 .lang-circle {
   width: 55px;
   height: 55px;
@@ -68,26 +70,77 @@ h1 {
 }
 
 /* ===========================
-   EVENTS SECTION
+   EVENT CARD – BASE STYLE
+   (Shared by posters, calendars, etc.)
 =========================== */
 .event-card {
   min-width: 160px;
-  height: 285px; /* 9:16 ratio */
   border-radius: 12px;
-  overflow: hidden;
   flex-shrink: 0;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-.event-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  overflow: hidden;
+  background: #fff;
 }
 
 /* ===========================
-   FULLSCREEN EVENT VIEW
+   POSTER / REEL CARDS (9:16)
+=========================== */
+.event-card.poster {
+  height: 285px; /* 9:16 ratio */
+}
+
+.event-card.poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===========================
+   DAILY CALENDAR (English / Hindi)
+   – flexible height, no cropping
+=========================== */
+.daily-calendar {
+  display: flex;
+  gap: 12px;
+}
+
+/* Stack calendars vertically on mobile */
+@media (max-width: 768px) {
+  .daily-calendar {
+    flex-direction: column;
+  }
+}
+
+/* Override poster height rules */
+.daily-calendar .event-card {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.daily-calendar img {
+  width: 100%;
+  height: auto !important;
+  max-height: none !important;
+  display: block;
+  border-radius: 10px;
+}
+
+/* ===========================
+   EVENT TITLE (below images)
+=========================== */
+.event-title {
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+/* ===========================
+   FULLSCREEN IMAGE OVERLAY
 =========================== */
 .event-overlay {
   display: none;
@@ -115,43 +168,13 @@ h1 {
 }
 
 /* ===========================
-   FOOTER
+   WHATSAPP BANNER
 =========================== */
-footer {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 12px;
-  color: #666;
-}
-/* ===========================
-   WHATSAPP BANNER FIX
-=========================== */
-.wa-icon img {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
-}
-/* ===========================
-   APK DOWNLOAD COUNTER
-=========================== */
-#apkDownloadStats {
-  text-align: center;
-  padding: 15px;
-  color: #ffffff;
-  background: #800000;
-  margin: 30px auto 0 auto;
-  font-size: 16px;
-  max-width: 700px;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  font-weight: bold;
-}
 .wa-banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-
   background: #f3fff7;
   border: 1px solid #cceedd;
   border-radius: 12px;
@@ -171,6 +194,12 @@ footer {
   height: 36px;
 }
 
+.wa-icon img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
 .wa-text {
   font-size: 14.5px;
   line-height: 1.4;
@@ -187,7 +216,6 @@ footer {
   text-decoration: none;
   font-size: 14px;
   font-weight: 600;
-
   padding: 8px 16px;
   border-radius: 20px;
   white-space: nowrap;
@@ -197,7 +225,6 @@ footer {
 .wa-btn:hover {
   background: #1ebe5d;
 }
-
 
 @media (max-width: 480px) {
   .wa-banner {
@@ -210,48 +237,28 @@ footer {
   }
 }
 
-.event-card {
-  min-width: 160px;
-  cursor: pointer;
+/* ===========================
+   APK DOWNLOAD COUNTER
+=========================== */
+#apkDownloadStats {
   text-align: center;
+  padding: 15px;
+  color: #ffffff;
+  background: #800000;
+  margin: 30px auto 0 auto;
+  font-size: 16px;
+  max-width: 700px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  font-weight: bold;
 }
 
-.event-card img {
-  width: 100%;
-  border-radius: 10px;
-  display: block;
+/* ===========================
+   FOOTER
+=========================== */
+footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
 }
-
-.event-title {
-  margin-top: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-}
-
-.daily-calendar {
-  display: flex;
-  gap: 12px;
-}
-
-/* 📱 Mobile / WebView */
-@media (max-width: 768px) {
-  .daily-calendar {
-    flex-direction: column;
-  }
-}
-/* 🔥 FIX: Allow full height for calendar cards */
-.daily-calendar .event-card {
-  height: auto !important;
-  max-height: none !important;
-  overflow: visible !important;
-}
-
-/* 🔥 FIX: Ensure image shows fully */
-.daily-calendar img {
-  width: 100%;
-  height: auto !important;
-  max-height: none !important;
-  display: block;
-}
-
