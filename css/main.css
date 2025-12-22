@@ -228,3 +228,28 @@ footer {
   font-weight: 600;
   color: #333;
 }
+
+.daily-calendar {
+  display: flex;
+  gap: 12px;
+}
+
+/* Equal width */
+.daily-calendar .event-card {
+  flex: 1;
+}
+
+/* Proper scaling */
+.daily-calendar img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* 📱 Mobile / WebView */
+@media (max-width: 768px) {
+  .daily-calendar {
+    flex-direction: column;
+  }
+}
+
