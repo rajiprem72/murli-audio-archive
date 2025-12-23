@@ -391,3 +391,46 @@ footer {
   overflow-x: auto;
   scroll-behavior: smooth;
 }
+
+/* GIST container */
+.gist {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  padding: 12px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Individual card */
+.gist-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-align: center;
+}
+
+/* Hover effect */
+.gist-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Image inside card */
+.gist-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Language title */
+.gist-card .event-title {
+  padding: 8px 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  background: #f6f6f6;
+}
