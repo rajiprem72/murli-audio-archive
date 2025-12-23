@@ -320,23 +320,23 @@ footer {
 
 .ypv-card img {
   width: 100%;
-  height: auto;
+  height: auto !important;
+  object-fit: contain !important;
   display: block;
-  object-fit: contain; /* text stays sharp */
-  border-radius: 12px 12px 0 0;
 }
 
 
 /* ===========================
-   BK EVENTS (Tamil Nadu Events)
+   BK EVENTS – Tamil Nadu Events
+   (Flyers – NO crop)
 =========================== */
-.bk-events {
-  display: flex;
-  gap: 16px;
-  padding: 12px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
+.bk-events .event-card img {
+  width: 100%;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block;
 }
+
 
 
 /* ===========================
