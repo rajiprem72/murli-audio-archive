@@ -296,3 +296,32 @@ footer {
   border-radius: 12px;
 }
 
+/* ===========================
+   YPV – Yennal Pol Vazhvu
+   (Thoughts Shape Our Life)
+=========================== */
+.ypv {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.ypv-card {
+  min-width: 160px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  cursor: pointer;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.ypv-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain; /* text stays sharp */
+  border-radius: 12px 12px 0 0;
+}
