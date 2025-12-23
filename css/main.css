@@ -392,34 +392,46 @@ footer {
   scroll-behavior: smooth;
 }
 
-/* GIST container */
+/* GIST horizontal carousel */
 .gist {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  display: flex;
   gap: 14px;
   padding: 12px;
-  max-width: 1000px;
-  margin: 0 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar (optional but clean) */
+.gist::-webkit-scrollbar {
+  display: none;
+}
+.gist {
+  scrollbar-width: none; /* Firefox */
 }
 
 /* Individual card */
 .gist-card {
+  flex: 0 0 auto;
+  width: 160px;
   background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
   text-align: center;
+  scroll-snap-align: start;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Hover effect */
+/* Hover animation */
 .gist-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
 }
 
-/* Image inside card */
+/* Image */
 .gist-card img {
   width: 100%;
   height: auto;
