@@ -325,3 +325,15 @@ footer {
   object-fit: contain; /* text stays sharp */
   border-radius: 12px 12px 0 0;
 }
+
+
+/* ===========================
+   BK EVENTS (Tamil Nadu Events)
+=========================== */
+.bk-events {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
