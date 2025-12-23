@@ -349,3 +349,14 @@ footer {
   overflow-x: auto;
   scroll-behavior: smooth;
 }
+
+/* ===========================
+   SAKARA VANI – GLOBAL
+=========================== */
+.sakara-vani-global {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
