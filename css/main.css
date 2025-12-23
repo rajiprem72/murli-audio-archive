@@ -337,3 +337,15 @@ footer {
   overflow-x: auto;
   scroll-behavior: smooth;
 }
+
+
+/* ===========================
+   RESOURCES (Available Resources)
+=========================== */
+.resources {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
