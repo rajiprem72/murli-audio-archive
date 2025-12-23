@@ -298,15 +298,38 @@ footer {
 
 /* ===========================
    YPV – Yennal Pol Vazhvu
-   (Thumbnail view – NO zoom, NO blur)
+   (Horizontal carousel – left to right)
 =========================== */
+.ypv {
+  display: flex;
+  flex-direction: row;        /* 👈 force horizontal */
+  gap: 16px;
+  padding: 12px;
+  overflow-x: auto;           /* 👈 horizontal scroll */
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ypv-card {
+  flex: 0 0 auto;             /* 👈 prevents stacking */
+  width: 160px;               /* 👈 fixed card width */
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Thumbnail image */
 .ypv-card img {
   width: 100%;
-  height: 180px;          /* 👈 fixed thumbnail height */
-  object-fit: contain;   /* 👈 no crop, no zoom */
+  height: 180px;              /* 👈 thumbnail height */
+  object-fit: contain;        /* 👈 no crop, no zoom */
   display: block;
-  background: #fff;      /* 👈 clean padding area */
+  background: #fff;
 }
+
 
 
 
