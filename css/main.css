@@ -446,3 +446,59 @@ footer {
   color: #333;
   background: #f6f6f6;
 }
+
+/* MANIFESTATION horizontal carousel */
+.manifestation {
+  display: flex;
+  gap: 14px;
+  padding: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar for clean UI */
+.manifestation::-webkit-scrollbar {
+  display: none;
+}
+.manifestation {
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Individual card */
+.manifestation-card {
+  flex: 0 0 auto;
+  width: 160px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  scroll-snap-align: start;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover effect */
+.manifestation-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Image */
+.manifestation-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Language label */
+.manifestation-card .event-title {
+  padding: 8px 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  background: #f6f6f6;
+}
+
