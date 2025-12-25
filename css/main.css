@@ -176,68 +176,54 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  background: #f3fff7;
-  border: 1px solid #cceedd;
+  background: #f3fff6;
   border-radius: 12px;
-  padding: 12px 16px;
-  margin: 16px 0;
+  padding: 10px 14px;
+  max-width: 100%;
+  margin: 10px auto;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 .wa-left {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex: 1;
+  gap: 10px;
 }
 
 .wa-icon {
-  width: 36px;
-  height: 36px;
-}
-
-.wa-icon img {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
+  width: 38px;
+  height: 38px;
 }
 
 .wa-text {
-  font-size: 14.5px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.3;
   color: #222;
 }
 
 .wa-text strong {
+  display: block;
+  font-size: 15px;
   font-weight: 600;
 }
 
 .wa-btn {
   background: #25d366;
   color: #fff;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 600;
   padding: 8px 16px;
   border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
   white-space: nowrap;
-  transition: background 0.2s ease;
+  transition: background 0.3s ease;
 }
 
 .wa-btn:hover {
   background: #1ebe5d;
 }
 
-@media (max-width: 480px) {
-  .wa-banner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 
-  .wa-btn {
-    align-self: flex-end;
-  }
-}
 
 /* =====================================================
    APK DOWNLOAD COUNTER
