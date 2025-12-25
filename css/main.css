@@ -503,3 +503,38 @@ footer {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
 }
 
+.lang-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.lang-card {
+  cursor: pointer;
+  text-align: center;
+  padding: 15px;
+  border-radius: 12px;
+  background: #f8f8f8;
+  transition: transform 0.2s;
+}
+
+.lang-card:hover {
+  transform: scale(1.05);
+}
+
+.lang-circle {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 8px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lang-name {
+  font-size: 14px;
+  font-weight: 600;
+}
