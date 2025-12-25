@@ -487,4 +487,9 @@ footer {
   color: #333;
   background: #f6f6f6;
 }
-
+.view-all-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a73e8;
+  text-decoration: none;
+}
