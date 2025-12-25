@@ -503,18 +503,33 @@ footer {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
 }
 
-.lang-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 15px;
+/* Horizontal carousel container */
+.lang-carousel {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 12px 10px;
+  scroll-behavior: smooth;
 }
 
+/* Hide scrollbar (optional but nice) */
+.lang-carousel::-webkit-scrollbar {
+  display: none;
+}
+.lang-carousel {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Individual cards */
 .lang-card {
-  cursor: pointer;
+  flex: 0 0 auto;        /* ⭐ KEY for horizontal */
+  width: 120px;
   text-align: center;
-  padding: 15px;
-  border-radius: 12px;
-  background: #f8f8f8;
+  padding: 14px 10px;
+  border-radius: 14px;
+  background: #f7f7f7;
+  cursor: pointer;
   transition: transform 0.2s;
 }
 
@@ -522,6 +537,7 @@ footer {
   transform: scale(1.05);
 }
 
+/* Icon circle */
 .lang-circle {
   width: 48px;
   height: 48px;
@@ -534,7 +550,8 @@ footer {
   justify-content: center;
 }
 
+/* Language name */
 .lang-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
 }
