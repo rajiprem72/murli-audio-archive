@@ -24,53 +24,67 @@ h1 {
 }
 
 /* =====================================================
-   HORIZONTAL SCROLL CONTAINERS
-   (languages, resources, posters)
+   LANGUAGE CAROUSEL (JSON-DRIVEN)
 ===================================================== */
-.lang-scroll-container,
-.events-scroll-container {
-  display: flex;
-  overflow-x: auto;
+.lang-carousel {
+  display: flex;                 /* ✅ horizontal */
   gap: 16px;
-  padding: 12px;
+  padding: 12px 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* =====================================================
-   LANGUAGE / RESOURCE CARDS
-===================================================== */
-.lang-card {
-  min-width: 140px;
-  background: #fff;
-  border-radius: 12px;
-  padding: 16px;
+/* Hide scrollbar (clean UI) */
+.lang-carousel::-webkit-scrollbar {
+  display: none;
+}
+.lang-carousel {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Language card */
+.lang-carousel .lang-card {
+  flex: 0 0 auto;                /* ✅ prevents vertical stacking */
+  width: 120px;
+  background: #f7f7f7;
+  border-radius: 14px;
+  padding: 14px 10px;
   text-align: center;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  flex-shrink: 0;
   cursor: pointer;
-  transition: transform 0.15s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
 }
 
-.lang-card:hover {
+.lang-carousel .lang-card:hover {
   transform: scale(1.05);
 }
 
-/* Placeholder / icon circle (❓ comes from HTML text) */
-.lang-circle {
-  width: 55px;
-  height: 55px;
+/* Icon / symbol */
+.lang-carousel .lang-circle {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 8px;
   border-radius: 50%;
-  background: #e6e6e6;
+  background: #e0e0e0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 22px;
   font-weight: bold;
-  margin: 0 auto 10px auto;
+}
+
+/* Language name */
+.lang-carousel .lang-name {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 /* =====================================================
-   EVENT CARD – BASE (NO image stretching here)
+   EVENT CARDS (unchanged, safe)
 ===================================================== */
 .event-card {
   min-width: 160px;
@@ -82,12 +96,9 @@ h1 {
   overflow: hidden;
 }
 
-/* =====================================================
-   POSTERS / BANNERS / REELS (9:16)
-   – Cropping is OK here
-===================================================== */
+/* Posters / banners (9:16) */
 .event-card.poster {
-  height: 285px; /* 9:16 ratio */
+  height: 285px;
 }
 
 .event-card.poster img {
@@ -98,40 +109,34 @@ h1 {
 }
 
 /* =====================================================
-   DAILY CALENDAR & TEXT IMAGES
-   – NO cropping, NO zoom, text stays sharp
+   DAILY CALENDAR (NO crop)
 ===================================================== */
 .daily-calendar {
   display: flex;
   gap: 12px;
 }
 
-/* Stack vertically on mobile / WebView */
 @media (max-width: 768px) {
   .daily-calendar {
     flex-direction: column;
   }
 }
 
-/* Remove poster constraints */
 .daily-calendar .event-card {
   height: auto !important;
-  max-height: none !important;
   overflow: visible !important;
 }
 
-/* Correct image behaviour for text-based images */
 .daily-calendar img {
   width: 100%;
   height: auto !important;
   object-fit: contain !important;
   display: block;
   border-radius: 10px;
-  image-rendering: auto;
 }
 
 /* =====================================================
-   EVENT TITLE (below images)
+   EVENT TITLE
 ===================================================== */
 .event-title {
   margin-top: 6px;
@@ -139,34 +144,6 @@ h1 {
   font-weight: 600;
   color: #333;
   text-align: center;
-}
-
-/* =====================================================
-   FULLSCREEN IMAGE OVERLAY
-===================================================== */
-.event-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.9);
-  z-index: 9999;
-  justify-content: center;
-  align-items: center;
-}
-
-.event-overlay img {
-  max-width: 95vw;
-  max-height: 95vh;
-  border-radius: 12px;
-}
-
-.event-overlay span {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  font-size: 30px;
-  color: #fff;
-  cursor: pointer;
 }
 
 /* =====================================================
@@ -179,7 +156,6 @@ h1 {
   background: #f3fff6;
   border-radius: 12px;
   padding: 10px 14px;
-  max-width: 100%;
   margin: 10px auto;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
@@ -198,7 +174,6 @@ h1 {
 .wa-text {
   font-size: 14px;
   line-height: 1.3;
-  color: #222;
 }
 
 .wa-text strong {
@@ -215,30 +190,10 @@ h1 {
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  white-space: nowrap;
-  transition: background 0.3s ease;
 }
 
 .wa-btn:hover {
   background: #1ebe5d;
-}
-
-
-
-/* =====================================================
-   APK DOWNLOAD COUNTER
-===================================================== */
-#apkDownloadStats {
-  text-align: center;
-  padding: 15px;
-  color: #ffffff;
-  background: #800000;
-  margin: 30px auto 0 auto;
-  font-size: 16px;
-  max-width: 700px;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  font-weight: bold;
 }
 
 /* =====================================================
@@ -249,309 +204,4 @@ footer {
   text-align: center;
   font-size: 12px;
   color: #666;
-}
-
-/* ===========================
-   DAILY CALENDAR (ISOLATED)
-=========================== */
-.daily-calendar {
-  display: flex;
-  gap: 12px;
-}
-
-/* Mobile / WebView */
-@media (max-width: 768px) {
-  .daily-calendar {
-    flex-direction: column;
-  }
-}
-
-.daily-calendar-card {
-  width: 100%;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  cursor: pointer;
-}
-
-.daily-calendar-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-  border-radius: 12px;
-}
-
-/* ===========================
-   YPV – Yennal Pol Vazhvu
-   (Horizontal carousel – left to right)
-=========================== */
-.ypv {
-  display: flex;
-  flex-direction: row;        /* 👈 force horizontal */
-  gap: 16px;
-  padding: 12px;
-  overflow-x: auto;           /* 👈 horizontal scroll */
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-.ypv-card {
-  flex: 0 0 auto;             /* 👈 prevents stacking */
-  width: 160px;               /* 👈 fixed card width */
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  cursor: pointer;
-  text-align: center;
-}
-
-/* Thumbnail image */
-.ypv-card img {
-  width: 100%;
-  height: 180px;              /* 👈 thumbnail height */
-  object-fit: contain;        /* 👈 no crop, no zoom */
-  display: block;
-  background: #fff;
-}
-
-
-
-
-/* ===========================
-   BK EVENTS – Tamil Nadu Events
-   (Horizontal carousel – thumbnails)
-=========================== */
-.bk-events {
-  display: flex;
-  flex-direction: row;        /* 👈 force horizontal */
-  gap: 16px;
-  padding: 12px;
-  overflow-x: auto;           /* 👈 horizontal scroll */
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Event card in carousel */
-.bk-events .event-card {
-  flex: 0 0 auto;             /* 👈 prevents stacking */
-  width: 160px;               /* 👈 fixed card width */
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  cursor: pointer;
-}
-
-/* Thumbnail image */
-.bk-events .event-card img {
-  width: 100%;
-  height: 180px;              /* 👈 thumbnail height */
-  object-fit: contain;        /* 👈 no crop, no zoom */
-  display: block;
-  background: #fff;
-}
-
-
-
-
-/* ===========================
-   RESOURCES (Available Resources)
-=========================== */
-.resources {
-  display: flex;
-  gap: 16px;
-  padding: 12px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-}
-
-/* ===========================
-   SAKARA VANI – GLOBAL
-=========================== */
-.sakara-vani-global {
-  display: flex;
-  gap: 16px;
-  padding: 12px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-}
-
-/* GIST horizontal carousel */
-.gist {
-  display: flex;
-  gap: 14px;
-  padding: 12px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Hide scrollbar (optional but clean) */
-.gist::-webkit-scrollbar {
-  display: none;
-}
-.gist {
-  scrollbar-width: none; /* Firefox */
-}
-
-/* Individual card */
-.gist-card {
-  flex: 0 0 auto;
-  width: 160px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  cursor: pointer;
-  text-align: center;
-  scroll-snap-align: start;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-/* Hover animation */
-.gist-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
-}
-
-/* Image */
-.gist-card img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Language title */
-.gist-card .event-title {
-  padding: 8px 6px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-  background: #f6f6f6;
-}
-
-/* MANIFESTATION horizontal carousel */
-.manifestation {
-  display: flex;
-  gap: 14px;
-  padding: 12px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Hide scrollbar for clean UI */
-.manifestation::-webkit-scrollbar {
-  display: none;
-}
-.manifestation {
-  scrollbar-width: none; /* Firefox */
-}
-
-/* Individual card */
-.manifestation-card {
-  flex: 0 0 auto;
-  width: 160px;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  cursor: pointer;
-  text-align: center;
-  scroll-snap-align: start;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-/* Hover effect */
-.manifestation-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
-}
-
-/* Image */
-.manifestation-card img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Language label */
-.manifestation-card .event-title {
-  padding: 8px 6px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-  background: #f6f6f6;
-}
-.view-all-link {
-  font-size: 14px;
-  font-weight: 500;
-  color: #1a73e8;
-  text-decoration: none;
-}
-
-.sakara-box {
-  background: #f8fefb;
-  border: 1.5px solid #d9eede;
-  border-radius: 14px;
-  padding: 16px;
-  margin: 20px 0;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
-}
-
-/* Horizontal carousel container */
-.lang-carousel {
-  display: flex;
-  gap: 14px;
-  overflow-x: auto;
-  padding: 12px 10px;
-  scroll-behavior: smooth;
-}
-
-/* Hide scrollbar (optional but nice) */
-.lang-carousel::-webkit-scrollbar {
-  display: none;
-}
-.lang-carousel {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Individual cards */
-.lang-card {
-  flex: 0 0 auto;        /* ⭐ KEY for horizontal */
-  width: 120px;
-  text-align: center;
-  padding: 14px 10px;
-  border-radius: 14px;
-  background: #f7f7f7;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.lang-card:hover {
-  transform: scale(1.05);
-}
-
-/* Icon circle */
-.lang-circle {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 8px;
-  border-radius: 50%;
-  background: #e0e0e0;
-  font-size: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Language name */
-.lang-name {
-  font-size: 13px;
-  font-weight: 600;
 }
