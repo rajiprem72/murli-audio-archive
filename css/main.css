@@ -493,3 +493,13 @@ footer {
   color: #1a73e8;
   text-decoration: none;
 }
+
+.sakara-box {
+  background: #f8fefb;
+  border: 1.5px solid #d9eede;
+  border-radius: 14px;
+  padding: 16px;
+  margin: 20px 0;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+
