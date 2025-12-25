@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Paramathma Smriti<br>Calendar",
+    "icon": "📅",
+    "iconSize": "32px",
+    "url": "paramathma_smrithi_calendar.html"
+  },
+  {
+    "title": "Avyakt Vani<br>Tamil Calendar",
+    "icon": "📅",
+    "iconSize": "32px",
+    "url": "avyakt_vani_calendar_tamil.html"
+  },
+  {
+    "title": "Raja Yoga<br>7 Days Course",
+    "icon": "🧘",
+    "iconSize": "30px",
+    "url": "raja_yoga_7_days_course.html"
+  },
+  {
+    "title": "GIST &<br>Manifestation",
+    "icon": "🧘",
+    "iconSize": "30px",
+    "url": "raja_yoga_gist_and_manifestation.html"
+  }
+]
