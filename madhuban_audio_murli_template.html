@@ -245,10 +245,20 @@ async function loadCalendars(){
               const lang=document.getElementById("language").value;
               const url=`https://murli.madhuban.org/murlis/${lang}/mp3/murli-${year}-${pad(m+1)}-${pad(day)}.mp3`;
 
-              const audio=document.getElementById("audio");
-              audio.src=url;
-              audio.play();
+              const audio = document.getElementById("audio");
+              audio.pause();
+              audio.currentTime = 0;
+              audio.src = url;
+              audio.load();
+              audio.play().catch(()=>{});
 
+              // ✅ Show playing URL on screen
+              const playingUrl = document.getElementById("playing-url");
+              playingUrl.href = url;
+              playingUrl.textContent = url;
+
+
+              
               audio.onerror=()=>{
                 document.getElementById("selected-date").textContent=
                   "Murli audio not available for this date.";
