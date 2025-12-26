@@ -1,7 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calendar Test</title>
+</head>
+<body>
+
+<h1>Calendar Test</h1>
+
+<div id="calendar" style="color:green;font-size:18px;">
+  Waiting for data…
+</div>
+
+<!-- SCRIPT MUST BE AT THE END -->
 <script>
+console.log("✅ Script started");
+
 fetch("./data/calendar-years.json")
-  .then(r => r.json())
+  .then(response => {
+    console.log("📦 Fetch status:", response.status);
+    return response.json();
+  })
   .then(cfg => {
+    console.log("✅ JSON object:", cfg);
+
+    if (!cfg.years) {
+      document.getElementById("calendar").innerText =
+        "ERROR: cfg.years is undefined";
+      return;
+    }
+
     const first = cfg.years[0];
     const last  = cfg.years[cfg.years.length - 1];
 
@@ -9,5 +37,12 @@ fetch("./data/calendar-years.json")
       `First year: ${first.year} (${first.start})<br>
        Last year: ${last.year} (${last.end})`;
   })
-  .catch(e => console.error(e));
+  .catch(err => {
+    console.error("❌ Error:", err);
+    document.getElementById("calendar").innerText =
+      "Fetch failed. Check console.";
+  });
 </script>
+
+</body>
+</html>
