@@ -145,6 +145,19 @@ button.day-btn.selected {
 </div>
 
 <script>
+/* ===== DATE SOURCE (TEST or PRODUCTION) ===== */
+
+// 👉 Use this ONLY for testing future behaviour
+// 👉 Keep it empty "" for normal production
+const TEST_DATE = "2026-01-01";  
+// Examples for testing:
+// "2026-01-01"
+// "2026-02-01"
+// "2027-01-01"
+
+// Single source of truth for "today"
+const today = TEST_DATE ? new Date(TEST_DATE) : new Date();
+  
 /* ================= CONFIG ================= */
 const WINDOW_YEARS = 7;
 
