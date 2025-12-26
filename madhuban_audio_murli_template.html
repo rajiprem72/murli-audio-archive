@@ -39,7 +39,32 @@ audio{width:100%}
 ---------------------------- */
 const pad=n=>String(n).padStart(2,"0");
 let lastSelectedBtn=null;
-const langNames={"ta_my":"Tamil","en":"English"};
+const langNames = {
+  "as":"Assamese",
+  "de":"German",
+  "el":"Greek",
+  "en":"English",
+  "es":"Spanish",
+  "fr":"French",
+  "gu":"Gujarati",
+  "hi":"Hindi",
+  "it":"Italian",
+  "kn":"Kannada",
+  "ml":"Malayalam",
+  "mr":"Marathi",
+  "ne":"Nepali",
+  "or":"Odia",
+  "pl":"Polish",
+  "pt":"Portuguese",
+  "pa":"Punjabi",
+  "ro":"Romanian",
+  "si":"Sinhala",
+  "ta_my":"Tamil (Chennai)",
+  "ta":"Tamil (Sri Lanka)",
+  "te":"Telugu",
+  "th":"Thai"
+};
+ 
 
 function attachAudio(btn,y,m,d){
   btn.onclick=function(){
@@ -71,7 +96,7 @@ const monthNames=[
 ];
 const dayNames=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-fetch("data/calendar-years.json")
+fetch("./data/calendar-years.json")  
 .then(r=>r.json())
 .then(cfg=>{
   const today=new Date();
