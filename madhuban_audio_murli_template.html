@@ -5,19 +5,90 @@
 <title>Madhuban Murli Audio Library</title>
 
 <style>
-html{scroll-behavior:smooth}
-body{font-family:Arial;margin:10px;background:#f5f5f5;color:#111}
-h1{text-align:center}
-.year{background:#fff;padding:10px;margin-bottom:20px;border-radius:6px}
-.months{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media(max-width:900px){.months{grid-template-columns:1fr}}
-.month{background:#fafafa;padding:8px;border-radius:6px}
-table{width:100%;border-collapse:collapse;font-size:11px}
-th,td{text-align:center;padding:3px}
-.day-btn{width:100%;padding:4px;border-radius:4px;background:#e7f3ff;border:1px solid #ccc;cursor:pointer}
-.day-btn.selected{background:#2563eb;color:#fff;font-weight:bold}
-#player{max-width:600px;margin:20px auto;padding:10px;background:#fff;border-radius:6px;text-align:center}
-audio{width:100%}
+html { scroll-behavior: smooth; }
+body { font-family: Arial, sans-serif; margin: 10px; background: #f5f5f5; color: #111; }
+h1 { text-align: center; }
+
+#year-links {
+  max-width: 1200px;
+  margin: 0 auto 15px auto;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+#year-links a {
+  margin: 0 10px;
+  font-weight: bold;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.year {
+  background: #ffffff;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+}
+
+.months {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .months { grid-template-columns: 1fr; }
+}
+
+.month {
+  background: #fafafa;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+th, td {
+  padding: 3px;
+  text-align: center;
+}
+
+.day-btn {
+  width: 100%;
+  padding: 4px;
+  border-radius: 4px;
+  background: #e7f3ff;
+  border: 1px solid #cccccc;
+  cursor: pointer;
+}
+
+.day-btn:hover {
+  background: #d0e7ff;
+}
+
+.day-btn.selected {
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+#player {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 6px;
+  text-align: center;
+}
+
+audio { width: 100%; }
 </style>
 </head>
 
@@ -25,8 +96,13 @@ audio{width:100%}
 
 <h1>Madhuban Murli Audio Library</h1>
 
+<!-- YEAR ANCHOR LINKS -->
+<div id="year-links"></div>
+
+<!-- CALENDAR -->
 <div id="calendar"></div>
 
+<!-- PLAYER -->
 <div id="player">
   <p id="selected-date">Click any valid date to play its Murli.</p>
   <audio id="audio" controls></audio>
@@ -34,106 +110,133 @@ audio{width:100%}
 </div>
 
 <script>
-/* ================= AUDIO CODE (UNCHANGED) ================= */
-const pad=n=>String(n).padStart(2,"0");
-let lastSelectedBtn=null;
-const lang="ta_my";
-const langNames={"ta_my":"Tamil"};
+/* ================= AUDIO LOGIC (UNCHANGED) ================= */
+const pad = n => String(n).padStart(2, "0");
+let lastSelectedBtn = null;
 
-function attachAudio(btn,y,m,d){
-  btn.onclick=function(){
-    if(lastSelectedBtn) lastSelectedBtn.classList.remove("selected");
+const lang = "ta_my";
+const langNames = { "ta_my": "Tamil" };
+
+function attachAudio(btn, y, m, d) {
+  btn.onclick = function () {
+    if (lastSelectedBtn) lastSelectedBtn.classList.remove("selected");
     btn.classList.add("selected");
-    lastSelectedBtn=btn;
+    lastSelectedBtn = btn;
 
-    const url=`https://murli.madhuban.org/murlis/${lang}/mp3/murli-${y}-${pad(m+1)}-${pad(d)}.mp3`;
+    const url =
+      `https://murli.madhuban.org/murlis/${lang}/mp3/murli-${y}-${pad(m+1)}-${pad(d)}.mp3`;
 
-    document.getElementById("selected-date").textContent=
+    document.getElementById("selected-date").textContent =
       `Playing: ${pad(d)}-${pad(m+1)}-${y} (${langNames[lang]})`;
 
-    const audio=document.getElementById("audio");
-    audio.src=url;
+    const audio = document.getElementById("audio");
+    audio.src = url;
     audio.play();
 
-    const dl=document.getElementById("download-btn");
-    dl.href=url;
-    dl.style.display="inline-block";
+    const dl = document.getElementById("download-btn");
+    dl.href = url;
+    dl.style.display = "inline-block";
   };
 }
 
 /* ================= CALENDAR LOGIC ================= */
-const monthNames=[
-"January","February","March","April","May","June",
-"July","August","September","October","November","December"
+const monthNames = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December"
 ];
-const dayNames=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
 fetch("./data/calendar-years.json")
-.then(r=>r.json())
-.then(cfg=>{
-  const today=new Date();
-  const currentYear=today.getFullYear();
-  const currentMonth=today.getMonth();
+  .then(r => r.json())
+  .then(cfg => {
 
-  const allYears=cfg.years;
-  const index=allYears.findIndex(y=>y.year===currentYear);
-  const startIndex=Math.max(0,index-6);
-  const visibleYears=allYears.slice(startIndex,index+1);
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth();
 
-  const calendar=document.getElementById("calendar");
+    const allYears = cfg.years;
+    const currentIndex = allYears.findIndex(y => y.year === currentYear);
 
-  visibleYears.forEach(yObj=>{
-    const y=yObj.year;
-    const yearBox=document.createElement("section");
-    yearBox.className="year";
-    yearBox.innerHTML=`<h2>${y}</h2>`;
+    const startIndex = Math.max(0, currentIndex - 6);
+    const visibleYears = allYears.slice(startIndex, currentIndex + 1);
 
-    const months=document.createElement("div");
-    months.className="months";
+    const calendar = document.getElementById("calendar");
+    const yearLinks = document.getElementById("year-links");
 
-    for(let m=0;m<12;m++){
-      if(y===currentYear && m>currentMonth) break;
+    /* -------- YEAR LINKS -------- */
+    visibleYears.forEach(yObj => {
+      const a = document.createElement("a");
+      a.href = "#y" + yObj.year;
+      a.textContent = yObj.year;
+      yearLinks.appendChild(a);
+    });
 
-      const month=document.createElement("div");
-      month.className="month";
-      month.innerHTML=`<h3>${monthNames[m]}</h3>`;
-      const table=document.createElement("table");
+    /* -------- CALENDAR -------- */
+    visibleYears.forEach(yObj => {
+      const y = yObj.year;
 
-      let head="<tr>"+dayNames.map(d=>`<th>${d}</th>`).join("")+"</tr>";
-      table.innerHTML=head;
+      const yearBox = document.createElement("section");
+      yearBox.className = "year";
+      yearBox.id = "y" + y;
+      yearBox.innerHTML = `<h2>${y}</h2>`;
 
-      const firstDay=new Date(y,m,1).getDay();
-      const days=new Date(y,m+1,0).getDate();
-      let day=1;
+      const months = document.createElement("div");
+      months.className = "months";
 
-      for(let w=0;w<6;w++){
-        const tr=document.createElement("tr");
-        for(let d=0;d<7;d++){
-          const td=document.createElement("td");
-          if((w===0&&d<firstDay)||day>days){
-            td.innerHTML="";
-          } else {
-            const btn=document.createElement("button");
-            btn.className="day-btn";
-            btn.textContent=day;
-            attachAudio(btn,y,m,day);
-            td.appendChild(btn);
-            day++;
+      for (let m = 0; m < 12; m++) {
+        if (y === currentYear && m > currentMonth) break;
+
+        const month = document.createElement("div");
+        month.className = "month";
+        month.innerHTML = `<h3>${monthNames[m]}</h3>`;
+
+        const table = document.createElement("table");
+        table.innerHTML =
+          "<tr>" + dayNames.map(d => `<th>${d}</th>`).join("") + "</tr>";
+
+        const firstDay = new Date(y, m, 1).getDay();
+        const daysInMonth = new Date(y, m + 1, 0).getDate();
+        let day = 1;
+
+        for (let w = 0; w < 6; w++) {
+          const tr = document.createElement("tr");
+
+          for (let d = 0; d < 7; d++) {
+            const td = document.createElement("td");
+
+            if ((w === 0 && d < firstDay) || day > daysInMonth) {
+              td.innerHTML = "";
+            } else {
+              const btn = document.createElement("button");
+              btn.className = "day-btn";
+              btn.textContent = day;
+              attachAudio(btn, y, m, day);
+              td.appendChild(btn);
+              day++;
+            }
+            tr.appendChild(td);
           }
-          tr.appendChild(td);
+
+          table.appendChild(tr);
+          if (day > daysInMonth) break;
         }
-        table.appendChild(tr);
-        if(day>days) break;
+
+        month.appendChild(table);
+        months.appendChild(month);
       }
 
-      month.appendChild(table);
-      months.appendChild(month);
-    }
+      yearBox.appendChild(months);
 
-    yearBox.appendChild(months);
-    calendar.appendChild(yearBox);
+      /* GO TOP LINK */
+      const goTop = document.createElement("div");
+      goTop.style.textAlign = "right";
+      goTop.innerHTML =
+        `<a href="#top" style="font-size:12px;font-weight:bold;color:#2563eb;text-decoration:none;">⬆ Go Top</a>`;
+      yearBox.appendChild(goTop);
+
+      calendar.appendChild(yearBox);
+    });
   });
-});
 </script>
 
 </body>
