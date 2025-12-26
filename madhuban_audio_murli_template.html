@@ -149,14 +149,14 @@ button.day-btn.selected {
 
 // 👉 Use this ONLY for testing future behaviour
 // 👉 Keep it empty "" for normal production
-const TEST_DATE = "2027-10-01";  
+//const TEST_DATE = "2027-10-01";  
 // Examples for testing:
 // "2026-01-01"
 // "2026-02-01"
 // "2027-01-01"
 
 // Single source of truth for "today"
-const today = TEST_DATE ? new Date(TEST_DATE) : new Date();
+//const today = TEST_DATE ? new Date(TEST_DATE) : new Date();
   
 /* ================= CONFIG ================= */
 const WINDOW_YEARS = 7;
@@ -184,7 +184,7 @@ const pad=n=>String(n).padStart(2,"0");
 let lastSelectedBtn=null;
 
 /* ================= DATE LOGIC ================= */
-//const today = new Date();
+const today = new Date();
 const currentYear = today.getFullYear();
 const currentMonth = today.getMonth();
 
