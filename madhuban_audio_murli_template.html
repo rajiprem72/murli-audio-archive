@@ -144,20 +144,31 @@ button.day-btn.selected {
   <a id="download-btn" style="display:none;" download>Download MP3</a>
 </div>
 
-  <script>
+<script>
 /* ================= CONFIG ================= */
 const WINDOW_YEARS = 7;
-const CALENDAR_JSON = "data/calendar-years.json";
+
+const calendarFiles = [
+  "data/calendar-2019.json",
+  "data/calendar-2020.json",
+  "data/calendar-2021.json",
+  "data/calendar-2022.json",
+  "data/calendar-2023.json",
+  "data/calendar-2024.json",
+  "data/calendar-2025.json",
+  "data/calendar-2026.json",
+  "data/calendar-2027.json"
+];
 
 const monthNames = [
   "January","February","March","April","May","June",
   "July","August","September","October","November","December"
 ];
 
-const dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-const pad = n => String(n).padStart(2,"0");
+const dayNames=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const pad=n=>String(n).padStart(2,"0");
 
-let lastSelectedBtn = null;
+let lastSelectedBtn=null;
 
 /* ================= DATE LOGIC ================= */
 const today = new Date();
@@ -176,83 +187,76 @@ function monthsToRender(year){
 
 /* ================= CALENDAR ================= */
 async function loadCalendars(){
-  const container = document.getElementById("calendar");
-  const yearLinks = document.getElementById("year-links");
+  const container=document.getElementById("calendar");
+  const yearLinks=document.getElementById("year-links");
 
-  const res = await fetch(CALENDAR_JSON);
-  const data = await res.json();
+  for(const file of calendarFiles){
+    const res = await fetch(file);
+    const data = await res.json();
+    const year = data.year;
 
-  for (const item of data.years) {
-    const year = item.year;
-    if (!shouldRenderYear(year)) continue;
+    if(!shouldRenderYear(year)) continue;
 
-    const link = document.createElement("a");
-    link.href = "#y" + year;
-    link.textContent = year;
+    // year link
+    const link=document.createElement("a");
+    link.href="#y"+year;
+    link.textContent=year;
     yearLinks.appendChild(link);
 
-    const yearBox = document.createElement("section");
-    yearBox.className = "year";
-    yearBox.id = "y" + year;
-    yearBox.innerHTML = `<h2>${year}</h2>`;
+    const yearBox=document.createElement("section");
+    yearBox.className="year";
+    yearBox.id="y"+year;
+    yearBox.innerHTML=`<h2>${year}</h2>`;
 
-    const months = document.createElement("div");
-    months.className = "months";
+    const months=document.createElement("div");
+    months.className="months";
 
     const maxMonths = monthsToRender(year);
 
-    for (let m = 0; m < maxMonths; m++) {
-      const monthDiv = document.createElement("div");
-      monthDiv.className = "month";
-      monthDiv.innerHTML = `<h3>${monthNames[m]}</h3>`;
+    for(let m=0;m<maxMonths;m++){
+      const monthDiv=document.createElement("div");
+      monthDiv.className="month";
+      monthDiv.innerHTML=`<h3>${monthNames[m]}</h3>`;
 
-      const table = document.createElement("table");
-      table.innerHTML =
-        "<thead><tr>" +
-        dayNames.map(d => `<th>${d}</th>`).join("") +
-        "</tr></thead>";
+      const table=document.createElement("table");
+      table.innerHTML="<thead><tr>"+dayNames.map(d=>`<th>${d}</th>`).join("")+"</tr></thead>";
+      const tbody=document.createElement("tbody");
 
-      const tbody = document.createElement("tbody");
-      const firstDay = new Date(year, m, 1).getDay();
-      const daysInMonth = new Date(year, m + 1, 0).getDate();
+      const firstDay=new Date(year,m,1).getDay();
+      const daysInMonth=new Date(year,m+1,0).getDate();
 
-      let day = 1;
-      for (let w = 0; w < 6; w++) {
-        const tr = document.createElement("tr");
-        for (let d = 0; d < 7; d++) {
-          const td = document.createElement("td");
-
-          if ((w === 0 && d < firstDay) || day > daysInMonth) {
-            td.innerHTML = "";
+      let day=1;
+      for(let w=0;w<6;w++){
+        const tr=document.createElement("tr");
+        for(let d=0;d<7;d++){
+          const td=document.createElement("td");
+          if((w===0 && d<firstDay) || day>daysInMonth){
+            td.innerHTML="";
           } else {
-            const btn = document.createElement("button");
-            btn.className = "day-btn";
-            btn.textContent = day;
+            const btn=document.createElement("button");
+            btn.className="day-btn";
+            btn.textContent=day;
 
-            btn.onclick = () => {
-              if (lastSelectedBtn) lastSelectedBtn.classList.remove("selected");
+            btn.onclick=()=>{
+              if(lastSelectedBtn) lastSelectedBtn.classList.remove("selected");
               btn.classList.add("selected");
-              lastSelectedBtn = btn;
+              lastSelectedBtn=btn;
 
-              const lang = document.getElementById("language").value;
-              const url =
-                `https://murli.madhuban.org/murlis/${lang}/mp3/murli-${year}-${pad(m+1)}-${pad(day)}.mp3`;
+              const lang=document.getElementById("language").value;
+              const url=`https://murli.madhuban.org/murlis/${lang}/mp3/murli-${year}-${pad(m+1)}-${pad(day)}.mp3`;
 
-              const audio = document.getElementById("audio");
-              audio.pause();
-              audio.currentTime = 0;
-              audio.src = url;
-              audio.load();
-              audio.play().catch(()=>{});
+              const audio=document.getElementById("audio");
+              audio.src=url;
+              audio.play();
 
-              audio.onerror = () => {
-                document.getElementById("selected-date").textContent =
+              audio.onerror=()=>{
+                document.getElementById("selected-date").textContent=
                   "Murli audio not available for this date.";
               };
 
-              document.getElementById("download-btn").href = url;
-              document.getElementById("download-btn").style.display = "inline";
-              document.getElementById("selected-date").textContent =
+              document.getElementById("download-btn").href=url;
+              document.getElementById("download-btn").style.display="inline";
+              document.getElementById("selected-date").textContent=
                 `Playing: ${pad(day)}-${pad(m+1)}-${year}`;
             };
 
@@ -262,15 +266,14 @@ async function loadCalendars(){
           tr.appendChild(td);
         }
         tbody.appendChild(tr);
-        if (day > daysInMonth) break;
+        if(day>daysInMonth) break;
       }
 
       table.appendChild(tbody);
       monthDiv.appendChild(table);
 
-      if (year === currentYear && m === maxMonths - 1) {
-        monthDiv.innerHTML +=
-          `<div class="jump-top"><a href="#top">⬆ Go Top</a></div>`;
+      if(year === currentYear && m === maxMonths - 1){
+        monthDiv.innerHTML += `<div class="jump-top"><a href="#top">⬆ Go Top</a></div>`;
       }
 
       months.appendChild(monthDiv);
@@ -283,13 +286,11 @@ async function loadCalendars(){
 
 /* ================= LANGUAGE CHANGE ================= */
 document.getElementById("language").addEventListener("change",()=>{
-  if (lastSelectedBtn) lastSelectedBtn.click();
+  if(lastSelectedBtn) lastSelectedBtn.click();
 });
 
-/* ================= INIT ================= */
 loadCalendars();
 </script>
-
 
 </body>
 </html>
