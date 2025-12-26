@@ -71,7 +71,7 @@ const monthNames=[
 ];
 const dayNames=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-fetch("calendar-years.json")
+fetch("data/calendar-years.json")
 .then(r=>r.json())
 .then(cfg=>{
   const today=new Date();
