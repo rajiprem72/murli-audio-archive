@@ -140,6 +140,12 @@ function attachAudio(btn, y, m, d) {
     const dl = document.getElementById("download-btn");
     dl.href = url;
     dl.style.display = "inline-block";
+
+     /* ✅ AUTO-SCROLL TO PLAYER */
+    document.getElementById("player").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
   };
 }
 
