@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html>
-<body>
-<h1>Calendar Test</h1>
-<div id="calendar"></div>
-
 <script>
 fetch("./data/calendar-years.json")
   .then(r => r.json())
   .then(cfg => {
+    const first = cfg.years[0];
+    const last  = cfg.years[cfg.years.length - 1];
+
     document.getElementById("calendar").innerHTML =
-      "Start: " + cfg.startYear + ", End: " + cfg.endYear;
+      `First year: ${first.year} (${first.start})<br>
+       Last year: ${last.year} (${last.end})`;
   })
   .catch(e => console.error(e));
 </script>
-</body>
-</html>
