@@ -5,8 +5,8 @@
 <title>Madhuban Murli Audio Library</title>
 
 <style>
-html { scroll-behavior:smooth; }
-body { font-family:Arial; margin:10px; background:#f5f5f5; color:#111; }
+html{scroll-behavior:smooth}
+body{font-family:Arial;margin:10px;background:#f5f5f5;color:#111}
 h1{text-align:center}
 .year{background:#fff;padding:10px;margin-bottom:20px;border-radius:6px}
 .months{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
@@ -30,41 +30,15 @@ audio{width:100%}
 <div id="player">
   <p id="selected-date">Click any valid date to play its Murli.</p>
   <audio id="audio" controls></audio>
-  <a id="download-btn" style="display:none">Download</a>
+  <a id="download-btn" style="display:none">Download MP3</a>
 </div>
 
 <script>
-/* ---------------------------
-   🔹 AUDIO CODE (UNCHANGED)
----------------------------- */
+/* ================= AUDIO CODE (UNCHANGED) ================= */
 const pad=n=>String(n).padStart(2,"0");
 let lastSelectedBtn=null;
-const langNames = {
-  "as":"Assamese",
-  "de":"German",
-  "el":"Greek",
-  "en":"English",
-  "es":"Spanish",
-  "fr":"French",
-  "gu":"Gujarati",
-  "hi":"Hindi",
-  "it":"Italian",
-  "kn":"Kannada",
-  "ml":"Malayalam",
-  "mr":"Marathi",
-  "ne":"Nepali",
-  "or":"Odia",
-  "pl":"Polish",
-  "pt":"Portuguese",
-  "pa":"Punjabi",
-  "ro":"Romanian",
-  "si":"Sinhala",
-  "ta_my":"Tamil (Chennai)",
-  "ta":"Tamil (Sri Lanka)",
-  "te":"Telugu",
-  "th":"Thai"
-};
- 
+const lang="ta_my";
+const langNames={"ta_my":"Tamil"};
 
 function attachAudio(btn,y,m,d){
   btn.onclick=function(){
@@ -72,7 +46,6 @@ function attachAudio(btn,y,m,d){
     btn.classList.add("selected");
     lastSelectedBtn=btn;
 
-    const lang="ta_my";
     const url=`https://murli.madhuban.org/murlis/${lang}/mp3/murli-${y}-${pad(m+1)}-${pad(d)}.mp3`;
 
     document.getElementById("selected-date").textContent=
@@ -83,35 +56,38 @@ function attachAudio(btn,y,m,d){
     audio.play();
 
     const dl=document.getElementById("download-btn");
-    dl.href=url; dl.style.display="inline-block";
+    dl.href=url;
+    dl.style.display="inline-block";
   };
 }
 
-/* ---------------------------
-   🔹 DYNAMIC CALENDAR LOGIC
----------------------------- */
+/* ================= CALENDAR LOGIC ================= */
 const monthNames=[
 "January","February","March","April","May","June",
 "July","August","September","October","November","December"
 ];
 const dayNames=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-fetch("./data/calendar-years.json")  
+fetch("./data/calendar-years.json")
 .then(r=>r.json())
 .then(cfg=>{
   const today=new Date();
   const currentYear=today.getFullYear();
   const currentMonth=today.getMonth();
 
-  const start=Math.max(cfg.startYear, currentYear-(cfg.windowSize-1));
-  const end=Math.min(cfg.endYear, currentYear);
+  const allYears=cfg.years;
+  const index=allYears.findIndex(y=>y.year===currentYear);
+  const startIndex=Math.max(0,index-6);
+  const visibleYears=allYears.slice(startIndex,index+1);
 
   const calendar=document.getElementById("calendar");
 
-  for(let y=start;y<=end;y++){
+  visibleYears.forEach(yObj=>{
+    const y=yObj.year;
     const yearBox=document.createElement("section");
     yearBox.className="year";
     yearBox.innerHTML=`<h2>${y}</h2>`;
+
     const months=document.createElement("div");
     months.className="months";
 
@@ -123,15 +99,15 @@ fetch("./data/calendar-years.json")
       month.innerHTML=`<h3>${monthNames[m]}</h3>`;
       const table=document.createElement("table");
 
-      let tr="<tr>"+dayNames.map(d=>`<th>${d}</th>`).join("")+"</tr>";
-      table.innerHTML=tr;
+      let head="<tr>"+dayNames.map(d=>`<th>${d}</th>`).join("")+"</tr>";
+      table.innerHTML=head;
 
       const firstDay=new Date(y,m,1).getDay();
       const days=new Date(y,m+1,0).getDate();
       let day=1;
 
       for(let w=0;w<6;w++){
-        const row=document.createElement("tr");
+        const tr=document.createElement("tr");
         for(let d=0;d<7;d++){
           const td=document.createElement("td");
           if((w===0&&d<firstDay)||day>days){
@@ -144,9 +120,9 @@ fetch("./data/calendar-years.json")
             td.appendChild(btn);
             day++;
           }
-          row.appendChild(td);
+          tr.appendChild(td);
         }
-        table.appendChild(row);
+        table.appendChild(tr);
         if(day>days) break;
       }
 
@@ -156,7 +132,7 @@ fetch("./data/calendar-years.json")
 
     yearBox.appendChild(months);
     calendar.appendChild(yearBox);
-  }
+  });
 });
 </script>
 
