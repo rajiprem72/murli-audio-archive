@@ -161,27 +161,7 @@ button.day-btn.selected {
   
 /* ================= CONFIG ================= */
 const WINDOW_YEARS = 7;
-
-const calendarFiles = [
-  "data/calendar-2019.json",
-  "data/calendar-2020.json",
-  "data/calendar-2021.json",
-  "data/calendar-2022.json",
-  "data/calendar-2023.json",
-  "data/calendar-2024.json",
-  "data/calendar-2025.json",
-  "data/calendar-2026.json",
-  "data/calendar-2027.json",
-  "data/calendar-2028.json",
-  "data/calendar-2029.json",
-  "data/calendar-2030.json",
-  "data/calendar-2031.json",
-  "data/calendar-2032.json",
-  "data/calendar-2033.json",
-  "data/calendar-2034.json",
-  "data/calendar-2035.json",
-  "data/calendar-2036.json"
-];
+const CALENDAR_JSON = "data/calendar-years.json";
 
 const monthNames = [
   "January","February","March","April","May","June",
@@ -214,7 +194,7 @@ async function loadCalendars(){
   const yearLinks=document.getElementById("year-links");
 
   for(const file of calendarFiles){
-    const res = await fetch(file);
+    const res = await fetch(CALENDAR_JSON);
     const data = await res.json();
     const year = data.year;
 
