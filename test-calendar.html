@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Calendar Test</h1>
+<div id="calendar"></div>
+
+<script>
+fetch("./data/calendar-years.json")
+  .then(r => r.json())
+  .then(cfg => {
+    document.getElementById("calendar").innerHTML =
+      "Start: " + cfg.startYear + ", End: " + cfg.endYear;
+  })
+  .catch(e => console.error(e));
+</script>
+</body>
+</html>
