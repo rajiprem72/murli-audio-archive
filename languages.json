@@ -20,6 +20,12 @@
     "url": "madhuban-murli-audio-library-Assamese.html"
   },
   {
+    "name": "French",
+    "symbol": "F",
+    "url": "madhuban-murli-audio-library-French.html"
+  },
+   
+  {
     "name": "German",
     "symbol": "D",
     "url": "madhuban-murli-audio-library-German.html"
@@ -30,20 +36,17 @@
     "url": "madhuban-murli-audio-library-Greek.html"
   },
   {
-    "name": "Spanish",
-    "symbol": "E",
-    "url": "madhuban-murli-audio-library-Spanish.html"
-  },
-  {
-    "name": "French",
-    "symbol": "F",
-    "url": "madhuban-murli-audio-library-French.html"
-  },
-  {
     "name": "Gujarati",
     "symbol": "ગ",
     "url": "madhuban-murli-audio-library-Gujarati.html"
   },
+  
+  {
+    "name": "Italian",
+    "symbol": "it",
+    "url": "madhuban-murli-audio-library-Italian.html"
+  },
+  
   {
     "name": "Kannada",
     "symbol": "ಕ",
@@ -54,6 +57,59 @@
     "symbol": "മ",
     "url": "madhuban-murli-audio-library-Malayalam.html"
   },
+  {
+    "name": "Marathi",
+    "symbol": "म",
+    "url": "madhuban-murli-audio-library-Marathi.html"
+  },
+  {
+    "name": "Nepali",
+    "symbol": "न",
+    "url": "madhuban-murli-audio-library-Nepali.html"
+  },
+  {
+    "name": "Odiya",
+    "symbol": "ଓ",
+    "url": "madhuban-murli-audio-library-Odia.html"
+  },
+  {
+    "name": "Polish",
+    "symbol": "P",
+    "url": "madhuban-murli-audio-library-Polish.html"
+  },
+ {
+    "name": "Portuguese",
+    "symbol": "P",
+    "url": "madhuban-murli-audio-library-Portuguese.html"
+  },
+ {
+    "name": "Punjabi",
+    "symbol": "ਪ",
+    "url": "madhuban-murli-audio-library-Punjabi.html"
+  },
+ {
+    "name": "Romanian",
+    "symbol": "R",
+    "url": "madhuban-murli-audio-library-Romanian.html"
+  },
+{
+    "name": "Sinhala",
+    "symbol": "ස",
+    "url": "madhuban-murli-audio-library-Sinhala.html"
+  },
+
+  {
+    "name": "Tamil (Lanka)",
+    "symbol": "அ",
+    "url": "madhuban-murli-audio-library-Tamil-Lanka.html"
+  },
+  
+  {
+    "name": "Spanish",
+    "symbol": "E",
+    "url": "madhuban-murli-audio-library-Spanish.html"
+  },
+  
   {
     "name": "Telugu",
     "symbol": "త",
