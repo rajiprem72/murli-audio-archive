@@ -15,6 +15,29 @@
   </video>
 </div>
 <div id="mainContent" style="display:none;">
+  <!-- Background Music -->
+<audio id="bgMusic" loop>
+  <source src="bg_music.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<!-- Music Toggle Button -->
+<button id="musicToggle" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: none;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+">
+  🔇 Music Off
+</button>
+
   
 <!-- ===============================
      HERO CAROUSEL
@@ -448,5 +471,38 @@ window.addEventListener("load", () => {
   }, 5000); // 5 seconds
 });
 </script>
+<script>
+const bgMusic = document.getElementById("bgMusic");
+const toggleBtn = document.getElementById("musicToggle");
+
+let musicStarted = false;
+
+// Start music after first user interaction
+function startMusicOnce() {
+  if (!musicStarted) {
+    bgMusic.volume = 0.3; // soft background
+    bgMusic.play().catch(() => {});
+    musicStarted = true;
+    toggleBtn.textContent = "🔊 Music On";
+  }
+}
+
+document.addEventListener("click", startMusicOnce, { once: true });
+document.addEventListener("scroll", startMusicOnce, { once: true });
+document.addEventListener("touchstart", startMusicOnce, { once: true });
+
+// Toggle ON / OFF
+toggleBtn.addEventListener("click", (e) => {
+  e.stopPropagation(); // avoid retriggering start
+  if (bgMusic.paused) {
+    bgMusic.play();
+    toggleBtn.textContent = "🔊 Music On";
+  } else {
+    bgMusic.pause();
+    toggleBtn.textContent = "🔇 Music Off";
+  }
+});
+</script>
+  
 </body>
 </html>
