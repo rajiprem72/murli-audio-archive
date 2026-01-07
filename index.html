@@ -7,6 +7,15 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+<!-- INTRO VIDEO OVERLAY -->
+<div id="introVideoContainer">
+  <video id="introVideo" autoplay muted playsinline>
+    <source src="intro.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+<div id="mainContent" style="display:none;">
+  
 <!-- ===============================
      HERO CAROUSEL
 ================================ -->
@@ -430,6 +439,14 @@ fetch("special_cards.json")
   });
 </script>
 
-
+</div>
+<script>
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("introVideoContainer").style.display = "none";
+    document.getElementById("mainContent").style.display = "block";
+  }, 5000); // 5 seconds
+});
+</script>
 </body>
 </html>
