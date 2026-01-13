@@ -514,6 +514,34 @@ toggleBtn.addEventListener("click", (e) => {
   }
 });
 </script>
+
+<script>
+  const v = document.getElementById("introVideo");
+
+  // set source like this instead of <source>
+  v.src = "intro.mp4";
+  v.load();
+
+  function forcePlay() {
+    const p = v.play();
+    if (p && p.catch) {
+      p.catch(() => {
+        // if autoplay is blocked, play on first touch
+        const kick = () => v.play().catch(()=>{});
+        window.addEventListener("touchstart", kick, { once: true, passive: true });
+      });
+    }
+  }
+
+  v.addEventListener("loadeddata", forcePlay);
+  v.addEventListener("canplay", forcePlay);
+
+  v.addEventListener("ended", () => {
+    document.getElementById("introVideoContainer").style.display = "none";
+    // show your page content here if you hid it
+    // document.getElementById("mainContent").style.display = "block";
+  });
+</script>
   
 </body>
 </html>
