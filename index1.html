@@ -9,12 +9,46 @@
 <body>
 <!-- INTRO VIDEO OVERLAY -->
 <div id="introVideoContainer">
-  <video id="introVideo" autoplay muted playsinline>
-    <source src="intro.mp4" type="video/mp4">
+  <video
+    id="introVideo"
+    autoplay
+    muted
+    playsinline
+    webkit-playsinline
+    preload="auto"
+    disablepictureinpicture
+    controlslist="nodownload noplaybackrate noremoteplayback"
+  >
+    <!-- fallback text only -->
     Your browser does not support the video tag.
   </video>
 </div>
+
+
 <div id="mainContent" style="display:none;">
+  <!-- Background Music -->
+<audio id="bgMusic" loop>
+  <source src="bg_music.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<!-- Music Toggle Button -->
+<button id="musicToggle" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: none;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+">
+  ? Music Off
+</button>
+
   
 <!-- ===============================
      HERO CAROUSEL
@@ -139,20 +173,27 @@
 
 <div class="ypv">
 
-  <div class="ypv-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/deutsch.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/deutsch.jpg">
-    <div class="event-title">Deutsch</div>
+  <div class="ypv-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/hindi.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/hindi.jpg">
+    <div class="event-title">Hindi</div>
   </div>
 
+  <div class="ypv-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/tamil.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/tamil.jpg">
+    <div class="event-title">Tamil</div>
+  </div>
+
+  
   <div class="ypv-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/english.jpg')">
     <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/english.jpg">
     <div class="event-title">English</div>
   </div>
 
-  <div class="ypv-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/hindi.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/hindi.jpg">
-    <div class="event-title">Hindi</div>
+    <div class="ypv-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/deutsch.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/deutsch.jpg">
+    <div class="event-title">Deutsch</div>
   </div>
+
 
   <div class="ypv-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/kannada.jpg')">
     <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/kannada.jpg">
@@ -174,10 +215,6 @@
     <div class="event-title">Sinhala</div>
   </div>
 
-  <div class="ypv-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/tamil.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/tamil.jpg">
-    <div class="event-title">Tamil</div>
-  </div>
 
   <div class="ypv-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/telugu.jpg')">
     <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/ypv/telugu.jpg">
@@ -191,21 +228,32 @@
 
 <div class="daily-calendar">
 
-  <!-- English Calendar -->
-  <div class="daily-calendar-card"
-       onclick="openEventImage('calendar_english/07-01.jpg')">
-    <img class="daily-calendar-img"
-         src="calendar_english/07-01.jpg"
-         alt="English Calendar">
-  </div>
 
   <!-- Hindi Calendar -->
   <div class="daily-calendar-card"
-       onclick="openEventImage('calendar_hindi/07-01.jpg')">
+       onclick="openEventImage('calendar_hindi/15-01.jpg')">
     <img class="daily-calendar-img"
-         src="calendar_hindi/07-01.jpg"
+         src="calendar_hindi/15-01.jpg"
          alt="Hindi Calendar">
   </div>
+
+<!-- Tamil Calendar -->
+  <div class="daily-calendar-card"
+       onclick="openEventImage('calendar_tamil/15-01.jpg')">
+    <img class="daily-calendar-img"
+         src="calendar_tamil/15-01.jpg"
+         alt="Tamil Calendar">
+  </div>
+
+    <!-- English Calendar -->
+  <div class="daily-calendar-card"
+       onclick="openEventImage('calendar_english/15-01.jpg')">
+    <img class="daily-calendar-img"
+         src="calendar_english/15-01.jpg"
+         alt="English Calendar">
+  </div>
+
+  
 </div>
 
 
@@ -214,35 +262,39 @@
 
 <div class="gist">
 
- <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/07-01-english.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/07-01-english.jpg">
-    <div class="event-title">English</div>
-  </div>
 
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/07-01-hindi.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/07-01-hindi.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-hindi.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-hindi.jpg">
     <div class="event-title">Hindi</div>
   </div>
 
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/07-01-kannada.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/07-01-kannada.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-tamil.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-tamil.jpg">
+    <div class="event-title">Tamil</div>
+  </div>
+
+  
+ <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-english.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-english.jpg">
+    <div class="event-title">English</div>
+  </div>
+
+  
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-kannada.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-kannada.jpg">
     <div class="event-title">Kannada</div>
   </div>
 
  
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/07-01-malayalam.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/07-01-malayalam.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-malayalam.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-malayalam.jpg">
     <div class="event-title">Malayalam</div>
   </div>
 
  
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/07-01-tamil.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/07-01-tamil.jpg">
-    <div class="event-title">Tamil</div>
-  </div>
 
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/07-01-telugu.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/07-01-telugu.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-telugu.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-telugu.jpg">
     <div class="event-title">Telugu</div>
   </div>
 </div>
@@ -254,35 +306,39 @@
 
 <div class="manifestation">
 
- <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/07-01-english.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/07-01-english.jpg">
-    <div class="event-title">English</div>
-  </div>
 
-  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/07-01-hindi.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/07-01-hindi.jpg">
+  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-hindi.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-hindi.jpg">
     <div class="event-title">Hindi</div>
   </div>
 
-  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/07-01-kannada.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/07-01-kannada.jpg">
+  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-tamil.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-tamil.jpg">
+    <div class="event-title">Tamil</div>
+  </div>
+
+  
+  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-english.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-english.jpg">
+    <div class="event-title">English</div>
+  </div>
+
+  
+  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-kannada.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-kannada.jpg">
     <div class="event-title">Kannada</div>
   </div>
 
  
-  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/07-01-malayalam.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/07-01-malayalam.jpg">
+  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-malayalam.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-malayalam.jpg">
     <div class="event-title">Malayalam</div>
   </div>
 
  
-  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/07-01-tamil.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/07-01-tamil.jpg">
-    <div class="event-title">Tamil</div>
-  </div>
 
-  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/07-01-telugu.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/07-01-telugu.jpg">
+  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-telugu.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-telugu.jpg">
     <div class="event-title">Telugu</div>
   </div>
 
@@ -448,5 +504,66 @@ window.addEventListener("load", () => {
   }, 5000); // 5 seconds
 });
 </script>
+<script>
+const bgMusic = document.getElementById("bgMusic");
+const toggleBtn = document.getElementById("musicToggle");
+
+let musicStarted = false;
+
+// Start music after first user interaction
+function startMusicOnce() {
+  if (!musicStarted) {
+    bgMusic.volume = 0.3; // soft background
+    bgMusic.play().catch(() => {});
+    musicStarted = true;
+    toggleBtn.textContent = "? Music On";
+  }
+}
+
+document.addEventListener("click", startMusicOnce, { once: true });
+document.addEventListener("scroll", startMusicOnce, { once: true });
+document.addEventListener("touchstart", startMusicOnce, { once: true });
+
+// Toggle ON / OFF
+toggleBtn.addEventListener("click", (e) => {
+  e.stopPropagation(); // avoid retriggering start
+  if (bgMusic.paused) {
+    bgMusic.play();
+    toggleBtn.textContent = "? Music On";
+  } else {
+    bgMusic.pause();
+    toggleBtn.textContent = "? Music Off";
+  }
+});
+</script>
+
+<script>
+  const v = document.getElementById("introVideo");
+
+  // set source like this instead of <source>
+  v.src = "intro.mp4";
+  v.load();
+
+  function forcePlay() {
+    const p = v.play();
+    if (p && p.catch) {
+      p.catch(() => {
+        // if autoplay is blocked, play on first touch
+        const kick = () => v.play().catch(()=>{});
+        window.addEventListener("touchstart", kick, { once: true, passive: true });
+      });
+    }
+  }
+
+  v.addEventListener("loadeddata", forcePlay);
+  v.addEventListener("canplay", forcePlay);
+
+  v.addEventListener("ended", () => {
+    document.getElementById("introVideoContainer").style.display = "none";
+    // show your page content here if you hid it
+    // document.getElementById("mainContent").style.display = "block";
+  });
+</script>
+  
 </body>
 </html>
