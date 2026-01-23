@@ -615,8 +615,27 @@ toggleBtn.addEventListener("click", (e) => {
   const v = document.getElementById("introVideo");
 
   // set source like this instead of <source>
-  v.src = "intro.mp4";
-  v.load();
+ v.style.display = "none";     // ✅ keep hidden while loading
+v.poster = "";                // ✅ no poster/preview
+
+v.src = "intro.mp4";
+v.load();
+
+// ✅ Show only when video has frame data (prevents default placeholder icon)
+const showAndPlay = () => {
+  v.style.display = "block";
+  const p = v.play();
+  if (p) p.catch(() => {});
+};
+
+v.addEventListener("loadeddata", showAndPlay, { once: true });
+v.addEventListener("canplay", showAndPlay, { once: true });
+
+// Extra safety for some WebViews
+setTimeout(() => {
+  if (v.readyState >= 2) showAndPlay();  // HAVE_CURRENT_DATA
+}, 200);
+
 
   function forcePlay() {
     const p = v.play();
