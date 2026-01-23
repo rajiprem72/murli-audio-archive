@@ -8,21 +8,21 @@
 </head>
 <body>
 <!-- INTRO VIDEO OVERLAY -->
-<video
-  id="introVideo"
-  autoplay
-  muted
-  playsinline
-  webkit-playsinline
-  preload="auto"
-  poster=""
-  disablepictureinpicture
-  controlslist="nodownload noplaybackrate noremoteplayback"
-  style="display:none; width:100%; height:100%; object-fit:cover; background:#000;"
->
-  Your browser does not support the video tag.
-</video>
-
+<!-- INTRO VIDEO OVERLAY -->
+<div id="introVideoContainer" style="position:fixed; inset:0; background:#000; z-index:99999;">
+  <video
+    id="introVideo"
+    autoplay
+    muted
+    playsinline
+    webkit-playsinline
+    preload="auto"
+    style="width:100%; height:100%; object-fit:cover; background:#000;"
+  >
+    Your browser does not support the video tag.
+  </video>
+</div>
+  
 
 <div id="mainContent" style="display:none;">
   <!-- Background Music -->
@@ -613,51 +613,47 @@ toggleBtn.addEventListener("click", (e) => {
 
 <script>
   const v = document.getElementById("introVideo");
+  const main = document.getElementById("mainContent");
+  const introWrap = document.getElementById("introVideoContainer"); // may be null
 
-  // set source like this instead of <source>
- v.style.display = "none";     // ✅ keep hidden while loading
-v.poster = "";                // ✅ no poster/preview
-
-v.src = "intro.mp4";
-v.load();
-
-// ✅ Show only when video has frame data (prevents default placeholder icon)
-const showAndPlay = () => {
-  v.style.display = "block";
-  const p = v.play();
-  if (p) p.catch(() => {});
-};
-
-v.addEventListener("loadeddata", showAndPlay, { once: true });
-v.addEventListener("canplay", showAndPlay, { once: true });
-
-// Extra safety for some WebViews
-setTimeout(() => {
-  if (v.readyState >= 2) showAndPlay();  // HAVE_CURRENT_DATA
-}, 200);
-
-
-  function forcePlay() {
-    const p = v.play();
-    if (p && p.catch) {
-      p.catch(() => {
-        // if autoplay is blocked, play on first touch
-        const kick = () => v.play().catch(()=>{});
-        window.addEventListener("touchstart", kick, { once: true, passive: true });
-      });
-    }
+  function showMain() {
+    if (introWrap) introWrap.style.display = "none"; // safe
+    v.style.display = "none";
+    main.style.display = "block";
   }
 
-  v.addEventListener("loadeddata", forcePlay);
-  v.addEventListener("canplay", forcePlay);
+  // Load intro video
+  v.style.display = "none";
+  v.poster = "";
+  v.src = "intro.mp4";
+  v.load();
 
-  v.addEventListener("ended", () => {
-    document.getElementById("introVideoContainer").style.display = "none";
-    // show your page content here if you hid it
-    // document.getElementById("mainContent").style.display = "block";
-  });
+  // Show video when ready
+  const showAndPlay = () => {
+    v.style.display = "block";
+    v.play().catch(() => {});
+  };
+
+  v.addEventListener("loadeddata", showAndPlay, { once: true });
+  v.addEventListener("canplay", showAndPlay, { once: true });
+
+  // If autoplay blocked, play on first user interaction
+  const kick = () => v.play().catch(() => {});
+  window.addEventListener("click", kick, { once: true, passive: true });
+  window.addEventListener("touchstart", kick, { once: true, passive: true });
+
+  // When done (or if video fails), show the page
+  v.addEventListener("ended", showMain, { once: true });
+  v.addEventListener("error", showMain, { once: true });
+
+  // Safety: if video hangs mid-way, show page anyway after 8 seconds
+  setTimeout(() => {
+    if (main.style.display === "none") showMain();
+  }, 8000);
 </script>
-<section id="get-in-touch" style="padding:40px 16px; text-align:center;">
+
+  
+  <section id="get-in-touch" style="padding:40px 16px; text-align:center;">
   <style>
     #get-in-touch{
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
