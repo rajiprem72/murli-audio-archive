@@ -8,7 +8,7 @@
 </head>
 <body>
 <!-- INTRO VIDEO OVERLAY -->
-<div id="introVideoContainer">
+<div id="introVideoContainer" style="position:fixed; inset:0; background:#000; z-index:99999;">
   <video
     id="introVideo"
     autoplay
@@ -16,14 +16,12 @@
     playsinline
     webkit-playsinline
     preload="auto"
-    disablepictureinpicture
-    controlslist="nodownload noplaybackrate noremoteplayback"
+    style="width:100%; height:100%; object-fit:cover; background:#000;"
   >
-    <!-- fallback text only -->
     Your browser does not support the video tag.
   </video>
 </div>
-
+  
 
 <div id="mainContent" style="display:none;">
   <!-- Background Music -->
@@ -108,7 +106,7 @@
 
 <div class="sakara-box">
 <div class="lang-section-title">
-  Sakara Vani Collections
+  Sakara Vani Collections (23)
 </div>
 
  <a
@@ -126,7 +124,7 @@
 
 <div class="sakara-box">  
 <div class="lang-section-title">
-  Available Resources
+  Available Resources (4)
 </div>
 
    <a
@@ -169,7 +167,7 @@
 -->
   
 <div class="sakara-box">  
-<div class="events-section-title">Thoughts Shape Your Life</div>
+<div class="events-section-title">Thoughts Shape Your Life (9)</div>
 
 <div class="ypv">
 
@@ -227,22 +225,22 @@
 
 
 <div class="sakara-box">  
-<div class="events-section-title">Daily Thoughts</div>
+<div class="events-section-title">Daily Thoughts (3)</div>
 
 <div class="ypv">
 
-  <div class="ypv-card" onclick="openEventImage('calendar_hindi/15-01.jpg')">
-    <img src="calendar_hindi/15-01.jpg">
+  <div class="ypv-card" onclick="openEventImage('calendar_hindi/24-01.jpg')">
+    <img src="calendar_hindi/24-01.jpg">
     <div class="event-title">Hindi</div>
   </div>
 
-  <div class="ypv-card" onclick="openEventImage('calendar_tamil/15-01.jpg')">
-    <img src="calendar_tamil/15-01.jpg" width="620" height="356">
+  <div class="ypv-card" onclick="openEventImage('calendar_tamil/24-01.jpg')">
+    <img src="calendar_tamil/24-01.jpg">
     <div class="event-title">Tamil</div>
   </div>
 
-  <div class="ypv-card" onclick="openEventImage('calendar_english/15-01.jpg')">
-    <img src="calendar_english/15-01.jpg">
+  <div class="ypv-card" onclick="openEventImage('calendar_english/24-01.jpg')">
+    <img src="calendar_english/24-01.jpg">
     <div class="event-title">English</div>
   </div>
 
@@ -252,67 +250,111 @@
 <!-- Daily Thoughts Section ends here -->
 
 <!-- Shrimath Section starts here -->
+<div class="sakara-box">
+  <div class="events-section-title">Shrimath - 365 (11)</div>
 
+  <div class="ypv">
 
-<div class="events-section-title">Shrimath- 365</div>
+    <div class="ypv-card" onclick="openEventImage('shrimath_hindi/24-01.jpg')">
+      <img src="shrimath_hindi/24-01.jpg" alt="Shrimath Hindi">
+      <div class="event-title">Hindi</div>
+    </div>
 
-<div class="daily-calendar">
+    <div class="ypv-card" onclick="openEventImage('shrimath_tamil/24-01.jpg')">
+      <img src="shrimath_tamil/24-01.jpg" alt="Shrimath Tamil">
+      <div class="event-title">Tamil</div>
+    </div>
 
+    <div class="ypv-card" onclick="openEventImage('shrimath_english/24-01.jpg')">
+      <img src="shrimath_english/24-01.jpg" alt="Shrimath English">
+      <div class="event-title">English</div>
+    </div>
 
-  <!-- Tamil Shrimath 365 -->
-  <div class="daily-calendar-card"
-       onclick="openEventImage('shrimath_tamil/15-01.jpg')">
-    <img class="daily-calendar-img"
-         src="shrimath_tamil/15-01.jpg"
-         alt="Shrimath 365 In Tamil">
+    <div class="ypv-card" onclick="openEventImage('shrimath_assamese/24-01.jpg')">
+      <img src="shrimath_assamese/24-01.jpg" alt="Shrimath Assamese">
+      <div class="event-title">Assamese</div>
+    </div>
+
+    <div class="ypv-card" onclick="openEventImage('shrimath_gujarathi/24-01.jpg')">
+      <img src="shrimath_gujarathi/24-01.jpg" alt="Shrimath Gujarathi">
+      <div class="event-title">Gujarathi</div>
+    </div>
+
+    <div class="ypv-card" onclick="openEventImage('shrimath_kannada/24-01.jpg')">
+      <img src="shrimath_kannada/24-01.jpg" alt="Shrimath Kannada">
+      <div class="event-title">Kannada</div>
+    </div>
+
+    <div class="ypv-card" onclick="openEventImage('shrimath_malayalam/24-01.jpg')">
+      <img src="shrimath_malayalam/24-01.jpg" alt="Shrimath Malayalam">
+      <div class="event-title">Malayalam</div>
+    </div>
+
+    <div class="ypv-card" onclick="openEventImage('shrimath_marathi/24-01.jpg')">
+      <img src="shrimath_marathi/24-01.jpg" alt="Shrimath Marathi">
+      <div class="event-title">Marathi</div>
+    </div>
+
+    <div class="ypv-card" onclick="openEventImage('shrimath_odiya/24-01.jpg')">
+      <img src="shrimath_odiya/24-01.jpg" alt="Shrimath Odiya">
+      <div class="event-title">Odiya</div>
+    </div>
+
+    <div class="ypv-card" onclick="openEventImage('shrimath_punjabi/24-01.jpg')">
+      <img src="shrimath_punjabi/24-01.jpg" alt="Shrimath Punjabi">
+      <div class="event-title">Punjabi</div>
+    </div>
+
+    <div class="ypv-card" onclick="openEventImage('shrimath_telugu/24-01.jpg')">
+      <img src="shrimath_telugu/24-01.jpg" alt="Shrimath Telugu">
+      <div class="event-title">Telugu</div>
+    </div>
+
   </div>
-
 </div>
 
-<!-- Shrimath Section ends  here -->
-
-
-
+<!-- Shrimath- 365 Section ends here -->
+  
 <!-- Raja Yoga GIST Section starts here -->
 
 <div class="sakara-box">  
-<div class="events-section-title">Raja Yoga - GIST</div>
+<div class="events-section-title">Raja Yoga - GIST (6)</div>
 
 <div class="gist">
 
 
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-hindi.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-hindi.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-hindi.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-hindi.jpg">
     <div class="event-title">Hindi</div>
   </div>
 
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-tamil.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-tamil.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-tamil.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-tamil.jpg">
     <div class="event-title">Tamil</div>
   </div>
 
   
- <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-english.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-english.jpg">
+ <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-english.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-english.jpg">
     <div class="event-title">English</div>
   </div>
 
   
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-kannada.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-kannada.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-kannada.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-kannada.jpg">
     <div class="event-title">Kannada</div>
   </div>
 
  
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-malayalam.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-malayalam.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-malayalam.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-malayalam.jpg">
     <div class="event-title">Malayalam</div>
   </div>
 
  
 
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-telugu.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/15-01-telugu.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-telugu.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-telugu.jpg">
     <div class="event-title">Telugu</div>
   </div>
 </div>
@@ -324,43 +366,43 @@
 <!-- Raja Yoga Manifestation Section starts here -->
 
 <div class="sakara-box">  
-<div class="events-section-title">Raja Yoga - MANIFESTATION</div>
+<div class="events-section-title">Raja Yoga - MANIFESTATION (6)</div>
 
 <div class="manifestation">
 
 
-  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-hindi.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-hindi.jpg">
+  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/24-01-hindi.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/24-01-hindi.jpg">
     <div class="event-title">Hindi</div>
   </div>
 
-  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-tamil.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-tamil.jpg">
+  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/24-01-tamil.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/24-01-tamil.jpg">
     <div class="event-title">Tamil</div>
   </div>
 
   
-  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-english.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-english.jpg">
+  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/24-01-english.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/24-01-english.jpg">
     <div class="event-title">English</div>
   </div>
 
   
-  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-kannada.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-kannada.jpg">
+  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/24-01-kannada.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/24-01-kannada.jpg">
     <div class="event-title">Kannada</div>
   </div>
 
  
-  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-malayalam.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-malayalam.jpg">
+  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/24-01-malayalam.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/24-01-malayalam.jpg">
     <div class="event-title">Malayalam</div>
   </div>
 
  
 
-  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-telugu.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/15-01-telugu.jpg">
+  <div class="manifestation-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/24-01-telugu.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/manifestation/24-01-telugu.jpg">
     <div class="event-title">Telugu</div>
   </div>
 
@@ -532,8 +574,9 @@ window.addEventListener("load", () => {
   setTimeout(() => {
     document.getElementById("introVideoContainer").style.display = "none";
     document.getElementById("mainContent").style.display = "block";
-  }, 5000); // 5 seconds
+  }, 5000);
 });
+
 </script>
 <script>
 const bgMusic = document.getElementById("bgMusic");
@@ -570,31 +613,192 @@ toggleBtn.addEventListener("click", (e) => {
 
 <script>
   const v = document.getElementById("introVideo");
+  const main = document.getElementById("mainContent");
+  const introWrap = document.getElementById("introVideoContainer"); // may be null
 
-  // set source like this instead of <source>
+  function showMain() {
+    if (introWrap) introWrap.style.display = "none"; // safe
+    v.style.display = "none";
+    main.style.display = "block";
+  }
+
+  // Load intro video
+  v.style.display = "none";
+  v.poster = "";
   v.src = "intro.mp4";
   v.load();
 
-  function forcePlay() {
-    const p = v.play();
-    if (p && p.catch) {
-      p.catch(() => {
-        // if autoplay is blocked, play on first touch
-        const kick = () => v.play().catch(()=>{});
-        window.addEventListener("touchstart", kick, { once: true, passive: true });
-      });
-    }
-  }
+  // Show video when ready
+  const showAndPlay = () => {
+    v.style.display = "block";
+    v.play().catch(() => {});
+  };
 
-  v.addEventListener("loadeddata", forcePlay);
-  v.addEventListener("canplay", forcePlay);
+  v.addEventListener("loadeddata", showAndPlay, { once: true });
+  v.addEventListener("canplay", showAndPlay, { once: true });
 
-  v.addEventListener("ended", () => {
-    document.getElementById("introVideoContainer").style.display = "none";
-    // show your page content here if you hid it
-    // document.getElementById("mainContent").style.display = "block";
-  });
+  // If autoplay blocked, play on first user interaction
+  const kick = () => v.play().catch(() => {});
+  window.addEventListener("click", kick, { once: true, passive: true });
+  window.addEventListener("touchstart", kick, { once: true, passive: true });
+
+  // When done (or if video fails), show the page
+  v.addEventListener("ended", showMain, { once: true });
+  v.addEventListener("error", showMain, { once: true });
+
+  // Safety: if video hangs mid-way, show page anyway after 8 seconds
+  setTimeout(() => {
+    if (main.style.display === "none") showMain();
+  }, 8000);
 </script>
+
+  
+  <section id="get-in-touch" style="padding:40px 16px; text-align:center;">
+  <style>
+    #get-in-touch{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:#f4f2f6;
+      color:#1f1f1f;
+    }
+    #get-in-touch h2{
+      margin:0 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    #get-in-touch h2 .accent{ color:#6a2ca0; }
+    #get-in-touch .sub{
+      margin:0 auto 26px;
+      max-width:760px;
+      color:#5a5a5a;
+      font-size: clamp(16px, 2.2vw, 22px);
+      line-height:1.4;
+    }
+    #get-in-touch .card{
+      margin:0 auto;
+      max-width:760px;
+      background:#fff;
+      border-radius:18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      padding:18px;
+    }
+    #get-in-touch .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    @media (min-width:640px){
+      #get-in-touch .grid{ grid-template-columns:1fr 1fr; }
+    }
+    #get-in-touch .btn{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      border:0;
+      width:100%;
+      text-align:left;
+      padding:16px;
+      border-radius:16px;
+      background:#f7f6fa;
+      cursor:pointer;
+      transition: transform .08s ease, box-shadow .08s ease, background .08s ease;
+    }
+    #get-in-touch .btn:hover{
+      background:#f1eff8;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(0,0,0,.06);
+    }
+    #get-in-touch .icon{
+      width:54px; height:54px;
+      border-radius:14px;
+      display:grid; place-items:center;
+      background:#fff;
+      box-shadow: 0 6px 16px rgba(0,0,0,.06);
+      flex:0 0 54px;
+    }
+    #get-in-touch .label{
+      font-size:18px;
+      font-weight:700;
+      margin:0;
+      line-height:1.1;
+    }
+    #get-in-touch .value{
+      margin:6px 0 0;
+      color:#3b3b3b;
+      font-size:15px;
+      font-weight:600;
+      word-break: break-word;
+    }
+    #get-in-touch .hint{
+      margin-top:14px;
+      color:#5a5a5a;
+      font-size:13px;
+    }
+  </style>
+
+  <h2>Get in <span class="accent">Touch</span></h2>
+  <p class="sub">Have questions or need assistance? We?re here to help you on your Raja Yoga journey.</p>
+
+  <div class="card">
+    <div class="grid">
+      <!-- EMAIL: user sends to you -->
+      <button class="btn" type="button" onclick="openEmail()">
+        <div class="icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+            <path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-9Z" stroke="#111" stroke-width="1.8"/>
+            <path d="M6.5 7.2 12 11.2l5.5-4" stroke="#111" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <p class="label">Email</p>
+          <p class="value">premanandhan@gmail.com</p>
+        </div>
+      </button>
+
+      <!-- WHATSAPP: user sends to you (editable prefill) -->
+      <button class="btn" type="button" onclick="openWhatsApp()">
+        <div class="icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+            <path d="M20 11.8c0 4.5-3.7 8.2-8.2 8.2-1.4 0-2.8-.4-4-.9L4 20l1-3.5c-.7-1.2-1.1-2.6-1.1-4.1C3.9 7.9 7.6 4.2 12 4.2c4.5 0 8 3.6 8 7.6Z" stroke="#111" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M9.2 9.3c.2-.3.4-.3.6-.2l.7.3c.2.1.3.3.2.6l-.3.7c-.1.2 0 .4.1.6.6.9 1.5 1.7 2.5 2.3.2.1.4.1.6 0l.7-.4c.2-.1.4 0 .6.1l.6.4c.2.1.3.4.2.6-.3.8-1 .9-1.6 1-1 .1-2.6-.6-4-1.9-1.4-1.2-2.4-2.8-2.4-3.9 0-.6.2-1.2.5-1.6Z" fill="#111"/>
+          </svg>
+        </div>
+        <div>
+          <p class="label">WhatsApp</p>
+          <p class="value">+91 98844 86609</p>
+        </div>
+      </button>
+    </div>
+
+    <p class="hint">
+    <!--  WhatsApp message is just a sample ? the user can edit it before sending. -->
+    </p>
+  </div>
+
+  <script>
+    // Email recipient = YOU
+    const YOUR_EMAIL = "premanandhan@gmail.com";
+
+    // WhatsApp recipient = YOU (digits only)
+    const YOUR_WHATSAPP = "919884486609";
+
+    // Sample message (user can edit before sending)
+   // const SAMPLE_WA_TEXT = "Om Shanti, I am interested to learn Raja Yoga Meditation";
+
+    //function openEmail(){
+     // const subject = "Interested in Raja Yoga Meditation";
+      //const body = "Om Shanti,%0D%0A%0D%0AI am interested to learn Raja Yoga Meditation.%0D%0A%0D%0ARegards,";
+      //window.location.href = `mailto:${encodeURIComponent(YOUR_EMAIL)}?subject=${encodeURIComponent(subject)}&body=${body}`;
+    //}
+
+    //function openWhatsApp(){
+     // const url = `https://wa.me/${YOUR_WHATSAPP}?text=${encodeURIComponent(SAMPLE_WA_TEXT)}`;
+     // window.open(url, "_blank", "noopener,noreferrer");
+   // }
+  
+  </script>
+</section>
+  
   
 </body>
 </html>
