@@ -279,7 +279,7 @@
     window.openYennamReels = openYennam;
 
     // optional: confirm script loaded
-    // showDebug("✅ main.js loaded. Tap the Yennam button.");
+    showDebug("✅ main.js loaded. Tap the Yennam button.");
   }
 
   if (document.readyState === "loading") {
