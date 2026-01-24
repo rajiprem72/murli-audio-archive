@@ -94,11 +94,11 @@ const YENNAM_API_KEY = "AIzaSyDiFQhzkFVdYOz4NNcLiOGu--u6Lh2MvjY";
       try{
         hideDebug();
 
-        if (!API_KEY || API_KEY.includes("PASTE_")) {
-          showDebug("❌ API KEY not pasted in main.js");
-          setStatus("API key missing");
-          return;
-        }
+  if (!YENNAM_API_KEY || YENNAM_API_KEY.includes("PASTE_")) {
+    showDebug("❌ API KEY not pasted in main.js");
+    setStatus("API key missing");
+    return;
+  }
 
         setStatus("Checking YouTube API…");
         await waitForYT();
