@@ -323,38 +323,38 @@
 <div class="gist">
 
 
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-hindi.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-hindi.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/25-01-hindi.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/25-01-hindi.jpg">
     <div class="event-title">Hindi</div>
   </div>
 
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-tamil.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-tamil.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/25-01-tamil.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/25-01-tamil.jpg">
     <div class="event-title">Tamil</div>
   </div>
 
   
- <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-english.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-english.jpg">
+ <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/25-01-english.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/25-01-english.jpg">
     <div class="event-title">English</div>
   </div>
 
   
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-kannada.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-kannada.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/25-01-kannada.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/25-01-kannada.jpg">
     <div class="event-title">Kannada</div>
   </div>
 
  
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-malayalam.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-malayalam.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/25-01-malayalam.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/25-01-malayalam.jpg">
     <div class="event-title">Malayalam</div>
   </div>
 
  
 
-  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-telugu.jpg')">
-    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/24-01-telugu.jpg">
+  <div class="gist-card" onclick="openEventImage('https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/25-01-telugu.jpg')">
+    <img src="https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist/25-01-telugu.jpg">
     <div class="event-title">Telugu</div>
   </div>
 </div>
@@ -442,7 +442,7 @@
 
 
 <!-- Yennam Pol Vazhu Player code starts here -->
-<!-- ✅ Yennam Pol Vazhvu – Fullscreen Random Auto Playlist -->
+<!-- ? Yennam Pol Vazhvu ? Fullscreen Random Auto Playlist -->
 
   
 <section id="yennamReelsSection" style="display:none;">
@@ -457,7 +457,7 @@
     color:#fff; font:14px system-ui;
     background:linear-gradient(to bottom, rgba(0,0,0,.65), rgba(0,0,0,0));
     display:flex; align-items:center; justify-content:space-between; gap:10px;">
-    <div id="yennamStatus" style="opacity:.85;">Loading playlist…</div>
+    <div id="yennamStatus" style="opacity:.85;">Loading playlist?</div>
     <button id="yennamCloseBtn" type="button" style="
       appearance:none; border:1px solid rgba(255,255,255,.25);
       background:rgba(0,0,0,.35); color:#fff;
@@ -485,7 +485,7 @@
   </div>
 </section>
 <!--  
-<button id="yennamPlayBtn" type="button">▶ Yennam Pol Vazhvu (Random Auto Play) </button>
+<button id="yennamPlayBtn" type="button">? Yennam Pol Vazhvu (Random Auto Play) </button>
 -->  
  
 
@@ -636,17 +636,17 @@ const toggleBtn = document.getElementById("musicToggle");
 
 let musicStarted = false;
 
-// ✅ NEW: lock music auto-start when Yennam is open
+// ? NEW: lock music auto-start when Yennam is open
 window.YENNAM_MUSIC_LOCK = false;
 
 // Start music after first user interaction
 function startMusicOnce() {
-  if (window.YENNAM_MUSIC_LOCK) return;   // ✅ don't start while Yennam playing
+  if (window.YENNAM_MUSIC_LOCK) return;   // ? don't start while Yennam playing
   if (!musicStarted) {
     bgMusic.volume = 0.3; // soft background
     bgMusic.play().catch(() => {});
     musicStarted = true;
-    toggleBtn.textContent = "🎵 Music On";
+    toggleBtn.textContent = "? Music On";
   }
 }
 
@@ -659,16 +659,16 @@ toggleBtn.addEventListener("click", (e) => {
   e.stopPropagation(); // avoid retriggering start
   if (bgMusic.paused) {
     bgMusic.play().catch(()=>{});
-    toggleBtn.textContent = "🎵 Music On";
+    toggleBtn.textContent = "? Music On";
   } else {
     bgMusic.pause();
-    toggleBtn.textContent = "🎵 Music Off";
+    toggleBtn.textContent = "? Music Off";
   }
 });
 
-// ✅ helper so other scripts can sync UI
+// ? helper so other scripts can sync UI
 window.updateMusicToggleUI = function(){
-  toggleBtn.textContent = bgMusic.paused ? "🎵 Music Off" : "🎵 Music On";
+  toggleBtn.textContent = bgMusic.paused ? "? Music Off" : "? Music On";
 };
 </script>
 
