@@ -274,6 +274,14 @@
     }
 
     yCloseBtn.addEventListener("click", closeYennam);
+    const playBtn = $("yennamPlayBtn");
+if (playBtn) {
+  playBtn.addEventListener("click", openYennam);
+  showDebug("✅ Button wired. Tap to open Yennam.");
+} else {
+  showDebug("❌ Play button not found: add id='yennamPlayBtn' to the button.");
+}
+
 
     // make callable from HTML button onclick
     window.openYennamReels = openYennam;
