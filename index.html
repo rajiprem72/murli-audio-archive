@@ -458,7 +458,20 @@
       Close
     </button>
   </div>
-  <div id="yennamError" style="display:none;padding:16px;color:white;font:14px system-ui;"></div>
+  <div id="yennamDebug" style="
+  display:none;
+  position:fixed;
+  left:12px; right:12px; top:60px;
+  padding:12px;
+  background:rgba(0,0,0,.75);
+  color:#fff;
+  font:14px system-ui;
+  z-index:999999;
+  border-radius:12px;">
+</div>
+
+
+  
   <div id="yennamFeed" style="
     height:100vh; overflow-y:scroll;
     scroll-snap-type:y mandatory; background:#000;">
@@ -830,7 +843,7 @@ toggleBtn.addEventListener("click", (e) => {
 </section>
   
 <script src="https://www.youtube.com/iframe_api"></script>
-<script src="main.js"></script>
+<script src="main.js?v=5"></script>
   
 </body>
 </html>
