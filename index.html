@@ -441,6 +441,36 @@
 </div>
 
 
+<!-- Yennam Pol Vazhu Player code starts here -->
+<!-- ✅ Yennam Pol Vazhvu – Fullscreen Random Auto Playlist -->
+<section id="yennamReelsSection" style="display:none;">
+  <div id="yennamTopbar" style="
+    position:fixed; top:0; left:0; right:0;
+    padding:10px 12px; z-index:99999;
+    color:#fff; font:14px system-ui;
+    background:linear-gradient(to bottom, rgba(0,0,0,.65), rgba(0,0,0,0));
+    display:flex; align-items:center; justify-content:space-between; gap:10px;">
+    <div id="yennamStatus" style="opacity:.85;">Loading playlist…</div>
+    <button id="yennamCloseBtn" type="button" style="
+      appearance:none; border:1px solid rgba(255,255,255,.25);
+      background:rgba(0,0,0,.35); color:#fff;
+      padding:8px 10px; border-radius:10px; font:13px system-ui;">
+      Close
+    </button>
+  </div>
+
+  <div id="yennamFeed" style="
+    height:100vh; overflow-y:scroll;
+    scroll-snap-type:y mandatory; background:#000;">
+  </div>
+</section>
+<button type="button" onclick="openYennamReels()">
+  ▶ Yennam Pol Vazhvu (Random Auto Play)
+</button>
+
+
+<!-- Yennam Pol Vazhu Player code ends here -->  
+  
 <!-- Raja Yoga Vishwa Seva WhatsApp Channel Joining link ends here -->
 
 <!-- Sakar/Avyakt Info Section starts here -->
@@ -799,6 +829,8 @@ toggleBtn.addEventListener("click", (e) => {
   </script>
 </section>
   
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="main.js"></script>
   
 </body>
 </html>
