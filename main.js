@@ -1,224 +1,153 @@
+
+(() => {
 // ✅ Config
 const YENNAM_PLAYLIST_ID = "PLejqAWAjVfCRQDkOL-kgqRMFAE7vreADd";
 const YENNAM_API_KEY = "AIzaSyDiFQhzkFVdYOz4NNcLiOGu--u6Lh2MvjY";
 
-// ✅ Elements
-const ySection = document.getElementById("yennamReelsSection");
-const yFeed = document.getElementById("yennamFeed");
-const yStatus = document.getElementById("yennamStatus");
-const yCloseBtn = document.getElementById("yennamCloseBtn");
+  function $(id){ return document.getElementById(id); }
 
-let yVideoIds = [];
-let yOrder = [];
-let yPos = 0;
-let yPlayers = [];
-let yObserver = null;
-let yBuilt = false;
-
-function ySetStatus(msg){ yStatus.textContent = msg; }
-
-// ---------- Random helpers ----------
-function shuffleInPlace(arr){
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+  function showDebug(msg){
+    const box = $("yennamDebug");
+    if (!box) return alert(msg);
+    box.style.display = "block";
+    box.textContent = msg;
   }
-  return arr;
-}
 
-function buildNewRandomOrder(){
-  yOrder = shuffleInPlace([...Array(yVideoIds.length).keys()]);
-  yPos = 0;
-}
-
-function currentIndex(){
-  return yOrder[yPos] ?? 0;
-}
-
-function nextIndex(){
-  yPos++;
-  if (yPos >= yOrder.length) buildNewRandomOrder(); // reshuffle after one full cycle
-  return currentIndex();
-}
-
-// Open / close
-function openYennamReels(){
-  ySection.style.display = "block";
-  document.documentElement.style.overflow = "hidden";
-  document.body.style.overflow = "hidden";
-
-  if (!yBuilt) {
-    yBuilt = true;
-    setTimeout(() => yInitYennam(), 150);  // ✅ wait for layout
-  } else {
-    buildNewRandomOrder();
-    yScrollToIndex(currentIndex(), false);
-    yPlayIndex(currentIndex());
+  function hideDebug(){
+    const box = $("yennamDebug");
+    if (!box) return;
+    box.style.display = "none";
+    box.textContent = "";
   }
-}
-window.openYennamReels = openYennamReels;
 
-function closeYennamReels(){
-  yPlayers.forEach(p => { try { p.pauseVideo(); } catch(e){} });
-  ySection.style.display = "none";
-  document.documentElement.style.overflow = "";
-  document.body.style.overflow = "";
-}
-yCloseBtn.addEventListener("click", closeYennamReels);
+  function wait(ms){ return new Promise(r => setTimeout(r, ms)); }
 
-// Fetch playlist videos
-async function yFetchPlaylistVideoIds(){
-  let pageToken = "";
-  const ids = [];
-
-  while (true) {
-    const url =
-      "https://www.googleapis.com/youtube/v3/playlistItems" +
-      "?part=contentDetails" +
-      "&maxResults=50" +
-      "&playlistId=" + encodeURIComponent(YENNAM_PLAYLIST_ID) +
-      "&key=" + encodeURIComponent(YENNAM_API_KEY) +
-      (pageToken ? "&pageToken=" + encodeURIComponent(pageToken) : "");
-
-    const res = await fetch(url);
-    if (!res.ok) {
-      const txt = await res.text().catch(()=> "");
-      throw new Error("YouTube API error: " + res.status + " " + txt);
+  async function waitForYT(maxMs=10000){
+    const start = Date.now();
+    while (!(window.YT && window.YT.Player)) {
+      if (Date.now() - start > maxMs) throw new Error("YouTube iframe API not loaded");
+      await wait(80);
     }
-    const data = await res.json();
-    (data.items || []).forEach(it => {
-      const vid = it?.contentDetails?.videoId;
-      if (vid) ids.push(vid);
-    });
-
-    pageToken = data.nextPageToken;
-    if (!pageToken) break;
   }
-  return ids;
-}
 
-// Build feed
-function yBuildFeed(ids){
-  yFeed.innerHTML = "";
-  yPlayers = [];
+  async function fetchPlaylistIds(){
+    let pageToken = "";
+    const ids = [];
 
-  ids.forEach((id, i) => {
-    const item = document.createElement("div");
-    item.style.cssText = "height:100vh;scroll-snap-align:start;position:relative;";
-    item.dataset.index = String(i);
+    while (true) {
+      const url =
+        "https://www.googleapis.com/youtube/v3/playlistItems" +
+        "?part=contentDetails&maxResults=50" +
+        "&playlistId=" + encodeURIComponent(PLAYLIST_ID) +
+        "&key=" + encodeURIComponent(API_KEY) +
+        (pageToken ? "&pageToken=" + encodeURIComponent(pageToken) : "");
 
-    const box = document.createElement("div");
-    box.id = "yennam_player_" + i;
-    box.style.cssText = "width:100%;height:100%;";
-
-    const spinner = document.createElement("div");
-    spinner.textContent = "Loading…";
-    spinner.style.cssText =
-      "position:absolute;inset:0;display:flex;align-items:center;justify-content:center;" +
-      "color:#fff;font:14px system-ui;opacity:.85;";
-
-    item.appendChild(box);
-    item.appendChild(spinner);
-    yFeed.appendChild(item);
-  });
-}
-
-// Wait for YouTube iframe API
-function yWaitForYT(){
-  return new Promise(resolve => {
-    const t = setInterval(() => {
-      if (window.YT && window.YT.Player) { clearInterval(t); resolve(); }
-    }, 60);
-  });
-}
-
-// Create players
-function yCreatePlayers(){
-  const items = [...yFeed.children];
-
-  yVideoIds.forEach((id, i) => {
-    yPlayers[i] = new YT.Player("yennam_player_" + i, {
-      videoId: id,
-      playerVars: { playsinline: 1, rel: 0, modestbranding: 1 },
-      events: {
-        onReady: () => {
-          const sp = items[i]?.querySelector("div:nth-child(2)");
-          if (sp) sp.style.display = "none";
-        },
-        onStateChange: (e) => {
-          if (e.data === YT.PlayerState.ENDED) yGoNextRandom();
-        }
+      const res = await fetch(url);
+      if (!res.ok) {
+        const txt = await res.text().catch(()=> "");
+        throw new Error("Playlist fetch failed: " + res.status + " " + txt);
       }
-    });
-  });
-}
 
-// Scroll + play
-function yScrollToIndex(idx, smooth=true){
-  const el = yFeed.children[idx];
-  if (!el) return;
-  el.scrollIntoView({ behavior: smooth ? "smooth" : "auto" });
-}
+      const data = await res.json();
+      (data.items || []).forEach(it => {
+        const vid = it?.contentDetails?.videoId;
+        if (vid) ids.push(vid);
+      });
 
-function yPlayIndex(idx){
-  yPlayers.forEach((p, j) => { if (j !== idx) { try { p.pauseVideo(); } catch(e){} }});
-  try { yPlayers[idx]?.playVideo(); } catch(e){}
-  ySetStatus(`Random ${yPos + 1} / ${yOrder.length}`);
-}
+      pageToken = data.nextPageToken;
+      if (!pageToken) break;
+    }
 
-function yGoNextRandom(){
-  const idx = nextIndex();
-  yScrollToIndex(idx, true);
-  setTimeout(() => yPlayIndex(idx), 450);
-}
+    return ids;
+  }
 
-// Observer (user swipe support)
-function ySetupObserver(){
-  if (yObserver) { try { yObserver.disconnect(); } catch(e){} }
+  function setup(){
+    // Elements (after DOM is ready)
+    const section = $("yennamReelsSection");
+    const feed = $("yennamFeed");
+    const status = $("yennamStatus");
+    const closeBtn = $("yennamCloseBtn");
 
-  yObserver = new IntersectionObserver((entries) => {
-    entries.forEach((en) => {
-      if (!en.isIntersecting) return;
-      const visibleIdx = Number(en.target.dataset.index);
-      const foundPos = yOrder.indexOf(visibleIdx);
-      if (foundPos >= 0) yPos = foundPos;
-      yPlayIndex(visibleIdx);
-    });
-  }, { threshold: 0.70 });
-
-  [...yFeed.children].forEach(el => yObserver.observe(el));
-}
-
-// Init
-async function yInitYennam(){
-  try{
-    yHideErr();
-
-    if (!YENNAM_API_KEY || YENNAM_API_KEY.includes("PASTE_")) {
-      ySetStatus("API key missing");
-      yShowErr("Please paste your YouTube API key in main.js (YENNAM_API_KEY).");
+    if (!section || !feed || !status || !closeBtn) {
+      showDebug("❌ Yennam section elements not found. Check IDs in index.html.");
       return;
     }
-    ...
-  } catch(err){
-    console.error(err);
-    ySetStatus("Error");
-    yShowErr("Error: " + (err?.message || err));
+
+    function setStatus(t){ status.textContent = t; }
+
+    function close(){
+      section.style.display = "none";
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+    closeBtn.addEventListener("click", close);
+
+    // expose open function to button onclick
+    window.openYennamReels = async function open(){
+      section.style.display = "block";
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+
+      // Force layout before creating players
+      await wait(150);
+
+      try{
+        hideDebug();
+
+        if (!API_KEY || API_KEY.includes("PASTE_")) {
+          showDebug("❌ API KEY not pasted in main.js");
+          setStatus("API key missing");
+          return;
+        }
+
+        setStatus("Checking YouTube API…");
+        await waitForYT();
+        setStatus("Fetching playlist…");
+
+        const ids = await fetchPlaylistIds();
+        if (!ids.length) {
+          showDebug("❌ No videos found in playlist.");
+          setStatus("No videos found");
+          return;
+        }
+
+        setStatus(`Loaded ${ids.length} videos. Starting…`);
+
+        // Build ONLY first item first (to confirm playback works)
+        feed.innerHTML = "";
+        const first = document.createElement("div");
+        first.style.cssText = "height:100vh; background:#000; position:relative;";
+        const box = document.createElement("div");
+        box.id = "yennam_player_test";
+        box.style.cssText = "width:100%;height:100%;";
+        first.appendChild(box);
+        feed.appendChild(first);
+
+        const p = new YT.Player("yennam_player_test", {
+          videoId: ids[Math.floor(Math.random()*ids.length)],
+          playerVars: { playsinline: 1, rel: 0, modestbranding: 1 },
+          events: {
+            onReady: () => setStatus("Playing (test)…"),
+            onError: (e) => showDebug("❌ Player error: " + e.data)
+          }
+        });
+
+      } catch(err){
+        showDebug("❌ " + (err?.message || err));
+        setStatus("Error");
+        console.error(err);
+      }
+    };
+
+    // Confirm script executed
+    showDebug("✅ main.js loaded. Tap the Yennam button.");
   }
-}
 
-
-
-const yErr = document.getElementById("yennamError");
-function yShowErr(msg){
-  if (!yErr) return;
-  yErr.style.display = "block";
-  yErr.textContent = msg;
-}
-function yHideErr(){
-  if (!yErr) return;
-  yErr.style.display = "none";
-  yErr.textContent = "";
-}
-
+  // Ensure DOM ready before reading elements
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setup);
+  } else {
+    setup();
+  }
+})();
 
