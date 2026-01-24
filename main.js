@@ -38,8 +38,8 @@ const YENNAM_API_KEY = "AIzaSyDiFQhzkFVdYOz4NNcLiOGu--u6Lh2MvjY";
       const url =
         "https://www.googleapis.com/youtube/v3/playlistItems" +
         "?part=contentDetails&maxResults=50" +
-        "&playlistId=" + encodeURIComponent(PLAYLIST_ID) +
-        "&key=" + encodeURIComponent(API_KEY) +
+        "&playlistId=" + encodeURIComponent(YENNAM_PLAYLIST_ID) +
+        "&key=" + encodeURIComponent(YENNAM_API_KEY) +
         (pageToken ? "&pageToken=" + encodeURIComponent(pageToken) : "");
 
       const res = await fetch(url);
