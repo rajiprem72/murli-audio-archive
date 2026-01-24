@@ -621,19 +621,24 @@ window.addEventListener("load", () => {
 });
 
 </script>
+
 <script>
 const bgMusic = document.getElementById("bgMusic");
 const toggleBtn = document.getElementById("musicToggle");
 
 let musicStarted = false;
 
+// ✅ NEW: lock music auto-start when Yennam is open
+window.YENNAM_MUSIC_LOCK = false;
+
 // Start music after first user interaction
 function startMusicOnce() {
+  if (window.YENNAM_MUSIC_LOCK) return;   // ✅ don't start while Yennam playing
   if (!musicStarted) {
     bgMusic.volume = 0.3; // soft background
     bgMusic.play().catch(() => {});
     musicStarted = true;
-    toggleBtn.textContent = "? Music On";
+    toggleBtn.textContent = "🎵 Music On";
   }
 }
 
@@ -645,15 +650,22 @@ document.addEventListener("touchstart", startMusicOnce, { once: true });
 toggleBtn.addEventListener("click", (e) => {
   e.stopPropagation(); // avoid retriggering start
   if (bgMusic.paused) {
-    bgMusic.play();
-    toggleBtn.textContent = "? Music On";
+    bgMusic.play().catch(()=>{});
+    toggleBtn.textContent = "🎵 Music On";
   } else {
     bgMusic.pause();
-    toggleBtn.textContent = "? Music Off";
+    toggleBtn.textContent = "🎵 Music Off";
   }
 });
+
+// ✅ helper so other scripts can sync UI
+window.updateMusicToggleUI = function(){
+  toggleBtn.textContent = bgMusic.paused ? "🎵 Music Off" : "🎵 Music On";
+};
 </script>
 
+
+  
 <script>
   const v = document.getElementById("introVideo");
   const main = document.getElementById("mainContent");
