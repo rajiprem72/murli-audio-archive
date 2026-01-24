@@ -1,6 +1,6 @@
 // ✅ Config
 const YENNAM_PLAYLIST_ID = "PLejqAWAjVfCRQDkOL-kgqRMFAE7vreADd";
-const YENNAM_API_KEY = "PASTE_YOUR_API_KEY_HERE";
+const YENNAM_API_KEY = "AIzaSyDiFQhzkFVdYOz4NNcLiOGu--u6Lh2MvjY";
 
 // ✅ Elements
 const ySection = document.getElementById("yennamReelsSection");
@@ -49,7 +49,7 @@ function openYennamReels(){
 
   if (!yBuilt) {
     yBuilt = true;
-    yInitYennam();
+    setTimeout(() => yInitYennam(), 150);  // ✅ wait for layout
   } else {
     buildNewRandomOrder();
     yScrollToIndex(currentIndex(), false);
@@ -192,30 +192,33 @@ function ySetupObserver(){
 // Init
 async function yInitYennam(){
   try{
+    yHideErr();
+
     if (!YENNAM_API_KEY || YENNAM_API_KEY.includes("PASTE_")) {
-      ySetStatus("Please paste your YouTube API key in main.js (YENNAM_API_KEY).");
+      ySetStatus("API key missing");
+      yShowErr("Please paste your YouTube API key in main.js (YENNAM_API_KEY).");
       return;
     }
-
-    ySetStatus("Loading playlist…");
-    yVideoIds = await yFetchPlaylistVideoIds();
-    if (!yVideoIds.length) { ySetStatus("No videos found in playlist."); return; }
-
-    ySetStatus(`Loaded ${yVideoIds.length} videos…`);
-    yBuildFeed(yVideoIds);
-
-    await yWaitForYT();
-    yCreatePlayers();
-
-    buildNewRandomOrder();
-    ySetupObserver();
-
-    const first = currentIndex();
-    yScrollToIndex(first, false);
-    yPlayIndex(first);
-
+    ...
   } catch(err){
     console.error(err);
-    ySetStatus("Error: " + (err?.message || err));
+    ySetStatus("Error");
+    yShowErr("Error: " + (err?.message || err));
   }
 }
+
+
+
+const yErr = document.getElementById("yennamError");
+function yShowErr(msg){
+  if (!yErr) return;
+  yErr.style.display = "block";
+  yErr.textContent = msg;
+}
+function yHideErr(){
+  if (!yErr) return;
+  yErr.style.display = "none";
+  yErr.textContent = "";
+}
+
+
