@@ -587,26 +587,27 @@ footer {
 .sakara-vani-global {
     position: relative;
 }
+.sakara-box {
+    position: relative;   /* 🔑 THIS IS THE KEY */
+}
 
 .arrow-container {
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-    position: relative;
-    overflow: visible !important;
-    z-index: 10;
+    margin-top: 16px;
+    position: relative;   /* NOT absolute */
+    z-index: 5;
 }
 
 .arrow {
     width: 120px !important;
-    height: auto !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    height: auto;
+    display: block;
     animation: arrowMove 1.6s ease-in-out infinite alternate;
 }
+
+
 @keyframes arrowMove {
     from {
         transform: translateX(-30px);
