@@ -596,24 +596,24 @@ footer {
 }
 
 .arrow-container {
-        width: 4cm;       /* container width */
-        overflow: hidden;
-        position: relative;
-    }
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}
 
-    .arrow {
-        position: relative;
-        width: auto;
-        height: 40px;     /* adjust as needed */
-        animation: moveArrow 2s ease-in-out infinite alternate;
-    }
+.arrow {
+    width: 80px;          /* MAKE IT VISIBLE */
+    height: auto;
+    animation: arrowMove 1.5s ease-in-out infinite alternate;
+}
 
-    @keyframes moveArrow {
-        from {
-            transform: translateX(0);
-        }
-        to {
-            transform: translateX(1cm); /* move 1 cm to the right */
-        }
+@keyframes arrowMove {
+    from {
+        transform: translateX(-1cm);
     }
+    to {
+        transform: translateX(1cm);
+    }
+}
 
