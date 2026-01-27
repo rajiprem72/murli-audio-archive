@@ -584,6 +584,16 @@ footer {
 } why my languages.json load vertically when it is expected to load horizontally
 
 /* sliding arrow*/
+.sakara-vani-global {
+    position: relative;
+}
+
+.arrow-container {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
 .arrow-container {
         width: 4cm;       /* container width */
