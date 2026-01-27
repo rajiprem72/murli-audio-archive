@@ -588,7 +588,7 @@ footer {
     position: relative;
 }
 .sakara-box {
-    position: relative;
+    position: absolute;
     padding-bottom: 6px;   /* ⬅️ reduce height */
 }
 
