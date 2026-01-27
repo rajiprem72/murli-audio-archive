@@ -582,3 +582,28 @@ footer {
   font-size: 13px;
   font-weight: 600;
 } why my languages.json load vertically when it is expected to load horizontally
+
+/* sliding arrow*/
+
+.arrow-container {
+        width: 4cm;       /* container width */
+        overflow: hidden;
+        position: relative;
+    }
+
+    .arrow {
+        position: relative;
+        width: auto;
+        height: 40px;     /* adjust as needed */
+        animation: moveArrow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes moveArrow {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(1cm); /* move 1 cm to the right */
+        }
+    }
+
