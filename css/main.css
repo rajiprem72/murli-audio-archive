@@ -594,22 +594,24 @@ footer {
     justify-content: center;
     align-items: center;
     margin: 20px 0;
+    position: relative;
+    overflow: visible !important;
+    z-index: 10;
 }
 
 .arrow {
-    width: 120px !important;   /* FORCE SIZE */
-    max-width: 120px;
-    height: auto;
-    display: block;
+    width: 120px !important;
+    height: auto !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     animation: arrowMove 1.6s ease-in-out infinite alternate;
 }
-
-.arrow {
-    border: 2px solid red;
+@keyframes arrowMove {
+    from {
+        transform: translateX(-30px);
+    }
+    to {
+        transform: translateX(30px);
+    }
 }
-
-
-.arrow {
-    width: 150px !important;
-}
-
