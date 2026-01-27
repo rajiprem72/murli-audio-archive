@@ -588,31 +588,28 @@ footer {
     position: relative;
 }
 .sakara-box {
-    position: relative;   /* 🔑 THIS IS THE KEY */
+    position: relative;
+    padding-bottom: 12px;   /* ⬅️ reduce height */
 }
 
 .arrow-container {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 16px;
-    position: relative;   /* NOT absolute */
-    z-index: 5;
+    margin-top: 8px;     /* ⬅️ was too large before */
+    margin-bottom: 4px;  /* ⬅️ keep it compact */
 }
 
 .arrow {
-    width: 120px !important;
+    width: 100px !important;  /* visible but not huge */
     height: auto;
-    display: block;
-    animation: arrowMove 1.6s ease-in-out infinite alternate;
+    animation: arrowMove 1.4s ease-in-out infinite alternate;
 }
-
-
 @keyframes arrowMove {
     from {
-        transform: translateX(-30px);
+        transform: translateX(-24px);
     }
     to {
-        transform: translateX(30px);
+        transform: translateX(24px);
     }
 }
