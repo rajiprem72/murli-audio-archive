@@ -589,31 +589,27 @@ footer {
 }
 
 .arrow-container {
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.arrow-container {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 16px;
+    align-items: center;
+    margin: 20px 0;
 }
 
 .arrow {
-    width: 80px;          /* MAKE IT VISIBLE */
+    width: 120px !important;   /* FORCE SIZE */
+    max-width: 120px;
     height: auto;
-    animation: arrowMove 1.5s ease-in-out infinite alternate;
+    display: block;
+    animation: arrowMove 1.6s ease-in-out infinite alternate;
 }
 
-@keyframes arrowMove {
-    from {
-        transform: translateX(-1cm);
-    }
-    to {
-        transform: translateX(1cm);
-    }
+.arrow {
+    border: 2px solid red;
+}
+
+
+.arrow {
+    width: 150px !important;
 }
 
