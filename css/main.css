@@ -589,15 +589,15 @@ footer {
 }
 .sakara-box {
     position: absolute;
-    padding-bottom: 6px;   /* ⬅️ reduce height */
+    padding-bottom: 12px;   /* ⬅️ reduce height */
 }
 
 .arrow-container {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 4px;     /* ⬅️ was too large before */
-    margin-bottom: 2px;  /* ⬅️ keep it compact */
+    margin-top: 8px;     /* ⬅️ was too large before */
+    margin-bottom: 4px;  /* ⬅️ keep it compact */
 }
 
 .arrow {
