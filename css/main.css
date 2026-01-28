@@ -1,12 +1,14 @@
 /* =====================================================
    GLOBAL STYLES
 ===================================================== */
-<style>
+
 html, body {
   margin: 0;
-  height: 100%;
-  background: #000;
-  overflow: hidden;
+  background: #f5f5f5;
+  color: #111;
+  width: 100%;
+  overflow-x: hidden;   /* prevent sideways page scroll */
+  overflow-y: auto;     /* allow vertical scrolling */ 
 }
 
 #introVideoContainer {
@@ -25,7 +27,6 @@ html, body {
   object-position: center;
   background: #000;
 }
-</style>
 
 
 body {
@@ -66,17 +67,6 @@ h1 {
 /* =====================================================
    LANGUAGE / RESOURCE CARDS
 ===================================================== */
-.lang-card {
-  min-width: 140px;
-  background: #fff;
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  flex-shrink: 0;
-  cursor: pointer;
-  transition: transform 0.15s;
-}
 
 .lang-card:hover {
   transform: scale(1.05);
@@ -582,4 +572,19 @@ footer {
   font-size: 13px;
   font-weight: 600;
 } why my languages.json load vertically when it is expected to load horizontally
+
+
+.sakara-vani-global {
+  display: block;            /* IMPORTANT */
+}
+
+.lang-carousel {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+}
+
 
