@@ -34,51 +34,40 @@
 <body>
 
 <div class="video-container">
-  <iframe id="youtubePlayer"
-    loading="lazy"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
+  <iframe
+  width="100%"
+  height="500"
+  src="https://www.youtube.com/embed/videoseries?list=PLejqAWAjVfCT4HENHmsdb4jHGdtj3D5EP"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen>
+</iframe>
+  
 </div>
 <script>
-  const apiKey = "AIzaSyDiFQhzkFVdYOz4NNcLiOGu--u6Lh2Mvj";   // ⚠ Replace with your API key
-  const playlistId = "PLejqAWAjVfCT4HENHmsdb4jHGdtj3D5EP";
-
   async function loadLatestVideo() {
-    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,status&maxResults=10&playlistId=${playlistId}&key=${apiKey}`;
+
+    const channelId = "UCUdlewvf5aiwwG5AQ2v3Y0Q";
+    const rssUrl = `https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
 
     try {
-      const response = await fetch(url);
+      const response = await fetch(rssUrl);
       const data = await response.json();
 
-      if (!data.items || data.items.length === 0) return;
+      if (data.items && data.items.length > 0) {
+        const videoLink = data.items[0].link;
+        const videoId = videoLink.split("v=")[1];
 
-      tryNextVideo(data.items, 0);
+        document.getElementById("youtubePlayer").src =
+          `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
+      }
 
     } catch (error) {
-      console.error("API Error:", error);
+      console.error("Error loading video:", error);
     }
-  }
-
-  function tryNextVideo(items, index) {
-    if (index >= items.length) {
-      console.log("No public videos found.");
-      return;
-    }
-
-    const videoId = items[index].snippet.resourceId.videoId;
-    const iframe = document.getElementById("youtubePlayer");
-
-    iframe.src = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
-
-    // If video fails to load (private), try next
-    iframe.onerror = function () {
-      tryNextVideo(items, index + 1);
-    };
   }
 
   loadLatestVideo();
 </script>
-
 </body>
 </html>
