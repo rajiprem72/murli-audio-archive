@@ -626,13 +626,42 @@ fetch("special_cards.json")
 
 </div>
 <script>
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    document.getElementById("introVideoContainer").style.display = "none";
-    document.getElementById("mainContent").style.display = "block";
-  }, 5000);
-});
+const v = document.getElementById("introVideo");
+const main = document.getElementById("mainContent");
+const introWrap = document.getElementById("introVideoContainer");
 
+// 🔐 Check if intro already played in this session
+if (sessionStorage.getItem("introPlayed")) {
+  // Skip intro
+  introWrap.style.display = "none";
+  main.style.display = "block";
+} else {
+
+  function showMain() {
+    sessionStorage.setItem("introPlayed", "true"); // Mark as played
+    introWrap.style.display = "none";
+    main.style.display = "block";
+  }
+
+  // Load intro video
+  v.src = "intro.mp4";
+  v.load();
+
+  const playVideo = () => {
+    v.play().catch(()=>{});
+  };
+
+  v.addEventListener("canplay", playVideo, { once: true });
+  v.addEventListener("ended", showMain, { once: true });
+  v.addEventListener("error", showMain, { once: true });
+
+  // Safety timeout
+  setTimeout(() => {
+    if (!sessionStorage.getItem("introPlayed")) {
+      showMain();
+    }
+  }, 8000);
+}
 </script>
 
 <script>
