@@ -1,66 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Latest YouTube Video</title>
-  <style>
-    body {
-      margin: 0;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .video-container {
-      position: relative;
-      width: 90%;
-      max-width: 900px;
-      padding-bottom: 56.25%; /* 16:9 ratio */
-      height: 0;
-    }
-
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-  </style>
-</head>
-<body>
-
-<div class="video-container">
-  <iframe id="youtubePlayer"
-    loading="lazy"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-
 <script>
-  //Channel ID UCUdlewvf5aiwwG5AQ2v3Y0Q
-  const apiKey = "AIzaSyDiFQhzkFVdYOz4NNcLiOGu--u6Lh2MvjY";
+  const apiKey = "AIzaSyDiFQhzkFVdYOz4NNcLiOGu--u6Lh2Mvj";   // ⚠ Replace with your API key
   const playlistId = "PLejqAWAjVfCT4HENHmsdb4jHGdtj3D5EP";
 
   async function loadLatestVideo() {
-    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=1&playlistId=${playlistId}&key=${apiKey}`;
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,status&maxResults=10&playlistId=${playlistId}&key=${apiKey}`;
 
-    const response = await fetch(url);
-    const data = await response.json();
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
 
-    if (data.items && data.items.length > 0) {
-      const videoId = data.items[0].snippet.resourceId.videoId;
-      document.getElementById("youtubePlayer").src =
-        `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
+      if (!data.items || data.items.length === 0) return;
+
+      tryNextVideo(data.items, 0);
+
+    } catch (error) {
+      console.error("API Error:", error);
     }
+  }
+
+  function tryNextVideo(items, index) {
+    if (index >= items.length) {
+      console.log("No public videos found.");
+      return;
+    }
+
+    const videoId = items[index].snippet.resourceId.videoId;
+    const iframe = document.getElementById("youtubePlayer");
+
+    iframe.src = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
+
+    // If video fails to load (private), try next
+    iframe.onerror = function () {
+      tryNextVideo(items, index + 1);
+    };
   }
 
   loadLatestVideo();
 </script>
-
-</body>
-</html>
