@@ -537,7 +537,7 @@ fetch("https://api.github.com/repos/rajiprem72/murli-audio-archive/releases/late
     const apk = data.assets.find(a => a.name === "MurliAudioApp-v1.0.apk");
     if (apk) {
       document.getElementById("apkDownloadStats").innerText =
-        "Designed by https://divine-connectionz.com " + apk.download_count;
+        "Designed by https://divine-connectionz.com ";
     } else {
       document.getElementById("apkDownloadStats").innerText = "APK not found.";
     }
