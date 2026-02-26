@@ -111,7 +111,7 @@
 </head>
 <body>
 
-<h1>Raja Yoga 7 Days Course in Telugu</h1>
+<h1>Raja Yoga Gist & Manifestation - Tamil</h1>
 
 <div id="loadingMessage">⏳ Playlist is loading, please wait…</div>
 
@@ -124,15 +124,11 @@
 <script>
 const playlistId = "PLejqAWAjVfCT4HENHmsdb4jHGdtj3D5EP";
 
-// NEW WORKING PROXY
 const youtubeFeed = `https://www.youtube.com/feeds/videos.xml?playlist_id=${playlistId}`;
 const proxyUrl = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(youtubeFeed)}`;
 
-// Show loading message
 document.getElementById("loadingMessage").style.display = "block";
 
-
-// 🔥 Guaranteed Thumbnail Function
 function findWorkingThumbnail(videoId) {
     const attempts = [
         `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
@@ -140,7 +136,6 @@ function findWorkingThumbnail(videoId) {
         `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`,
         `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`,
         `https://i.ytimg.com/vi/${videoId}/default.jpg`,
-        // 🔥 Guaranteed fallback — auto-generated from video
         `https://img.youtube.com/vi/${videoId}/0.jpg`
     ];
 
@@ -163,8 +158,6 @@ function findWorkingThumbnail(videoId) {
     });
 }
 
-
-// Load playlist
 fetch(proxyUrl)
   .then(response => response.text())
   .then(async xmlText => {
@@ -172,15 +165,20 @@ fetch(proxyUrl)
       const xml = new DOMParser().parseFromString(xmlText, "text/xml");
       const entries = Array.from(xml.getElementsByTagName("entry"));
 
+      // ✅ SORT NEWEST FIRST
       entries.sort((a, b) =>
-          new Date(a.getElementsByTagName("published")[0].textContent) -
-          new Date(b.getElementsByTagName("published")[0].textContent)
+          new Date(b.getElementsByTagName("published")[0].textContent) -
+          new Date(a.getElementsByTagName("published")[0].textContent)
       );
 
       const container = document.getElementById("playlist");
 
-      // Load first video in main player
-      const firstId = entries[0].getElementsByTagName("link")[0].getAttribute("href").split("v=")[1];
+      // ✅ Load LATEST video in main player
+      const firstId = entries[0]
+          .getElementsByTagName("link")[0]
+          .getAttribute("href")
+          .split("v=")[1];
+
       document.getElementById("player").src =
         "https://www.youtube-nocookie.com/embed/" + firstId + "?rel=0&modestbranding=1";
 
@@ -192,7 +190,6 @@ fetch(proxyUrl)
           const videoId = link.split("v=")[1];
           const published = entry.getElementsByTagName("published")[0].textContent;
 
-          // ALWAYS get a thumbnail
           const thumb = await findWorkingThumbnail(videoId);
 
           const card = document.createElement("div");
@@ -214,7 +211,6 @@ fetch(proxyUrl)
           container.appendChild(card);
       }
 
-      // Hide loading message
       document.getElementById("loadingMessage").style.display = "none";
   })
   .catch(err => {
@@ -222,6 +218,5 @@ fetch(proxyUrl)
       console.error(err);
   });
 </script>
-
 </body>
 </html>
