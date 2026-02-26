@@ -537,7 +537,7 @@ fetch("https://api.github.com/repos/rajiprem72/murli-audio-archive/releases/late
     const apk = data.assets.find(a => a.name === "MurliAudioApp-v1.0.apk");
     if (apk) {
       document.getElementById("apkDownloadStats").innerText =
-        "Murli Audio App Downloads: " + apk.download_count;
+        "Designed by https://divine-connectionz.com " + apk.download_count;
     } else {
       document.getElementById("apkDownloadStats").innerText = "APK not found.";
     }
@@ -559,14 +559,14 @@ function closeEventImage() {
 </script>
 <!-- Event Fullscreen Viewer -->
 <div id="eventOverlay" class="event-overlay" onclick="closeEventImage()">
-  <span>&times;</span>
+  <span></span>
   <img id="eventOverlayImg">
 </div>
 
 
 
 <footer>
-  designed by https://divine-connectionz.com
+  
 </footer>
 
 <script>
