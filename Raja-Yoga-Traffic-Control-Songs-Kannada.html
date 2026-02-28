@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raja Yoga Traffic Control Songs - Kannada</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    color: white;
+}
+
+header {
+    text-align: center;
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    background: rgba(0,0,0,0.4);
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.player-section {
+    flex: 2;
+    min-width: 300px;
+    padding: 20px;
+}
+
+.playlist-section {
+    flex: 1;
+    min-width: 250px;
+    background: rgba(0,0,0,0.3);
+    padding: 10px;
+    overflow-y: auto;
+    height: 80vh;
+}
+
+iframe {
+    width: 100%;
+    height: 450px;
+    border-radius: 10px;
+}
+
+.playlist-item {
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    background: rgba(255,255,255,0.1);
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.playlist-item:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    iframe {
+        height: 250px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+Raja Yoga Traffic Control Songs – Kannada
+</header>
+
+<div class="container">
+
+<div class="player-section">
+<iframe id="videoPlayer"
+src="https://www.youtube.com/embed/M9SLxlbRWiE"
+allow="autoplay; encrypted-media"
+allowfullscreen>
+</iframe>
+</div>
+
+<div class="playlist-section">
+
+<div class="playlist-item" onclick="loadVideo('PljuheXVHJM')">
+3:30 AM | Brahmakumaris Traffic Control Song | Tamil
+</div>
+
+<div class="playlist-item" onclick="loadVideo('bffQr1QKptA')">
+5:45 AM | Brahmakumaris Traffic Control Song | Tamil
+</div>
+
+<div class="playlist-item" onclick="loadVideo('fkiTjYpq-Y0')">
+7:00 AM | Brahmakumaris Traffic Control Song | Tamil
+</div>
+
+<div class="playlist-item" onclick="loadVideo('_hJPekcGPR0')">
+10:30 AM | Brahmakumaris Traffic Control Song | Tamil
+</div>
+
+<div class="playlist-item" onclick="loadVideo('_jvJHhIG_T0')">
+12:00 PM | Brahmakumaris Traffic Control Song | Tamil
+</div>
+
+<div class="playlist-item" onclick="loadVideo('Mwi9CjrRB0Q')">
+5:30 PM | Brahmakumaris Traffic Control Song | Tamil
+</div>
+
+<div class="playlist-item" onclick="loadVideo('YttQIyfUNUk')">
+7:30 PM | Brahmakumaris Traffic Control Song | Tamil
+</div>
+
+<div class="playlist-item" onclick="loadVideo('QTCBLRVUmGk')">
+9:30 PM | Brahmakumaris Traffic Control Song | Tamil
+</div>
+
+</div>
+</div>
+
+<script>
+function loadVideo(videoId) {
+    document.getElementById("videoPlayer").src =
+    "https://www.youtube.com/embed/" + videoId + "?autoplay=1";
+}
+</script>
+
+</body>
+</html>
