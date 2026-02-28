@@ -48,17 +48,44 @@ header {
 .carousel {
     display: flex;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
     gap: 10px;
-    padding: 20px;
+    padding: 15px;
 }
 
 .carousel img {
-    width: 90%;
-    max-width: 500px;
-    border-radius: 12px;
-    scroll-snap-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    width: 140px;   /* Small thumbnail size */
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.carousel img:hover {
+    transform: scale(1.05);
+}
+
+/* Fullscreen Viewer */
+.fullscreen {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.fullscreen img {
+    max-width: 95%;
+    max-height: 95%;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
 }
 </style>
 </head>
@@ -68,63 +95,89 @@ header {
 <header>Raja Yoga 7 Days Course</header>
 
 <div class="language-buttons">
-    <button onclick="showSection('tamil')" class="active">Tamil</button>
-    <button onclick="showSection('hindi')">Hindi</button>
-    <button onclick="showSection('english')">English</button>
+    <button onclick="showSection('tamil', this)" class="active">Tamil</button>
+    <button onclick="showSection('hindi', this)">Hindi</button>
+    <button onclick="showSection('english', this)">English</button>
 </div>
 
-<!-- ================= TAMIL SECTION ================= -->
+<!-- Tamil -->
 <div id="tamil" class="course-section" style="display:block;">
-    <h2>Raja Yoga 7 Days Course - Tamil</h2>
+    <h2>Tamil</h2>
     <div class="carousel" id="carousel-tamil"></div>
 </div>
 
-<!-- ================= HINDI SECTION ================= -->
+<!-- Hindi -->
 <div id="hindi" class="course-section">
-    <h2>Raja Yoga 7 Days Course - Hindi</h2>
+    <h2>Hindi</h2>
     <div class="carousel" id="carousel-hindi"></div>
 </div>
 
-<!-- ================= ENGLISH SECTION ================= -->
+<!-- English -->
 <div id="english" class="course-section">
-    <h2>Raja Yoga 7 Days Course - English</h2>
+    <h2>English</h2>
     <div class="carousel" id="carousel-english"></div>
 </div>
 
+<!-- Fullscreen Viewer -->
+<div class="fullscreen" id="fullscreenViewer" onclick="closeFullscreen()">
+    <span class="close-btn">&times;</span>
+    <img id="fullscreenImage">
+</div>
+
 <script>
-const totalImages = 28;
+
+// === CONFIG: Set image count per language ===
+const courses = {
+    tamil: { folder: "7_days_course_tamil", total: 28 },
+    hindi: { folder: "7_days_course_hindi", total: 23 },
+    english: { folder: "7_days_course_english", total: 18 }
+};
 
 // Load images dynamically
-function loadImages(folder, carouselId) {
-    const carousel = document.getElementById(carouselId);
-    if (carousel.children.length > 0) return; // Prevent duplicate loading
+function loadImages(language) {
+    const config = courses[language];
+    const carousel = document.getElementById("carousel-" + language);
     
-    for (let i = 1; i <= totalImages; i++) {
+    if (carousel.children.length > 0) return;
+
+    for (let i = 1; i <= config.total; i++) {
         const img = document.createElement("img");
-        img.src = "./" + folder + "/" + i + ".jpg";
-        img.alt = folder + " Page " + i;
+        img.src = "./" + config.folder + "/" + i + ".jpg";
+        img.alt = language + " Page " + i;
+        img.onclick = function() {
+            openFullscreen(this.src);
+        };
         carousel.appendChild(img);
     }
 }
 
-// Initial load for Tamil
-loadImages("7_days_course_tamil", "carousel-tamil");
-
-// Load Hindi & English when clicked
-function showSection(language) {
+// Show section
+function showSection(language, button) {
     document.querySelectorAll(".course-section").forEach(sec => sec.style.display = "none");
     document.getElementById(language).style.display = "block";
 
     document.querySelectorAll(".language-buttons button").forEach(btn => btn.classList.remove("active"));
-    event.target.classList.add("active");
+    button.classList.add("active");
 
-    if (language === "hindi") {
-        loadImages("7_days_course_hindi", "carousel-hindi");
-    }
-    if (language === "english") {
-        loadImages("7_days_course_english", "carousel-english");
-    }
+    loadImages(language);
 }
+
+// Fullscreen open
+function openFullscreen(src) {
+    const viewer = document.getElementById("fullscreenViewer");
+    const img = document.getElementById("fullscreenImage");
+    img.src = src;
+    viewer.style.display = "flex";
+}
+
+// Fullscreen close
+function closeFullscreen() {
+    document.getElementById("fullscreenViewer").style.display = "none";
+}
+
+// Load Tamil by default
+loadImages("tamil");
+
 </script>
 
 </body>
