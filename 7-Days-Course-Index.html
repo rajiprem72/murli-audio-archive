@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raja Yoga 7 Days Course</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    text-align: center;
+}
+
+header {
+    background: #6a1b9a;
+    color: white;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.language-buttons {
+    padding: 10px;
+    background: white;
+}
+
+.language-buttons button {
+    padding: 8px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 20px;
+    background: #e0e0e0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.language-buttons button.active {
+    background: #6a1b9a;
+    color: white;
+}
+
+.course-section {
+    display: none;
+}
+
+.carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 10px;
+    padding: 20px;
+}
+
+.carousel img {
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    scroll-snap-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+</style>
+</head>
+
+<body>
+
+<header>Raja Yoga 7 Days Course</header>
+
+<div class="language-buttons">
+    <button onclick="showSection('tamil')" class="active">Tamil</button>
+    <button onclick="showSection('hindi')">Hindi</button>
+    <button onclick="showSection('english')">English</button>
+</div>
+
+<!-- ================= TAMIL SECTION ================= -->
+<div id="tamil" class="course-section" style="display:block;">
+    <h2>Raja Yoga 7 Days Course - Tamil</h2>
+    <div class="carousel" id="carousel-tamil"></div>
+</div>
+
+<!-- ================= HINDI SECTION ================= -->
+<div id="hindi" class="course-section">
+    <h2>Raja Yoga 7 Days Course - Hindi</h2>
+    <div class="carousel" id="carousel-hindi"></div>
+</div>
+
+<!-- ================= ENGLISH SECTION ================= -->
+<div id="english" class="course-section">
+    <h2>Raja Yoga 7 Days Course - English</h2>
+    <div class="carousel" id="carousel-english"></div>
+</div>
+
+<script>
+const totalImages = 28;
+
+// Load images dynamically
+function loadImages(folder, carouselId) {
+    const carousel = document.getElementById(carouselId);
+    if (carousel.children.length > 0) return; // Prevent duplicate loading
+    
+    for (let i = 1; i <= totalImages; i++) {
+        const img = document.createElement("img");
+        img.src = "./" + folder + "/" + i + ".jpg";
+        img.alt = folder + " Page " + i;
+        carousel.appendChild(img);
+    }
+}
+
+// Initial load for Tamil
+loadImages("7_days_course_tamil", "carousel-tamil");
+
+// Load Hindi & English when clicked
+function showSection(language) {
+    document.querySelectorAll(".course-section").forEach(sec => sec.style.display = "none");
+    document.getElementById(language).style.display = "block";
+
+    document.querySelectorAll(".language-buttons button").forEach(btn => btn.classList.remove("active"));
+    event.target.classList.add("active");
+
+    if (language === "hindi") {
+        loadImages("7_days_course_hindi", "carousel-hindi");
+    }
+    if (language === "english") {
+        loadImages("7_days_course_english", "carousel-english");
+    }
+}
+</script>
+
+</body>
+</html>
