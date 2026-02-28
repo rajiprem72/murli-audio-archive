@@ -45,39 +45,56 @@
   <div class="playlist" id="playlist"></div>
 
   <script src="https://www.youtube.com/iframe_api"></script>
+<!--const JSON_URL = "https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist_manifestation.json";
+ -->
+<script>
 
-  <script>
+const JSON_URL = "https://rajiprem72.github.io/murli-audio-archive/gist_manifestation.json";
 
-    const JSON_URL = "https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist_manifestation.json";
+let player;
+let videoIds = [];
+let currentIndex = 0;
+let playerReady = false;
+let apiReady = false;
+let dataReady = false;
 
-    let player;
-    let videoIds = [];
-    let currentIndex = 0;
+// YouTube API ready
+function onYouTubeIframeAPIReady() {
+  apiReady = true;
+  initializePlayerIfReady();
+}
 
-    // Load JSON
-    fetch(JSON_URL)
-      .then(response => response.json())
-      .then(data => {
-        videoIds = data.videos;
-        createPlaylist();
-        loadYouTubePlayer();
-      });
+// Load JSON
+fetch(JSON_URL)
+  .then(response => response.json())
+  .then(data => {
+    videoIds = data.videos;
+    createPlaylist();
+    dataReady = true;
+    initializePlayerIfReady();
+  });
 
-    function loadYouTubePlayer() {
-      window.onYouTubeIframeAPIReady = function() {
-        player = new YT.Player('player', {
-          height: '300',
-          width: '100%',
-          videoId: videoIds[0].id, // first video auto play
-          playerVars: {
-            autoplay: 1,
-            rel: 0
-          }
-        });
-      };
-    }
+function initializePlayerIfReady() {
+  if (apiReady && dataReady) {
+    player = new YT.Player('player', {
+      height: '400',
+      width: '100%',
+      videoId: videoIds[0].id,
+      playerVars: {
+        autoplay: 1,
+        rel: 0,
+        playsinline: 1
+      },
+      events: {
+        onReady: function() {
+          playerReady = true;
+        }
+      }
+    });
+  }
+}
 
-  function createPlaylist() {
+function createPlaylist() {
   const playlistDiv = document.getElementById("playlist");
   playlistDiv.innerHTML = "";
 
@@ -87,34 +104,33 @@
     div.className = "video-item";
 
     div.innerHTML = `
-      <img src="${video.thumbnail}" width="120" style="vertical-align:middle;">
+      <img src="${video.thumbnail}" width="120">
       <span style="margin-left:10px;">${video.title}</span>
     `;
 
     div.onclick = () => loadVideo(index);
-
     playlistDiv.appendChild(div);
   });
 
   highlightActive();
 }
 
-    function loadVideo(index) {
-      if (!playerReady) return;
+function loadVideo(index) {
+  if (!playerReady) return;
 
-      currentIndex = index;
-      player.loadVideoById(videoIds[index].id);
-      highlightActive();
-      }
-    
-    function highlightActive() {
-      const items = document.querySelectorAll(".video-item");
-      items.forEach((item, i) => {
-        item.classList.toggle("active", i === currentIndex);
-      });
-    }
+  currentIndex = index;
+  player.loadVideoById(videoIds[index].id);
+  highlightActive();
+}
 
-  </script>
+function highlightActive() {
+  const items = document.querySelectorAll(".video-item");
+  items.forEach((item, i) => {
+    item.classList.toggle("active", i === currentIndex);
+  });
+}
+
+</script>
 
 </body>
 </html>
