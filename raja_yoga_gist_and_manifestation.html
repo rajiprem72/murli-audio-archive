@@ -43,10 +43,8 @@
 
   <div id="player"></div>
   <div class="playlist" id="playlist"></div>
+<script src="https://www.youtube.com/iframe_api"></script>
 
-  <script src="https://www.youtube.com/iframe_api"></script>
-<!--const JSON_URL = "https://raw.githubusercontent.com/rajiprem72/murli-audio-archive/main/gist_manifestation.json";
- -->
 <script>
 
 const JSON_URL = "https://rajiprem72.github.io/murli-audio-archive/gist_manifestation.json";
@@ -55,43 +53,41 @@ let player;
 let videoIds = [];
 let currentIndex = 0;
 let playerReady = false;
-let apiReady = false;
-let dataReady = false;
 
-// YouTube API ready
-function onYouTubeIframeAPIReady() {
-  apiReady = true;
-  initializePlayerIfReady();
-}
-
-// Load JSON
+// Load JSON first
 fetch(JSON_URL)
   .then(response => response.json())
   .then(data => {
     videoIds = data.videos;
     createPlaylist();
-    dataReady = true;
-    initializePlayerIfReady();
   });
 
-function initializePlayerIfReady() {
-  if (apiReady && dataReady) {
-    player = new YT.Player('player', {
-      height: '400',
-      width: '100%',
-      videoId: videoIds[0].id,
-      playerVars: {
-        autoplay: 1,
-        rel: 0,
-        playsinline: 1
-      },
-      events: {
-        onReady: function() {
-          playerReady = true;
+// YouTube API ready (GLOBAL function — important)
+function onYouTubeIframeAPIReady() {
+
+  const checkData = setInterval(() => {
+    if (videoIds.length > 0) {
+      clearInterval(checkData);
+
+      player = new YT.Player('player', {
+        height: '400',
+        width: '100%',
+        videoId: videoIds[0].id,
+        playerVars: {
+          autoplay: 1,
+          mute: 1,     // Required for autoplay
+          rel: 0,
+          playsinline: 1
+        },
+        events: {
+          onReady: function(event) {
+            playerReady = true;
+            event.target.playVideo();
+          }
         }
-      }
-    });
-  }
+      });
+    }
+  }, 200);
 }
 
 function createPlaylist() {
