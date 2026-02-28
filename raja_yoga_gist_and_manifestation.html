@@ -77,20 +77,27 @@
       };
     }
 
-    function createPlaylist() {
-      const playlistDiv = document.getElementById("playlist");
-      playlistDiv.innerHTML = "";
+  function createPlaylist() {
+  const playlistDiv = document.getElementById("playlist");
+  playlistDiv.innerHTML = "";
 
-      videoIds.forEach((id, index) => {
-        const div = document.createElement("div");
-        div.className = "video-item";
-        div.innerText = "Video " + (index + 1);
-        div.onclick = () => loadVideo(index);
-        playlistDiv.appendChild(div);
-      });
+  videoIds.forEach((video, index) => {
 
-      highlightActive();
-    }
+    const div = document.createElement("div");
+    div.className = "video-item";
+
+    div.innerHTML = `
+      <img src="${video.thumbnail}" width="120" style="vertical-align:middle;">
+      <span style="margin-left:10px;">${video.title}</span>
+    `;
+
+    div.onclick = () => loadVideo(index);
+
+    playlistDiv.appendChild(div);
+  });
+
+  highlightActive();
+}
 
     function loadVideo(index) {
       currentIndex = index;
