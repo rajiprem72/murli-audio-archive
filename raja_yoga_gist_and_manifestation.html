@@ -68,7 +68,7 @@
         player = new YT.Player('player', {
           height: '300',
           width: '100%',
-          videoId: videoIds[0], // first video auto play
+          videoId: videoIds[0].id, // first video auto play
           playerVars: {
             autoplay: 1,
             rel: 0
@@ -100,11 +100,13 @@
 }
 
     function loadVideo(index) {
-      currentIndex = index;
-      player.loadVideoById(videoIds[index]);
-      highlightActive();
-    }
+      if (!playerReady) return;
 
+      currentIndex = index;
+      player.loadVideoById(videoIds[index].id);
+      highlightActive();
+      }
+    
     function highlightActive() {
       const items = document.querySelectorAll(".video-item");
       items.forEach((item, i) => {
