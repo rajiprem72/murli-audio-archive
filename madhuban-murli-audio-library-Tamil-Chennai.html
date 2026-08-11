@@ -95,6 +95,20 @@ th, td {
 }
 
 audio { width: 100%; }
+
+/* Mobile year links */
+@media (max-width: 600px) {
+  #year-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px 5px;
+  }
+
+  #year-links a {
+    margin: 0;
+    text-align: center;
+  }
+}  
 </style>
 </head>
 
