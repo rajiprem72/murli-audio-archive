@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madhuban Murli Audio Library - தமிழ் (சென்னை)</title>
+
+<style>
+html { scroll-behavior: smooth; }
+body { font-family: Arial, sans-serif; margin: 10px; background: #f5f5f5; color: #111; }
+h1 { text-align: center; }
+
+#year-links {
+  max-width: 1200px;
+  margin: 0 auto 15px auto;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+#year-links a {
+  margin: 0 10px;
+  font-weight: bold;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.year {
+  background: #ffffff;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+}
+
+.months {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .months { grid-template-columns: 1fr; }
+}
+
+.month {
+  background: #fafafa;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+th, td {
+  padding: 3px;
+  text-align: center;
+}
+
+.day-btn {
+  width: 100%;
+  padding: 4px;
+  border-radius: 4px;
+  background: #e7f3ff;
+  border: 1px solid #cccccc;
+  cursor: pointer;
+}
+
+.day-btn:hover {
+  background: #d0e7ff;
+}
+
+.day-btn.selected {
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+#player {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 6px;
+  text-align: center;
+}
+
+audio { width: 100%; }
+</style>
+</head>
+
+<body id="top">
+
+<h1>Madhuban Murli Audio Library - தமிழ் (சென்னை)</h1>
+
+<!-- YEAR ANCHOR LINKS -->
+<div id="year-links"></div>
+
+<!-- CALENDAR -->
+<div id="calendar"></div>
+
+<!-- PLAYER -->
+<div id="player">
+  <p id="selected-date">Click any valid date to play its Murli.</p>
+  <audio id="audio" controls></audio>
+  <a id="download-btn" style="display:none">Download MP3</a>
+
+  <p id="audio-note" style="font-size:12px;color:#666;margin-top:8px;">
+    Note: If the audio is not playing, the audio file is not available for this date.
+  </p>
+</div>
+
+<script>
+/* ================= AUDIO LOGIC (UNCHANGED) ================= */
+const pad = n => String(n).padStart(2, "0");
+let lastSelectedBtn = null;
+
+const lang = "ta_my";
+const langNames = { "ta_my": "தமிழ் (சென்னை)" };
+
+function attachAudio(btn, y, m, d) {
+  btn.onclick = function () {
+    if (lastSelectedBtn) lastSelectedBtn.classList.remove("selected");
+    btn.classList.add("selected");
+    lastSelectedBtn = btn;
+
+    const url =
+      `https://murli.madhuban.org/murlis/${lang}/mp3/murli-${y}-${pad(m+1)}-${pad(d)}.mp3`;
+
+    document.getElementById("selected-date").textContent =
+      `Playing: ${pad(d)}-${pad(m+1)}-${y} (${langNames[lang]})`;
+
+    const audio = document.getElementById("audio");
+    audio.src = url;
+    audio.play();
+
+    const dl = document.getElementById("download-btn");
+    dl.href = url;
+    dl.style.display = "inline-block";
+
+     /* ✅ AUTO-SCROLL TO PLAYER */
+    document.getElementById("player").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  };
+}
+
+/* ================= CALENDAR LOGIC ================= */
+const monthNames = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December"
+];
+const dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+fetch("./data/calendar-years.json")
+  .then(r => r.json())
+  .then(cfg => {
+
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth();
+
+    const allYears = cfg.years;
+    const currentIndex = allYears.findIndex(y => y.year === currentYear);
+
+    const startIndex = Math.max(0, currentIndex - 6);
+    const visibleYears = allYears.slice(startIndex, currentIndex + 1);
+
+    const calendar = document.getElementById("calendar");
+    const yearLinks = document.getElementById("year-links");
+
+    /* -------- YEAR LINKS -------- */
+    visibleYears.forEach(yObj => {
+      const a = document.createElement("a");
+      a.href = "#y" + yObj.year;
+      a.textContent = yObj.year;
+      yearLinks.appendChild(a);
+    });
+
+    /* -------- CALENDAR -------- */
+    visibleYears.forEach(yObj => {
+      const y = yObj.year;
+
+      const yearBox = document.createElement("section");
+      yearBox.className = "year";
+      yearBox.id = "y" + y;
+      yearBox.innerHTML = `<h2>${y}</h2>`;
+
+      const months = document.createElement("div");
+      months.className = "months";
+
+      for (let m = 0; m < 12; m++) {
+        if (y === currentYear && m > currentMonth) break;
+
+        const month = document.createElement("div");
+        month.className = "month";
+        month.innerHTML = `<h3>${monthNames[m]}</h3>`;
+
+        const table = document.createElement("table");
+        table.innerHTML =
+          "<tr>" + dayNames.map(d => `<th>${d}</th>`).join("") + "</tr>";
+
+        const firstDay = new Date(y, m, 1).getDay();
+        const daysInMonth = new Date(y, m + 1, 0).getDate();
+        let day = 1;
+
+        for (let w = 0; w < 6; w++) {
+          const tr = document.createElement("tr");
+
+          for (let d = 0; d < 7; d++) {
+            const td = document.createElement("td");
+
+            if ((w === 0 && d < firstDay) || day > daysInMonth) {
+              td.innerHTML = "";
+            } else {
+              const btn = document.createElement("button");
+              btn.className = "day-btn";
+              btn.textContent = day;
+              attachAudio(btn, y, m, day);
+              td.appendChild(btn);
+              day++;
+            }
+            tr.appendChild(td);
+          }
+
+          table.appendChild(tr);
+          if (day > daysInMonth) break;
+        }
+
+        month.appendChild(table);
+        months.appendChild(month);
+      }
+
+      yearBox.appendChild(months);
+
+      /* GO TOP LINK */
+      const goTop = document.createElement("div");
+      goTop.style.textAlign = "right";
+      goTop.innerHTML =
+        `<a href="#top" style="font-size:12px;font-weight:bold;color:#2563eb;text-decoration:none;">⬆ Go Top</a>`;
+      yearBox.appendChild(goTop);
+
+      calendar.appendChild(yearBox);
+    });
+  });
+</script>
+
+</body>
+</html>
