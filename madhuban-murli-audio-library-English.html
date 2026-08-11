@@ -79,7 +79,12 @@ th, td {
   color: #ffffff;
   font-weight: bold;
 }
-
+.day-btn.today {
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: bold;
+  border-color: #2563eb;
+}
 #player {
   max-width: 600px;
   margin: 20px auto;
@@ -174,10 +179,18 @@ fetch("./data/calendar-years.json")
     const calendar = document.getElementById("calendar");
     const yearLinks = document.getElementById("year-links");
 
-    /* -------- YEAR LINKS -------- */
+   /* -------- YEAR LINKS -------- */
     visibleYears.forEach(yObj => {
       const a = document.createElement("a");
-      a.href = "#y" + yObj.year;
+    
+      if (yObj.year === currentYear) {
+        // Current year → go directly to the current month
+        a.href = "#m" + currentYear + "-" + (currentMonth + 1);
+      } else {
+        // Previous years → go to beginning of that year
+        a.href = "#y" + yObj.year;
+      }
+    
       a.textContent = yObj.year;
       yearLinks.appendChild(a);
     });
@@ -195,11 +208,15 @@ fetch("./data/calendar-years.json")
       months.className = "months";
 
       for (let m = 0; m < 12; m++) {
-        if (y === currentYear && m > currentMonth) break;
-
-        const month = document.createElement("div");
-        month.className = "month";
-        month.innerHTML = `<h3>${monthNames[m]}</h3>`;
+      if (y === currentYear && m > currentMonth) break;
+      
+      const month = document.createElement("div");
+      month.className = "month";
+      
+      // Create an anchor target for each month
+      month.id = "m" + y + "-" + (m + 1);
+      
+      month.innerHTML = `<h3>${monthNames[m]}</h3>`;
 
         const table = document.createElement("table");
         table.innerHTML =
@@ -221,6 +238,16 @@ fetch("./data/calendar-years.json")
               const btn = document.createElement("button");
               btn.className = "day-btn";
               btn.textContent = day;
+              
+              // Highlight today's date
+              if (
+                y === currentYear &&
+                m === currentMonth &&
+                day === today.getDate()
+              ) {
+                btn.classList.add("today");
+              }
+              
               attachAudio(btn, y, m, day);
               td.appendChild(btn);
               day++;
