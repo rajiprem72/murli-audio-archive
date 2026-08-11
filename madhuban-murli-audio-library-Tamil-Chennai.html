@@ -79,7 +79,12 @@ th, td {
   color: #ffffff;
   font-weight: bold;
 }
-
+.day-btn.today {
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: bold;
+  border-color: #2563eb;
+}
 #player {
   max-width: 600px;
   margin: 20px auto;
@@ -233,6 +238,16 @@ fetch("./data/calendar-years.json")
               const btn = document.createElement("button");
               btn.className = "day-btn";
               btn.textContent = day;
+              
+              // Highlight today's date
+              if (
+                y === currentYear &&
+                m === currentMonth &&
+                day === today.getDate()
+              ) {
+                btn.classList.add("today");
+              }
+              
               attachAudio(btn, y, m, day);
               td.appendChild(btn);
               day++;
