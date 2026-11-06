@@ -633,6 +633,7 @@ fetch("languages.json")
     console.error("Failed to load languages.json", error);
   });
 </script>
+
 <script>
 fetch("special_cards.json")
   .then(res => res.json())
@@ -642,9 +643,22 @@ fetch("special_cards.json")
     cards.forEach(cardData => {
       const card = document.createElement("div");
       card.className = "lang-card";
+
       card.onclick = () => {
-        window.location.href =
-          "https://rajiprem72.github.io/murli-audio-archive/" + cardData.url;
+
+        // Check whether the URL is external or internal
+        if (
+          cardData.url.startsWith("http://") ||
+          cardData.url.startsWith("https://")
+        ) {
+          // Open external links directly
+          window.open(cardData.url, "_blank");
+        } else {
+          // Open internal GitHub Pages links
+          window.location.href =
+            "https://rajiprem72.github.io/murli-audio-archive/" + cardData.url;
+        }
+
       };
 
       card.innerHTML = `
@@ -661,6 +675,7 @@ fetch("special_cards.json")
     console.error("Failed to load special_cards.json", err);
   });
 </script>
+
 
 </div>
 <script>
